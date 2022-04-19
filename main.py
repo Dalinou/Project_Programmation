@@ -11,7 +11,7 @@ clock = pygame.time.Clock()
 
 
 # création des différents  écran
-menu_screen = menu.Menu(setting_screensize, setting_fps)
+menu_screen = menu.Menu(window, clock, setting_screensize, setting_fps)
 
 # Ecran à affiché / Etat du jeu
 state = "menu"
