@@ -1,17 +1,17 @@
 import pygame
 import menu
+import setting_reader
 
-# Principaux parametre
-setting_screensize = (1344, 704)
-setting_fps = 120
+# Paramêtre
+setting = setting_reader.SettingReader()
 
 # Création de la fenetre
-window = pygame.display.set_mode(setting_screensize)
+window = pygame.display.set_mode(setting.screen_size)
 clock = pygame.time.Clock()
 
 
 # création des différents  écran
-menu_screen = menu.Menu(window, clock, setting_screensize, setting_fps)
+menu_screen = menu.Menu(window, clock, setting)
 
 # Ecran à affiché / Etat du jeu
 state = "menu"
