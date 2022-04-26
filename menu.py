@@ -25,7 +25,7 @@ class Menu:
         self.texture_button_3_down = pygame.image.load("Texture/Menu/Button 3 down.png")
         # Curseur
         self.texture_cursor = pygame.image.load("Texture/Cursor.png")
-        # Coordonnée des différents objects
+        # Coordonnée des différents objets
         self.cursor_coord = (0, 0)
         self.button_1_coord = (
             self.setting.screensize[0]/2-self.texture_button_1_up.get_width()/2,

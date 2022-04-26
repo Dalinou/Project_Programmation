@@ -3,8 +3,8 @@ import menu
 import settings
 import create_perso
 
-# Paramêtre
-setting = setting_reader.SettingReader()
+# Paramètre
+setting = settings.SettingReader()
 
 # Création de la fenetre
 window = pygame.display.set_mode(setting.screensize)
