@@ -1,0 +1,2 @@
+screensize: 1344, 704
+fps: 120
