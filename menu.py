@@ -1,5 +1,5 @@
 import pygame
-from pathlib import Path
+import os
 
 
 # Classe pour l'écran de menu
@@ -17,15 +17,32 @@ class Menu:
         self.texture_button_1_up = pygame.image.load("Texture/Menu/Button 1 up.png")
         self.texture_button_1_down = pygame.image.load("Texture/Menu/Button 1 down.png")
         self.texture_button_1_gray = pygame.image.load("Texture/Menu/Button 1 gray.png")
+        # Bouton 2 pour les paramètres
+        self.texture_button_2_up = pygame.image.load("Texture/Menu/Button 2 up.png")
+        self.texture_button_2_down = pygame.image.load("Texture/Menu/Button 2 down.png")
+        # Bouton 3 pour accéder à la création de personnage
+        self.texture_button_3_up = pygame.image.load("Texture/Menu/Button 3 up.png")
+        self.texture_button_3_down = pygame.image.load("Texture/Menu/Button 3 down.png")
+        # Curseur
         self.texture_cursor = pygame.image.load("Texture/Cursor.png")
         # Coordonnée des différents objects
         self.cursor_coord = (0, 0)
         self.button_1_coord = (
-            self.setting.screen_size[0]/2-self.texture_button_1_up.get_width()/2,
-            self.setting.screen_size[1]/4-self.texture_button_1_up.get_height()/2,
+            self.setting.screensize[0]/2-self.texture_button_1_up.get_width()/2,
+            self.setting.screensize[1]/4-self.texture_button_1_up.get_height()/2,
         )
-        # Etat du boutton 1
-        self.button_1_state = "up"
+        self.button_2_coord = (
+            self.setting.screensize[0] / 2 - self.texture_button_1_up.get_width() / 2,
+            self.setting.screensize[1] / 2 - self.texture_button_1_up.get_height() / 2,
+        )
+        self.button_3_coord = (
+            self.setting.screensize[0] / 2 - self.texture_button_1_up.get_width() / 2,
+            self.setting.screensize[1] * 3 / 4 - self.texture_button_1_up.get_height() / 2,
+        )
+        # Etat des boutons
+        self.button_1_state = "up" if os.path.exists("save.txt") else "gray"
+        self.button_2_state = "up"
+        self.button_3_state = "up"
 
     def gameloop(self):
         while True:
@@ -41,7 +58,7 @@ class Menu:
                     # récupération des coordonnées de la souris
                     self.cursor_coord = event.pos
                     # regarde si une sauvegarde existe
-                    if not Path("save.txt").exists():
+                    if not os.path.exists("save.txt"):
                         self.button_1_state = "gray"
                     # regarde si la souris est sur le boutton 1
                     elif self.button_1_coord[0] \
@@ -53,33 +70,59 @@ class Menu:
                         self.button_1_state = "down"
                     else:
                         self.button_1_state = "up"
+                    # regarde si la souris est sur le bouton 2
+                    if self.button_2_coord[0] \
+                            <= self.cursor_coord[0] \
+                            < self.button_2_coord[0] + self.texture_button_2_up.get_width() and \
+                            self.button_2_coord[1] \
+                            <= self.cursor_coord[1] \
+                            < self.button_2_coord[1] + self.texture_button_2_up.get_height():
+                        self.button_2_state = "down"
+                    else:
+                        self.button_2_state = "up"
+                    # regarde si la souris est sur le bouton 3
+                    if self.button_3_coord[0] \
+                            <= self.cursor_coord[0] \
+                            < self.button_3_coord[0] + self.texture_button_3_up.get_width() and \
+                            self.button_3_coord[1] \
+                            <= self.cursor_coord[1] \
+                            < self.button_3_coord[1] + self.texture_button_3_up.get_height():
+                        self.button_3_state = "down"
+                    else:
+                        self.button_3_state = "up"
                 # Si Click de la souris
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    # Recupération des coordonnées de la souris
-                    self.cursor_coord = event.pos
-                    # regarde si une sauvegarde existe
-                    if not Path("save.txt").exists():
-                        self.button_1_state = "gray"
-                    # regarde si la souris est sur le boutton 1
-                    elif self.button_1_coord[0] \
-                            <= self.cursor_coord[0] \
-                            < self.button_1_coord[0] + self.texture_button_1_up.get_width() and \
-                            self.button_1_coord[1] \
-                            <= self.cursor_coord[1] \
-                            < self.button_1_coord[1] + self.texture_button_1_up.get_height():
-                        # passe à l'écran suivant --------------------------
+                    if self.button_1_state == "down":
                         return "game"
-                # Affichage du fond d'écran
-                self.window.blit(self.texture_background, (0, 0))
-                # Affichage du boutton 1 en fonction de son état
-                if self.button_1_state == "up":
-                    self.window.blit(self.texture_button_1_up, self.button_1_coord)
-                elif self.button_1_state == "down":
-                    self.window.blit(self.texture_button_1_down, self.button_1_coord)
-                elif self.button_1_state == "gray":
-                    self.window.blit(self.texture_button_1_gray, self.button_1_coord)
-                #  Affichage du curseur
-                self.window.blit(self.texture_cursor, self.cursor_coord)
-                self.window.blit(self.texture_cursor, self.cursor_coord)
+                    if self.button_2_state == "down":
+                        return "paramètre"
+                    if self.button_3_state == "down":
+                        if not os.path.exists("save.txt"):
+                            return "create"
+                        else:
+                            return "warning"
+
+            # Affichage du fond d'écran
+            self.window.blit(self.texture_background, (0, 0))
+            # Affichage des boutons en fonction de son état
+            # Bouton 1
+            if self.button_1_state == "up":
+                self.window.blit(self.texture_button_1_up, self.button_1_coord)
+            elif self.button_1_state == "down":
+                self.window.blit(self.texture_button_1_down, self.button_1_coord)
+            elif self.button_1_state == "gray":
+                self.window.blit(self.texture_button_1_gray, self.button_1_coord)
+            # Bouton 2
+            if self.button_2_state == "up":
+                self.window.blit(self.texture_button_2_up, self.button_2_coord)
+            elif self.button_2_state == "down":
+                self.window.blit(self.texture_button_2_down, self.button_2_coord)
+            # Bouton 3
+            if self.button_3_state == "up":
+                self.window.blit(self.texture_button_3_up, self.button_3_coord)
+            elif self.button_3_state == "down":
+                self.window.blit(self.texture_button_3_down, self.button_3_coord)
+            #  Affichage du curseur
+            self.window.blit(self.texture_cursor, self.cursor_coord)
             # Actualisation de l'affichage
             pygame.display.update()
