@@ -11,23 +11,23 @@ class CreateWarning:
         # Chargement des textures
         self.texture_background = pygame.image.load("Texture/Menu/Background.png")
         # Bouton pour continuer
-        self.texture_button_Continue_up = pygame.image.load("Texture/Menu/Button 2 up.png")
-        self.texture_button_Continue_down = pygame.image.load("Texture/Menu/Button 2 down.png")
+        self.texture_button_Continue = (pygame.image.load("Texture/Menu/Button 2 up.png"),
+                                        pygame.image.load("Texture/Menu/Button 2 down.png"))
         # Bouton pour retourner au menu
-        self.texture_button_Back_up = pygame.image.load("Texture/Menu/Button 3 up.png")
-        self.texture_button_Back_down = pygame.image.load("Texture/Menu/Button 3 down.png")
+        self.texture_button_Back = (pygame.image.load("Texture/Menu/Button 3 up.png"),
+                                    pygame.image.load("Texture/Menu/Button 3 down.png"))
         self.texture_cursor = pygame.image.load("Texture/Cursor.png")
         # Coordonnée des différents objets
         self.cursor_coord = (0, 0)
         # bouton pour valider la suppression de la sauvegarde
         self.button_Continue_coord = (
-            self.setting.screensize[0] / 2 - self.texture_button_Continue_up.get_width() / 2,
-            self.setting.screensize[1] * 3 / 4 - self.texture_button_Continue_up.get_height() / 2,
+            self.setting.screensize[0] / 2 - self.texture_button_Continue[0].get_width() / 2,
+            self.setting.screensize[1] * 3 / 4 - self.texture_button_Continue[0].get_height() / 2,
         )
         # bouton pour annuler et revenir au menu
         self.button_Back_coord = (
-            self.setting.screensize[0] / 2 - self.texture_button_Back_up.get_width() / 2,
-            self.setting.screensize[1] / 2 - self.texture_button_Back_up.get_height() / 2,
+            self.setting.screensize[0] / 2 - self.texture_button_Back[0].get_width() / 2,
+            self.setting.screensize[1] / 2 - self.texture_button_Back[0].get_height() / 2,
         )
         # défini l'état initial des boutons
         self.button_Continue_state = "up"
@@ -46,20 +46,20 @@ class CreateWarning:
                     # regarde si la souris est sur le bouton pour continuer
                     if self.button_Continue_coord[0] \
                             <= self.cursor_coord[0] \
-                            < self.button_Continue_coord[0] + self.texture_button_Continue_up.get_width() and \
+                            < self.button_Continue_coord[0] + self.texture_button_Continue[0].get_width() and \
                             self.button_Continue_coord[1] \
                             <= self.cursor_coord[1] \
-                            < self.button_Continue_coord[1] + self.texture_button_Continue_up.get_height():
+                            < self.button_Continue_coord[1] + self.texture_button_Continue[0].get_height():
                         self.button_Continue_state = "down"
                     else:
                         self.button_Continue_state = "up"
                     # regarde si la souris est sur le bouton pour revenir au menu
                     if self.button_Back_coord[0] \
                             <= self.cursor_coord[0] \
-                            < self.button_Back_coord[0] + self.texture_button_Back_up.get_width() and \
+                            < self.button_Back_coord[0] + self.texture_button_Back[0].get_width() and \
                             self.button_Back_coord[1] \
                             <= self.cursor_coord[1] \
-                            < self.button_Back_coord[1] + self.texture_button_Back_up.get_height():
+                            < self.button_Back_coord[1] + self.texture_button_Back[0].get_height():
                         self.button_Back_state = "down"
                     else:
                         self.button_Back_state = "up"
@@ -79,13 +79,13 @@ class CreateWarning:
             self.window.blit(self.texture_background, (0, 0))
             # Affichage des boutons en fonction de leur état
             if self.button_Continue_state == "up":
-                self.window.blit(self.texture_button_Continue_up, self.button_Continue_coord)
+                self.window.blit(self.texture_button_Continue[0], self.button_Continue_coord)
             elif self.button_Continue_state == "down":
-                self.window.blit(self.texture_button_Continue_down, self.button_Continue_coord)
+                self.window.blit(self.texture_button_Continue[1], self.button_Continue_coord)
             if self.button_Back_state == "up":
-                self.window.blit(self.texture_button_Back_up, self.button_Back_coord)
+                self.window.blit(self.texture_button_Back[0], self.button_Back_coord)
             elif self.button_Back_state == "down":
-                self.window.blit(self.texture_button_Back_down, self.button_Back_coord)
+                self.window.blit(self.texture_button_Back[1], self.button_Back_coord)
             #  Affichage du curseur
             self.window.blit(self.texture_cursor, self.cursor_coord)
             # Actualisation de l'affichage
