@@ -1,2 +1,3 @@
-screensize: 1344, 704
+screensize: 1366, 768
 fps: 120
+fullscreen: True
