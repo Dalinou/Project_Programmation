@@ -7,11 +7,16 @@ class SettingReader:
     def __init__(self):
         self.filename = "setting.txt"
         # Paramètre par défaut
-        self.default_screensize = (1344, 704)
+        self.fullscreen_resolution = [
+            pygame.display.set_mode([0, 0], pygame.FULLSCREEN).get_width(),
+            pygame.display.set_mode([0, 0], pygame.FULLSCREEN).get_height()]
+        self.default_screensize = [1344, 704]
         self.default_fps = 120
+        self.default_fullscreen = False
         # Paremètre
         self.screensize = self.default_screensize
         self.fps = self.default_fps
+        self.fullscreen = self.default_fullscreen
         if os.path.exists(self.filename):
             self.read_file()
         else:
@@ -30,23 +35,18 @@ class SettingReader:
                 ]
             elif d.split(':')[0] == "fps":
                 self.fps = int(d.split(':')[1])
+            elif d.split(':')[0] == "fullscreen":
+                self.fullscreen = d.split(':')[1] == " True"
+        if self.fullscreen:
+            self.screensize = self.fullscreen_resolution
         file.close()
 
     # écrit le fichier avec les diifférent paramètre
     def write_file(self):
         file = open(self.filename, 'w')
-        file.write("screensize: %(1)s, %(2)s\nfps: %(3)s" %
-                   {'1': self.screensize[0], '2': self.screensize[1], '3': self.fps})
+        file.write("screensize: %(1)s, %(2)s\nfps: %(3)s\nfullscreen: %(4)s" %
+                   {'1': self.screensize[0], '2': self.screensize[1], '3': self.fps, '4': self.fullscreen})
         file.close()
-
-    # renvoie lit le fichier et renvoie le paramètre demandé
-    def get_screensize(self):
-        self.read_file()
-        return self.screensize
-
-    def get_fps(self):
-        self.read_file()
-        return self.fps
 
     # change la valeur du paramètre et réecrit le fichier
     def set_screensize(self, screensize=(1344, 704)):
@@ -55,6 +55,14 @@ class SettingReader:
 
     def set_fps(self, fps=120):
         self.fps = fps
+        self.write_file()
+
+    def set_fullscreen(self, fullscreen=False):
+        self.fullscreen = fullscreen
+        if self.fullscreen:
+            self.screensize = self.fullscreen_resolution
+        else:
+            self.screensize = self.default_screensize
         self.write_file()
 
     # Charge la texture et l'adapte à la taille de l'écran
@@ -96,6 +104,10 @@ class SettingScreen:
              self.setting.get_texture("Texture/Paramètre/Button fps 60 down.png")),
             (self.setting.get_texture("Texture/Paramètre/Button fps 120 up.png"),
              self.setting.get_texture("Texture/Paramètre/Button fps 120 down.png")))
+        # Chargement bouton fullscreen
+        self.texture_button_fullscreen=(
+            self.setting.get_texture("Texture/Paramètre/Button fullscreen up.png"),
+            self.setting.get_texture("Texture/Paramètre/Button fullscreen down.png"))
         # Curseur
         self.texture_cursor = pygame.image.load("Texture/Cursor.png")
         # Coordonnée des différents objects
@@ -112,14 +124,19 @@ class SettingScreen:
             self.setting.screensize[0] * 3 / 4 - self.texture_button_fps[0][0].get_width() / 2,
             self.setting.screensize[1] / 2 - self.texture_button_fps[0][0].get_height() / 2,
         )  # Millieu droite
+        self.button_fullscreen_coord = (
+            self.setting.screensize[0] * 3 / 4 - self.texture_button_fullscreen[0].get_width() / 2,
+            self.setting.screensize[1] / 4 - self.texture_button_fullscreen[0].get_height() / 2,
+        )  # en haut gauche
         # Etat des différents boutons
         self.button_back_state = "up"
         self.button_screensize_state = "up"
         self.button_fps_state = "up"
+        self.button_fullscreen_state = "up"
         # Liste des différentes valeurs pour screen_size et fps
         # Doivent être dans le même ordre que les textures
         self.fps_list = (30, 60, 120)
-        self.screensize_list = ((800, 576), (1024, 786), (1280, 800), (1344, 704))
+        self.screensize_list = ([800, 576], [1024, 786], [1280, 800], [1344, 704])
 
     def gameloop(self):
         while True:
@@ -162,20 +179,32 @@ class SettingScreen:
                         self.button_fps_state = "down"
                     else:
                         self.button_fps_state = "up"
+                    if self.button_fullscreen_coord[0] \
+                            <= self.cursor_coord[0] \
+                            < self.button_fullscreen_coord[0] + self.texture_button_fullscreen[0].get_width() and \
+                            self.button_fullscreen_coord[1] \
+                            <= self.cursor_coord[1] \
+                            < self.button_fullscreen_coord[1] + self.texture_button_fullscreen[0].get_height():
+                        self.button_fullscreen_state = "down"
+                    else:
+                        self.button_fullscreen_state = "up"
                 # Si click de la souris
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.button_back_state == "down":
                         return "menu"
                     if self.button_screensize_state == "down":
-                        i = -1
-                        for _ in range(0, self.screensize_list.__len__()):
-                            if self.screensize_list[_] == self.setting.screensize:
-                                i = _
-                                break
-                        if i != -1:
-                            self.setting.set_screensize(self.screensize_list[(i + 1) % 4])
+                        if self.setting.fullscreen:
+                            self.setting.set_fullscreen(False)
                         else:
-                            self.setting.set_screensize(self.setting.default_screensize)
+                            i = -1
+                            for _ in range(0, self.screensize_list.__len__()):
+                                if self.screensize_list[_] == self.setting.screensize:
+                                    i = _
+                                    break
+                            if i != -1:
+                                self.setting.set_screensize(self.screensize_list[(i + 1) % 4])
+                            else:
+                                self.setting.set_screensize(self.setting.default_screensize)
                         self.window = pygame.display.set_mode(self.setting.screensize)
                         return "paramètre"
                     if self.button_fps_state == "down":
@@ -188,6 +217,13 @@ class SettingScreen:
                             self.setting.set_fps(self.fps_list[(i+1) % 3])
                         else:
                             self.setting.set_fps(self.setting.default_fps)
+                    if self.button_fullscreen_state == "down":
+                        self.setting.set_fullscreen(not self.setting.fullscreen)
+                        if self.setting.fullscreen:
+                            self.window = pygame.display.set_mode(self.setting.screensize, pygame.FULLSCREEN)
+                        else:
+                            self.window = pygame.display.set_mode(self.setting.screensize)
+                        return "paramètre"
 
             # Affichage du fond d'écran
             self.window.blit(self.texture_background, (0, 0))
@@ -214,6 +250,10 @@ class SettingScreen:
                 self.window.blit(self.texture_button_fps[i][0], self.button_fps_coord)
             elif self.button_fps_state == "down":
                 self.window.blit(self.texture_button_fps[i][1], self.button_fps_coord)
+            if self.button_fullscreen_state == "up":
+                self.window.blit(self.texture_button_fullscreen[0], self.button_fullscreen_coord)
+            elif self.button_fullscreen_state == "down":
+                self.window.blit(self.texture_button_fullscreen[1], self.button_fullscreen_coord)
             #  Affichage du curseur
             self.window.blit(self.texture_cursor, self.cursor_coord)
             # Actualisation de l'affichage
