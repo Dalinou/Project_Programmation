@@ -57,6 +57,14 @@ class SettingReader:
         self.fps = fps
         self.write_file()
 
+    # Charge la texture et l'adapte à la taille de l'écran
+    def get_texture(self, filename):
+        texture = pygame.image.load(filename)
+        newsize = (
+            self.screensize[0] * texture.get_width() / self.default_screensize[0],
+            self.screensize[1] * texture.get_height() / self.default_screensize[1])
+        return pygame.transform.scale(texture, newsize)
+
 
 class SettingScreen:
     def __init__(self, window, clock, setting):
@@ -65,29 +73,29 @@ class SettingScreen:
         self.clock = clock
         self.setting = setting
         # Chargement des textures
-        self.texture_background = pygame.image.load("Texture/Menu/Background.png")
+        self.texture_background = self.setting.get_texture("Texture/Menu/Background.png")
         # Chargement bouton back
         self.texture_button_back = (
-            pygame.image.load("Texture/Paramètre/Button Back up.png"),
-            pygame.image.load("Texture/Paramètre/Button Back down.png"))
+            self.setting.get_texture("Texture/Paramètre/Button Back up.png"),
+            self.setting.get_texture("Texture/Paramètre/Button Back down.png"))
         # Chargement bouton sreensize
         self.texture_button_screensize = (
-            (pygame.image.load("Texture/Paramètre/Button 800_576 up.png"),
-             pygame.image.load("Texture/Paramètre/Button 800_576 down.png")),
-            (pygame.image.load("Texture/Paramètre/Button 1024_786 up.png"),
-             pygame.image.load("Texture/Paramètre/Button 1024_786 down.png")),
-            (pygame.image.load("Texture/Paramètre/Button 1280_800 up.png"),
-             pygame.image.load("Texture/Paramètre/Button 1280_800 down.png")),
-            (pygame.image.load("Texture/Paramètre/Button 1344_704 up.png"),
-             pygame.image.load("Texture/Paramètre/Button 1344_704 down.png")))
+            (self.setting.get_texture("Texture/Paramètre/Button 800_576 up.png"),
+             self.setting.get_texture("Texture/Paramètre/Button 800_576 down.png")),
+            (self.setting.get_texture("Texture/Paramètre/Button 1024_786 up.png"),
+             self.setting.get_texture("Texture/Paramètre/Button 1024_786 down.png")),
+            (self.setting.get_texture("Texture/Paramètre/Button 1280_800 up.png"),
+             self.setting.get_texture("Texture/Paramètre/Button 1280_800 down.png")),
+            (self.setting.get_texture("Texture/Paramètre/Button 1344_704 up.png"),
+             self.setting.get_texture("Texture/Paramètre/Button 1344_704 down.png")))
         # Chargement bouton fps
         self.texture_button_fps = (
-            (pygame.image.load("Texture/Paramètre/Button fps 30 up.png"),
-             pygame.image.load("Texture/Paramètre/Button fps 30 down.png")),
-            (pygame.image.load("Texture/Paramètre/Button fps 60 up.png"),
-             pygame.image.load("Texture/Paramètre/Button fps 60 down.png")),
-            (pygame.image.load("Texture/Paramètre/Button fps 120 up.png"),
-             pygame.image.load("Texture/Paramètre/Button fps 120 down.png")))
+            (self.setting.get_texture("Texture/Paramètre/Button fps 30 up.png"),
+             self.setting.get_texture("Texture/Paramètre/Button fps 30 down.png")),
+            (self.setting.get_texture("Texture/Paramètre/Button fps 60 up.png"),
+             self.setting.get_texture("Texture/Paramètre/Button fps 60 down.png")),
+            (self.setting.get_texture("Texture/Paramètre/Button fps 120 up.png"),
+             self.setting.get_texture("Texture/Paramètre/Button fps 120 down.png")))
         # Curseur
         self.texture_cursor = pygame.image.load("Texture/Cursor.png")
         # Coordonnée des différents objects

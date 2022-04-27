@@ -12,17 +12,17 @@ class Menu:
         self.clock = clock
         self.setting = setting
         # Chargement des textures
-        self.texture_background = pygame.image.load("Texture/Menu/Background.png")
+        self.texture_background = self.setting.get_texture("Texture/Menu/Background.png")
         # Bouton 1 pour continuer sur la partie
-        self.texture_button_1 = (pygame.image.load("Texture/Menu/Button 1 up.png"),
-                                 pygame.image.load("Texture/Menu/Button 1 down.png"),
-                                 pygame.image.load("Texture/Menu/Button 1 gray.png"))
+        self.texture_button_1 = (self.setting.get_texture("Texture/Menu/Button 1 up.png"),
+                                 self.setting.get_texture("Texture/Menu/Button 1 down.png"),
+                                 self.setting.get_texture("Texture/Menu/Button 1 gray.png"))
         # Bouton 2 pour les paramètres
-        self.texture_button_2 = (pygame.image.load("Texture/Menu/Button 2 up.png"),
-                                 pygame.image.load("Texture/Menu/Button 2 down.png"))
+        self.texture_button_2 = (self.setting.get_texture("Texture/Menu/Button 2 up.png"),
+                                 self.setting.get_texture("Texture/Menu/Button 2 down.png"))
         # Bouton 3 pour accéder à la création de personnage
-        self.texture_button_3 = (pygame.image.load("Texture/Menu/Button 3 up.png"),
-                                 pygame.image.load("Texture/Menu/Button 3 down.png"))
+        self.texture_button_3 = (self.setting.get_texture("Texture/Menu/Button 3 up.png"),
+                                 self.setting.get_texture("Texture/Menu/Button 3 down.png"))
         # Curseur
         self.texture_cursor = pygame.image.load("Texture/Cursor.png")
         # Coordonnée des différents objets
