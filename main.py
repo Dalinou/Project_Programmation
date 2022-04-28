@@ -3,9 +3,10 @@ import menu
 import settings
 import create_perso
 
+pygame.font.init()
 # Paramètre
 setting = settings.SettingReader()
-print(bool("False"))
+
 # Création de la fenetre
 if setting.fullscreen:
     window = pygame.display.set_mode(setting.fullscreen_resolution, pygame.FULLSCREEN)
@@ -17,10 +18,8 @@ clock = pygame.time.Clock()
 state = "menu"
 
 while state != "exit":
-    # regarde l'état du jeu
-    print(setting.screensize)
     setting.read_file()
-    print(setting.screensize)
+    # regarde l'état du jeu
     if state == "menu":
         screen = menu.Menu(window, clock, setting)
         state = screen.gameloop()

@@ -1,5 +1,6 @@
 import pygame
 import os
+import button
 
 
 # Classe pour l'écran de menu
@@ -11,38 +12,44 @@ class Menu:
         self.window = window
         self.clock = clock
         self.setting = setting
+        self.font = pygame.font.Font("Game_font.TTF", 48)
         # Chargement des textures
-        self.texture_background = self.setting.get_texture("Texture/Menu/Background.png")
-        # Bouton 1 pour continuer sur la partie
-        self.texture_button_1 = (self.setting.get_texture("Texture/Menu/Button 1 up.png"),
-                                 self.setting.get_texture("Texture/Menu/Button 1 down.png"),
-                                 self.setting.get_texture("Texture/Menu/Button 1 gray.png"))
-        # Bouton 2 pour les paramètres
-        self.texture_button_2 = (self.setting.get_texture("Texture/Menu/Button 2 up.png"),
-                                 self.setting.get_texture("Texture/Menu/Button 2 down.png"))
-        # Bouton 3 pour accéder à la création de personnage
-        self.texture_button_3 = (self.setting.get_texture("Texture/Menu/Button 3 up.png"),
-                                 self.setting.get_texture("Texture/Menu/Button 3 down.png"))
+        self.texture_background = self.setting.get_texture("Texture/Background.png")
+        # Chargement des boutons
+        self.button_continue = button.Button(
+            [self.setting.screensize[0] / 2, self.setting.screensize[1] / 4],
+            3,
+            0 if os.path.exists("save.txt") else 2,
+            ["Texture/Button up.png", "Texture/Button down.png", "Texture/Button gray.png"],
+            self.font,
+            ["Continue", "Continue", "Continue"],
+            [pygame.Color("#CB4F00"), pygame.Color("#FE6400"), pygame.Color("#D17642")],
+            screensize_adaption=True, screensize=self.setting.screensize
+        )
+        self.button_new_game = button.Button(
+            [self.setting.screensize[0] / 2, self.setting.screensize[1] / 2],
+            2,
+            0,
+            ["Texture/Button up.png", "Texture/Button down.png"],
+            self.font,
+            ["New Game", "New Game"],
+            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            screensize_adaption=True, screensize=self.setting.screensize
+        )
+        self.button_setting = button.Button(
+            [self.setting.screensize[0] / 2, self.setting.screensize[1] * 3 / 4],
+            2,
+            0,
+            ["Texture/Button up.png", "Texture/Button down.png"],
+            self.font,
+            ["Setting", "Setting"],
+            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            screensize_adaption=True, screensize=self.setting.screensize
+        )
         # Curseur
         self.texture_cursor = pygame.image.load("Texture/Cursor.png")
         # Coordonnée des différents objets
         self.cursor_coord = (0, 0)
-        self.button_1_coord = (
-            self.setting.screensize[0]/2-self.texture_button_1[0].get_width()/2,
-            self.setting.screensize[1]/4-self.texture_button_1[0].get_height()/2,
-        )  # En haut centré
-        self.button_2_coord = (
-            self.setting.screensize[0] / 2 - self.texture_button_2[0].get_width() / 2,
-            self.setting.screensize[1] / 2 - self.texture_button_2[0].get_height() / 2,
-        )  # Au millieu centré
-        self.button_3_coord = (
-            self.setting.screensize[0] / 2 - self.texture_button_3[0].get_width() / 2,
-            self.setting.screensize[1] * 3 / 4 - self.texture_button_3[0].get_height() / 2,
-        )  # En bas centré
-        # Etat des boutons
-        self.button_1_state = "up" if os.path.exists("save.txt") else "gray"
-        self.button_2_state = "up"
-        self.button_3_state = "up"
 
     def gameloop(self):
         while True:
@@ -59,69 +66,41 @@ class Menu:
                     self.cursor_coord = event.pos
                     # regarde si une sauvegarde existe
                     if not os.path.exists("save.txt"):
-                        self.button_1_state = "gray"
-                    # regarde si la souris est sur le boutton 1
-                    elif self.button_1_coord[0] \
-                            <= self.cursor_coord[0] \
-                            < self.button_1_coord[0] + self.texture_button_1[0].get_width() and \
-                            self.button_1_coord[1] \
-                            <= self.cursor_coord[1] \
-                            < self.button_1_coord[1] + self.texture_button_1[0].get_height():
-                        self.button_1_state = "down"
+                        self.button_continue.set_state(2)
+                    # regarde si la souris est sur le bouton continue
+                    elif self.button_continue.is_coord_on(self.cursor_coord):
+                        self.button_continue.set_state(1)
                     else:
-                        self.button_1_state = "up"
-                    # regarde si la souris est sur le bouton 2
-                    if self.button_2_coord[0] \
-                            <= self.cursor_coord[0] \
-                            < self.button_2_coord[0] + self.texture_button_2[0].get_width() and \
-                            self.button_2_coord[1] \
-                            <= self.cursor_coord[1] \
-                            < self.button_2_coord[1] + self.texture_button_2[0].get_height():
-                        self.button_2_state = "down"
+                        self.button_continue.set_state(0)
+                    # regarde si la souris est sur le bouton new game
+                    if self.button_new_game.is_coord_on(self.cursor_coord):
+                        self.button_new_game.set_state(1)
                     else:
-                        self.button_2_state = "up"
-                    # regarde si la souris est sur le bouton 3
-                    if self.button_3_coord[0] \
-                            <= self.cursor_coord[0] \
-                            < self.button_3_coord[0] + self.texture_button_3[0].get_width() and \
-                            self.button_3_coord[1] \
-                            <= self.cursor_coord[1] \
-                            < self.button_3_coord[1] + self.texture_button_3[0].get_height():
-                        self.button_3_state = "down"
-                    else:
-                        self.button_3_state = "up"
+                        self.button_new_game.set_state(0)
+                    # regarde si la souris est sur le bouton setting
+                        # regarde si la souris est sur le bouton new game
+                        if self.button_setting.is_coord_on(self.cursor_coord):
+                            self.button_setting.set_state(1)
+                        else:
+                            self.button_setting.set_state(0)
                 # Si Click de la souris
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    if self.button_1_state == "down":
+                    if self.button_continue.state == 1:
                         return "game"
-                    if self.button_2_state == "down":
-                        return "paramètre"
-                    if self.button_3_state == "down":
+                    if self.button_new_game.state == 1:
                         if not os.path.exists("save.txt"):
                             return "create"
                         else:
                             return "warning"
+                    if self.button_setting.state == 1:
+                        return "paramètre"
 
             # Affichage du fond d'écran
             self.window.blit(self.texture_background, (0, 0))
             # Affichage des boutons en fonction de son état
-            # Bouton 1
-            if self.button_1_state == "up":
-                self.window.blit(self.texture_button_1[0], self.button_1_coord)
-            elif self.button_1_state == "down":
-                self.window.blit(self.texture_button_1[1], self.button_1_coord)
-            elif self.button_1_state == "gray":
-                self.window.blit(self.texture_button_1[2], self.button_1_coord)
-            # Bouton 2
-            if self.button_2_state == "up":
-                self.window.blit(self.texture_button_2[0], self.button_2_coord)
-            elif self.button_2_state == "down":
-                self.window.blit(self.texture_button_2[1], self.button_2_coord)
-            # Bouton 3
-            if self.button_3_state == "up":
-                self.window.blit(self.texture_button_3[0], self.button_3_coord)
-            elif self.button_3_state == "down":
-                self.window.blit(self.texture_button_3[1], self.button_3_coord)
+            self.button_continue.render(self.window)
+            self.button_new_game.render(self.window)
+            self.button_setting.render(self.window)
             #  Affichage du curseur
             self.window.blit(self.texture_cursor, self.cursor_coord)
             # Actualisation de l'affichage

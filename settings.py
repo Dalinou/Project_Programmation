@@ -1,5 +1,6 @@
 import os
 import pygame
+import button
 
 
 # Classe de lecture des parametres
@@ -80,59 +81,58 @@ class SettingScreen:
         self.window = window
         self.clock = clock
         self.setting = setting
+        self.font = pygame.font.Font("Game_font.TTF", 48)
         # Chargement des textures
-        self.texture_background = self.setting.get_texture("Texture/Menu/Background.png")
+        self.texture_background = self.setting.get_texture("Texture/Background.png")
         # Chargement bouton back
-        self.texture_button_back = (
-            self.setting.get_texture("Texture/Paramètre/Button Back up.png"),
-            self.setting.get_texture("Texture/Paramètre/Button Back down.png"))
+        self.button_back = button.Button(
+            [self.setting.screensize[0] / 2, self.setting.screensize[1] * 3 / 4],
+            2,
+            0,
+            ["Texture/Button up.png", "Texture/Button down.png"],
+            self.font,
+            ["Back", "Back"],
+            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            screensize_adaption=True, screensize=self.setting.screensize
+        )
         # Chargement bouton sreensize
-        self.texture_button_screensize = (
-            (self.setting.get_texture("Texture/Paramètre/Button 800_576 up.png"),
-             self.setting.get_texture("Texture/Paramètre/Button 800_576 down.png")),
-            (self.setting.get_texture("Texture/Paramètre/Button 1024_786 up.png"),
-             self.setting.get_texture("Texture/Paramètre/Button 1024_786 down.png")),
-            (self.setting.get_texture("Texture/Paramètre/Button 1280_800 up.png"),
-             self.setting.get_texture("Texture/Paramètre/Button 1280_800 down.png")),
-            (self.setting.get_texture("Texture/Paramètre/Button 1344_704 up.png"),
-             self.setting.get_texture("Texture/Paramètre/Button 1344_704 down.png")))
+        self.button_screensize = button.Button(
+            [self.setting.screensize[0] / 4, self.setting.screensize[1] / 4],
+            2,
+            0,
+            ["Texture/Button up.png", "Texture/Button down.png"],
+            self.font,
+            ["%(1)s*%(2)s" % {'1': self.setting.screensize[0], '2': self.setting.screensize[1]},
+             "%(1)s*%(2)s" % {'1': self.setting.screensize[0], '2': self.setting.screensize[1]}],
+            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            screensize_adaption=True, screensize=self.setting.screensize
+        )
         # Chargement bouton fps
-        self.texture_button_fps = (
-            (self.setting.get_texture("Texture/Paramètre/Button fps 30 up.png"),
-             self.setting.get_texture("Texture/Paramètre/Button fps 30 down.png")),
-            (self.setting.get_texture("Texture/Paramètre/Button fps 60 up.png"),
-             self.setting.get_texture("Texture/Paramètre/Button fps 60 down.png")),
-            (self.setting.get_texture("Texture/Paramètre/Button fps 120 up.png"),
-             self.setting.get_texture("Texture/Paramètre/Button fps 120 down.png")))
+        self.button_fps = button.Button(
+            [self.setting.screensize[0] / 2, self.setting.screensize[1] / 4],
+            2,
+            0,
+            ["Texture/Button up.png", "Texture/Button down.png"],
+            self.font,
+            ["Fps: %s" % self.setting.fps, "Fps: %s" % self.setting.fps],
+            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            screensize_adaption=True, screensize=self.setting.screensize
+        )
         # Chargement bouton fullscreen
-        self.texture_button_fullscreen=(
-            self.setting.get_texture("Texture/Paramètre/Button fullscreen up.png"),
-            self.setting.get_texture("Texture/Paramètre/Button fullscreen down.png"))
+        self.button_fullscreen = button.Button(
+            [self.setting.screensize[0] * 3 / 4, self.setting.screensize[1] / 4],
+            2,
+            0,
+            ["Texture/Button up.png", "Texture/Button down.png"],
+            self.font,
+            ["Fullscreen: On", "Fullscreen: On"] if self.setting.fullscreen else ["Fullscreen: Off", "Fullscreen: Off"],
+            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            screensize_adaption=True, screensize=self.setting.screensize
+        )
         # Curseur
         self.texture_cursor = pygame.image.load("Texture/Cursor.png")
         # Coordonnée des différents objects
         self.cursor_coord = (0, 0)
-        self.button_back_coord = (
-            self.setting.screensize[0] / 2 - self.texture_button_back[0].get_width() / 2,
-            self.setting.screensize[1] * 3 / 4 - self.texture_button_back[0].get_height() / 2,
-        )  # En-bas centré
-        self.button_screensize_coord = (
-            self.setting.screensize[0] / 4 - self.texture_button_screensize[0][0].get_width() / 2,
-            self.setting.screensize[1] / 2 - self.texture_button_screensize[0][0].get_height() / 2,
-        )  # Millieu gauche
-        self.button_fps_coord = (
-            self.setting.screensize[0] * 3 / 4 - self.texture_button_fps[0][0].get_width() / 2,
-            self.setting.screensize[1] / 2 - self.texture_button_fps[0][0].get_height() / 2,
-        )  # Millieu droite
-        self.button_fullscreen_coord = (
-            self.setting.screensize[0] * 3 / 4 - self.texture_button_fullscreen[0].get_width() / 2,
-            self.setting.screensize[1] / 4 - self.texture_button_fullscreen[0].get_height() / 2,
-        )  # en haut gauche
-        # Etat des différents boutons
-        self.button_back_state = "up"
-        self.button_screensize_state = "up"
-        self.button_fps_state = "up"
-        self.button_fullscreen_state = "up"
         # Liste des différentes valeurs pour screen_size et fps
         # Doivent être dans le même ordre que les textures
         self.fps_list = (30, 60, 120)
@@ -151,50 +151,35 @@ class SettingScreen:
                 if event.type == pygame.MOUSEMOTION:
                     # récupération des coordonnées de la souris
                     self.cursor_coord = event.pos
-                    # regarde si la souris est sur le boutton
-                    if self.button_back_coord[0] \
-                            <= self.cursor_coord[0] \
-                            < self.button_back_coord[0] + self.texture_button_back[0].get_width() and \
-                            self.button_back_coord[1] \
-                            <= self.cursor_coord[1] \
-                            < self.button_back_coord[1] + self.texture_button_back[0].get_height():
-                        self.button_back_state = "down"
+                    # regarde si la souris est sur le bouton
+                    if self.button_back.is_coord_on(self.cursor_coord):
+                        self.button_back.set_state(1)
                     else:
-                        self.button_back_state = "up"
-                    if self.button_screensize_coord[0] \
-                            <= self.cursor_coord[0] \
-                            < self.button_screensize_coord[0] + self.texture_button_screensize[0][0].get_width() and \
-                            self.button_screensize_coord[1] \
-                            <= self.cursor_coord[1] \
-                            < self.button_screensize_coord[1] + self.texture_button_screensize[0][0].get_height():
-                        self.button_screensize_state = "down"
+                        self.button_back.set_state(0)
+                    if self.button_screensize.is_coord_on(self.cursor_coord):
+                        self.button_screensize.set_state(1)
                     else:
-                        self.button_screensize_state = "up"
-                    if self.button_fps_coord[0] \
-                            <= self.cursor_coord[0] \
-                            < self.button_fps_coord[0] + self.texture_button_fps[0][0].get_width() and \
-                            self.button_fps_coord[1] \
-                            <= self.cursor_coord[1] \
-                            < self.button_fps_coord[1] + self.texture_button_fps[0][0].get_height():
-                        self.button_fps_state = "down"
+                        self.button_screensize.set_state(0)
+                    if self.button_fps.is_coord_on(self.cursor_coord):
+                        self.button_fps.set_state(1)
                     else:
-                        self.button_fps_state = "up"
-                    if self.button_fullscreen_coord[0] \
-                            <= self.cursor_coord[0] \
-                            < self.button_fullscreen_coord[0] + self.texture_button_fullscreen[0].get_width() and \
-                            self.button_fullscreen_coord[1] \
-                            <= self.cursor_coord[1] \
-                            < self.button_fullscreen_coord[1] + self.texture_button_fullscreen[0].get_height():
-                        self.button_fullscreen_state = "down"
+                        self.button_fps.set_state(0)
+                    if self.button_fullscreen.is_coord_on(self.cursor_coord):
+                        self.button_fullscreen.set_state(1)
                     else:
-                        self.button_fullscreen_state = "up"
+                        self.button_fullscreen.set_state(0)
                 # Si click de la souris
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    if self.button_back_state == "down":
+                    if self.button_back.state == 1:
                         return "menu"
-                    if self.button_screensize_state == "down":
+                    if self.button_screensize.state == 1:
                         if self.setting.fullscreen:
                             self.setting.set_fullscreen(False)
+                            self.button_fullscreen.change_text(
+                                self.font,
+                                ["Fullscreen: Off", "Fullscreen: Off"],
+                                [pygame.Color("#CB4F00"), pygame.Color("#FE6400")]
+                            )
                         else:
                             i = -1
                             for _ in range(0, self.screensize_list.__len__()):
@@ -205,9 +190,17 @@ class SettingScreen:
                                 self.setting.set_screensize(self.screensize_list[(i + 1) % 4])
                             else:
                                 self.setting.set_screensize(self.setting.default_screensize)
+                        self.button_screensize.change_text(
+                            self.font,
+                            ["%(1)s*%(2)s" % {'1': self.setting.screensize[0],
+                                                          '2': self.setting.screensize[1]},
+                             "%(1)s*%(2)s" % {'1': self.setting.screensize[0],
+                                                          '2': self.setting.screensize[1]}],
+                            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")]
+                        )
                         self.window = pygame.display.set_mode(self.setting.screensize)
                         return "paramètre"
-                    if self.button_fps_state == "down":
+                    if self.button_fps.state == 1:
                         i = -1
                         for _ in range(0, self.fps_list.__len__()):
                             if self.fps_list[_] == self.setting.fps:
@@ -217,43 +210,40 @@ class SettingScreen:
                             self.setting.set_fps(self.fps_list[(i+1) % 3])
                         else:
                             self.setting.set_fps(self.setting.default_fps)
-                    if self.button_fullscreen_state == "down":
+                        self.button_fps.change_text(
+                            self.font,
+                            ["Fps: %s" % self.setting.fps, "Fps: %s" % self.setting.fps],
+                            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")]
+                        )
+                    if self.button_fullscreen.state == 1:
                         self.setting.set_fullscreen(not self.setting.fullscreen)
                         if self.setting.fullscreen:
                             self.window = pygame.display.set_mode(self.setting.screensize, pygame.FULLSCREEN)
                         else:
                             self.window = pygame.display.set_mode(self.setting.screensize)
+                        self.button_fullscreen.change_text(
+                            self.font,
+                            ["Fullscreen: On", "Fullscreen: On"] if self.setting.fullscreen else ["Fullscreen: Off",
+                                                                                                  "Fullscreen: Off"],
+                            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")]
+                        )
+                        self.button_screensize.change_text(
+                            self.font,
+                            ["%(1)s*%(2)s" % {'1': self.setting.screensize[0],
+                                              '2': self.setting.screensize[1]},
+                             "%(1)s*%(2)s" % {'1': self.setting.screensize[0],
+                                              '2': self.setting.screensize[1]}],
+                            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")]
+                        )
                         return "paramètre"
 
             # Affichage du fond d'écran
             self.window.blit(self.texture_background, (0, 0))
             # Affichage des boutons en fonction de leur état
-            if self.button_back_state == "up":
-                self.window.blit(self.texture_button_back[0], self.button_back_coord)
-            elif self.button_back_state == "down":
-                self.window.blit(self.texture_button_back[1], self.button_back_coord)
-            i = -1
-            for _ in range(0, self.screensize_list.__len__()):
-                if self.screensize_list[_] == self.setting.screensize:
-                    i = _
-                    break
-            if self.button_screensize_state == "up":
-                self.window.blit(self.texture_button_screensize[i][0], self.button_screensize_coord)
-            elif self.button_screensize_state == "down":
-                self.window.blit(self.texture_button_screensize[i][1], self.button_screensize_coord)
-            i = -1
-            for _ in range(0, self.fps_list.__len__()):
-                if self.fps_list[_] == self.setting.fps:
-                    i = _
-                    break
-            if self.button_fps_state == "up":
-                self.window.blit(self.texture_button_fps[i][0], self.button_fps_coord)
-            elif self.button_fps_state == "down":
-                self.window.blit(self.texture_button_fps[i][1], self.button_fps_coord)
-            if self.button_fullscreen_state == "up":
-                self.window.blit(self.texture_button_fullscreen[0], self.button_fullscreen_coord)
-            elif self.button_fullscreen_state == "down":
-                self.window.blit(self.texture_button_fullscreen[1], self.button_fullscreen_coord)
+            self.button_back.render(self.window)
+            self.button_screensize.render(self.window)
+            self.button_fps.render(self.window)
+            self.button_fullscreen.render(self.window)
             #  Affichage du curseur
             self.window.blit(self.texture_cursor, self.cursor_coord)
             # Actualisation de l'affichage
