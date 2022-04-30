@@ -47,4 +47,9 @@ def render_text_multilign(window, coord, font, text, text_color, is_center=True,
                 coord[0] - text_texture[i].get_width()/2,
                 coord[1] - text_texture[i].get_height()/2 + dh * i
             ]
+        else:
+            _coord = [
+                coord[0],
+                coord[1] + dh * i
+        ]
         window.blit(text_texture[i], _coord)
