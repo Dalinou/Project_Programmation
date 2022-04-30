@@ -1,6 +1,7 @@
 import os
 import pygame
 import button
+import text_render
 
 
 # Classe de lecture des parametres
@@ -81,27 +82,29 @@ class SettingScreen:
         self.window = window
         self.clock = clock
         self.setting = setting
-        self.font = pygame.font.Font("Game_font.TTF", 48)
+        self.button_font = pygame.font.Font("Game_font.TTF", 48)
+        self.text_font = pygame.font.Font("Game_font.TTF", 72)
+
         # Chargement des textures
         self.texture_background = self.setting.get_texture("Texture/Background.png")
         # Chargement bouton back
         self.button_back = button.Button(
-            [self.setting.screensize[0] / 2, self.setting.screensize[1] * 3 / 4],
+            [self.setting.screensize[0] / 2, self.setting.screensize[1] * 4 / 5],
             2,
             0,
             ["Texture/Button up.png", "Texture/Button down.png"],
-            self.font,
+            self.button_font,
             ["Back", "Back"],
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
             screensize_adaption=True, screensize=self.setting.screensize
         )
         # Chargement bouton sreensize
         self.button_screensize = button.Button(
-            [self.setting.screensize[0] / 4, self.setting.screensize[1] / 4],
+            [self.setting.screensize[0] / 4, self.setting.screensize[1] * 2 / 5],
             2,
             0,
             ["Texture/Button up.png", "Texture/Button down.png"],
-            self.font,
+            self.button_font,
             ["%(1)s*%(2)s" % {'1': self.setting.screensize[0], '2': self.setting.screensize[1]},
              "%(1)s*%(2)s" % {'1': self.setting.screensize[0], '2': self.setting.screensize[1]}],
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
@@ -109,22 +112,22 @@ class SettingScreen:
         )
         # Chargement bouton fps
         self.button_fps = button.Button(
-            [self.setting.screensize[0] / 2, self.setting.screensize[1] / 4],
+            [self.setting.screensize[0] / 2, self.setting.screensize[1] * 2 / 5],
             2,
             0,
             ["Texture/Button up.png", "Texture/Button down.png"],
-            self.font,
+            self.button_font,
             ["Fps: %s" % self.setting.fps, "Fps: %s" % self.setting.fps],
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
             screensize_adaption=True, screensize=self.setting.screensize
         )
         # Chargement bouton fullscreen
         self.button_fullscreen = button.Button(
-            [self.setting.screensize[0] * 3 / 4, self.setting.screensize[1] / 4],
+            [self.setting.screensize[0] * 3 / 4, self.setting.screensize[1] * 2 / 5],
             2,
             0,
             ["Texture/Button up.png", "Texture/Button down.png"],
-            self.font,
+            self.button_font,
             ["Fullscreen: On", "Fullscreen: On"] if self.setting.fullscreen else ["Fullscreen: Off", "Fullscreen: Off"],
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
             screensize_adaption=True, screensize=self.setting.screensize
@@ -176,7 +179,7 @@ class SettingScreen:
                         if self.setting.fullscreen:
                             self.setting.set_fullscreen(False)
                             self.button_fullscreen.change_text(
-                                self.font,
+                                self.button_font,
                                 ["Fullscreen: Off", "Fullscreen: Off"],
                                 [pygame.Color("#CB4F00"), pygame.Color("#FE6400")]
                             )
@@ -191,7 +194,7 @@ class SettingScreen:
                             else:
                                 self.setting.set_screensize(self.setting.default_screensize)
                         self.button_screensize.change_text(
-                            self.font,
+                            self.button_font,
                             ["%(1)s*%(2)s" % {'1': self.setting.screensize[0],
                                                           '2': self.setting.screensize[1]},
                              "%(1)s*%(2)s" % {'1': self.setting.screensize[0],
@@ -211,7 +214,7 @@ class SettingScreen:
                         else:
                             self.setting.set_fps(self.setting.default_fps)
                         self.button_fps.change_text(
-                            self.font,
+                            self.button_font,
                             ["Fps: %s" % self.setting.fps, "Fps: %s" % self.setting.fps],
                             [pygame.Color("#CB4F00"), pygame.Color("#FE6400")]
                         )
@@ -222,13 +225,13 @@ class SettingScreen:
                         else:
                             self.window = pygame.display.set_mode(self.setting.screensize)
                         self.button_fullscreen.change_text(
-                            self.font,
+                            self.button_font,
                             ["Fullscreen: On", "Fullscreen: On"] if self.setting.fullscreen else ["Fullscreen: Off",
                                                                                                   "Fullscreen: Off"],
                             [pygame.Color("#CB4F00"), pygame.Color("#FE6400")]
                         )
                         self.button_screensize.change_text(
-                            self.font,
+                            self.button_font,
                             ["%(1)s*%(2)s" % {'1': self.setting.screensize[0],
                                               '2': self.setting.screensize[1]},
                              "%(1)s*%(2)s" % {'1': self.setting.screensize[0],
@@ -239,6 +242,15 @@ class SettingScreen:
 
             # Affichage du fond d'écran
             self.window.blit(self.texture_background, (0, 0))
+            # Affichage de texte
+            text_render.render_text(
+                self.window,
+                [self.setting.screensize[0] / 2, self.setting.screensize[1] / 5],
+                self.text_font,
+                "Settings",
+                pygame.Color("#36B500"),
+                screensize_adaption=True, screensize=self.setting.screensize
+            )
             # Affichage des boutons en fonction de leur état
             self.button_back.render(self.window)
             self.button_screensize.render(self.window)

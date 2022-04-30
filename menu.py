@@ -1,7 +1,7 @@
 import pygame
 import os
 import button
-
+import text_render
 
 # Classe pour l'écran de menu
 # Reste dans la classe jusqu'à changement d'écran
@@ -12,37 +12,39 @@ class Menu:
         self.window = window
         self.clock = clock
         self.setting = setting
-        self.font = pygame.font.Font("Game_font.TTF", 48)
+        self.button_font = pygame.font.Font("Game_font.TTF", 48)
+        self.text_font = pygame.font.Font("Game_font.TTF", 72)
+
         # Chargement des textures
         self.texture_background = self.setting.get_texture("Texture/Background.png")
         # Chargement des boutons
         self.button_continue = button.Button(
-            [self.setting.screensize[0] / 2, self.setting.screensize[1] / 4],
+            [self.setting.screensize[0] / 2, self.setting.screensize[1] * 2 / 5],
             3,
             0 if os.path.exists("save.txt") else 2,
             ["Texture/Button up.png", "Texture/Button down.png", "Texture/Button gray.png"],
-            self.font,
+            self.button_font,
             ["Continue", "Continue", "Continue"],
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400"), pygame.Color("#D17642")],
             screensize_adaption=True, screensize=self.setting.screensize
         )
         self.button_new_game = button.Button(
-            [self.setting.screensize[0] / 2, self.setting.screensize[1] / 2],
+            [self.setting.screensize[0] / 2, self.setting.screensize[1] * 3 / 5],
             2,
             0,
             ["Texture/Button up.png", "Texture/Button down.png"],
-            self.font,
+            self.button_font,
             ["New Game", "New Game"],
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
             screensize_adaption=True, screensize=self.setting.screensize
         )
         self.button_setting = button.Button(
-            [self.setting.screensize[0] / 2, self.setting.screensize[1] * 3 / 4],
+            [self.setting.screensize[0] / 2, self.setting.screensize[1] * 4 / 5],
             2,
             0,
             ["Texture/Button up.png", "Texture/Button down.png"],
-            self.font,
-            ["Setting", "Setting"],
+            self.button_font,
+            ["Settings", "Settings"],
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
             screensize_adaption=True, screensize=self.setting.screensize
         )
@@ -97,6 +99,15 @@ class Menu:
 
             # Affichage du fond d'écran
             self.window.blit(self.texture_background, (0, 0))
+            # Affichage de texte
+            text_render.render_text(
+                self.window,
+                [self.setting.screensize[0] / 2, self.setting.screensize[1] / 5],
+                self.text_font,
+                "Game of the programmation project ",
+                pygame.Color("#36B500"),
+                screensize_adaption=True, screensize=self.setting.screensize
+            )
             # Affichage des boutons en fonction de son état
             self.button_continue.render(self.window)
             self.button_new_game.render(self.window)

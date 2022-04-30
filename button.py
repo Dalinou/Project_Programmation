@@ -20,13 +20,13 @@ class Button:
                     self.background_texture[i],
                     [
                         screensize[0] / default_screensize[0] * self.background_texture[i].get_width(),
-                        screensize[0] / default_screensize[0] * self.background_texture[i].get_height()
+                        screensize[1] / default_screensize[1] * self.background_texture[i].get_height()
                     ])
                 self.text_texture[i] = pygame.transform.scale(
                     self.text_texture[i],
                     [
                         screensize[0] / default_screensize[0] * self.text_texture[i].get_width(),
-                        screensize[0] / default_screensize[0] * self.text_texture[i].get_height()
+                        screensize[1] / default_screensize[1] * self.text_texture[i].get_height()
                     ])
 
         self.coord = [coord[0] - self.background_texture[0].get_width()/2,
