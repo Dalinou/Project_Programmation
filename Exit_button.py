@@ -13,7 +13,7 @@ class Exit:
         self.font = pygame.font.Font("Game_font.TTF", 48)
 
         #Chargements des textures
-        self.texture_background = self.setting.get_texture("Texture/Menu/Background.png")
+        self.texture_background = self.setting.get_texture("Texture/Background.png")
 
         #button exit
         self.button_exit = button.Button(

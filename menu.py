@@ -80,11 +80,10 @@ class Menu:
                     else:
                         self.button_new_game.set_state(0)
                     # regarde si la souris est sur le bouton setting
-                        # regarde si la souris est sur le bouton new game
-                        if self.button_setting.is_coord_on(self.cursor_coord):
-                            self.button_setting.set_state(1)
-                        else:
-                            self.button_setting.set_state(0)
+                    if self.button_setting.is_coord_on(self.cursor_coord):
+                        self.button_setting.set_state(1)
+                    else:
+                        self.button_setting.set_state(0)
                 # Si Click de la souris
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.button_continue.state == 1:
@@ -108,7 +107,7 @@ class Menu:
                 pygame.Color("#36B500"),
                 screensize_adaption=True, screensize=self.setting.screensize
             )
-            # Affichage des boutons en fonction de son état
+            # Affichage des boutons
             self.button_continue.render(self.window)
             self.button_new_game.render(self.window)
             self.button_setting.render(self.window)

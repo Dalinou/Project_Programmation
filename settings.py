@@ -22,7 +22,6 @@ class SettingReader:
         if os.path.exists(self.filename):
             self.read_file()
         else:
-            print("Setting file does not exist, using default setting")
             self.write_file()
 
     # lis le fichier et extrait les différents paramètre
