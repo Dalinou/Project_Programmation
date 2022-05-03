@@ -139,6 +139,14 @@ class SettingScreen:
         # Doivent être dans le même ordre que les textures
         self.fps_list = (30, 60, 120)
         self.screensize_list = ([800, 576], [1024, 786], [1280, 800], [1344, 704])
+        # Création du texte
+        self.text = text_render.Text(
+            self.setting,
+            [self.setting.screensize[0] / 2, self.setting.screensize[1] / 5],
+            self.text_font,
+            "Settings",
+            pygame.Color("#36B500"),
+        )
 
     def gameloop(self):
         while True:
@@ -178,9 +186,7 @@ class SettingScreen:
                         if self.setting.fullscreen:
                             self.setting.set_fullscreen(False)
                             self.button_fullscreen.change_text(
-                                self.button_font,
-                                ["Fullscreen: Off", "Fullscreen: Off"],
-                                [pygame.Color("#CB4F00"), pygame.Color("#FE6400")]
+                                ["Fullscreen: Off", "Fullscreen: Off"]
                             )
                         else:
                             i = -1
@@ -193,12 +199,10 @@ class SettingScreen:
                             else:
                                 self.setting.set_screensize(self.setting.default_screensize)
                         self.button_screensize.change_text(
-                            self.button_font,
-                            ["%(1)s*%(2)s" % {'1': self.setting.screensize[0],
+                             ["%(1)s*%(2)s" % {'1': self.setting.screensize[0],
                                                           '2': self.setting.screensize[1]},
                              "%(1)s*%(2)s" % {'1': self.setting.screensize[0],
-                                                          '2': self.setting.screensize[1]}],
-                            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")]
+                                                          '2': self.setting.screensize[1]}]
                         )
                         self.window = pygame.display.set_mode(self.setting.screensize)
                         return "paramètre"
@@ -213,9 +217,7 @@ class SettingScreen:
                         else:
                             self.setting.set_fps(self.setting.default_fps)
                         self.button_fps.change_text(
-                            self.button_font,
                             ["Fps: %s" % self.setting.fps, "Fps: %s" % self.setting.fps],
-                            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")]
                         )
                     if self.button_fullscreen.state == 1:
                         self.setting.set_fullscreen(not self.setting.fullscreen)
@@ -224,32 +226,21 @@ class SettingScreen:
                         else:
                             self.window = pygame.display.set_mode(self.setting.screensize)
                         self.button_fullscreen.change_text(
-                            self.button_font,
-                            ["Fullscreen: On", "Fullscreen: On"] if self.setting.fullscreen else ["Fullscreen: Off",
-                                                                                                  "Fullscreen: Off"],
-                            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")]
+                            ["Fullscreen: On", "Fullscreen: On"] if self.setting.fullscreen else
+                            ["Fullscreen: Off", "Fullscreen: Off"]
                         )
                         self.button_screensize.change_text(
-                            self.button_font,
                             ["%(1)s*%(2)s" % {'1': self.setting.screensize[0],
                                               '2': self.setting.screensize[1]},
                              "%(1)s*%(2)s" % {'1': self.setting.screensize[0],
-                                              '2': self.setting.screensize[1]}],
-                            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")]
+                                              '2': self.setting.screensize[1]}]
                         )
                         return "paramètre"
 
             # Affichage du fond d'écran
             self.window.blit(self.texture_background, (0, 0))
             # Affichage de texte
-            text_render.render_text(
-                self.window,
-                [self.setting.screensize[0] / 2, self.setting.screensize[1] / 5],
-                self.text_font,
-                "Settings",
-                pygame.Color("#36B500"),
-                screensize_adaption=True, screensize=self.setting.screensize
-            )
+            self.text.render(self.window)
             # Affichage des boutons en fonction de leur état
             self.button_back.render(self.window)
             self.button_screensize.render(self.window)

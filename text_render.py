@@ -1,55 +1,75 @@
 import pygame
 
 
+# Classe pour faire le rendu de texte
+class Text:
+    def __init__(self, setting, coord, font, text, text_color,
+                 is_center=True, screensize_adaptation=True, interligne=0):
+        # Récupération des variables
+        self.setting = setting
+        self.coord = coord
+        self.font = font
+        self.text = text
+        self.text_color = text_color
+        self.is_center = is_center
+        self.screensize_adaptation = screensize_adaptation
+        self.interligne = interligne
+        self.text_texture = None  # Liste car \n pris en compte
+        # Création des textures
+        self.create_texture()
 
-# fait le rendu de text monoligne
-def render_text(window, coord, font, text, text_color, is_center=True,
-                 screensize_adaption=False, screensize=[0, 0]):
-    # fait le rendu du text
-    text_texture = font.render(text, True, text_color)
-    # adapte la taille du texte à la taille de l'écran
-    if screensize_adaption:
-        default_screensize = [1344, 704]
-        text_texture = pygame.transform.scale(
-            text_texture,
-            [
-                screensize[0] / default_screensize[0] * text_texture.get_width(),
-                screensize[1] / default_screensize[1] * text_texture.get_height()
-            ])
-    if is_center:
-        coord = [
-            coord[0] - text_texture.get_width()/2,
-            coord[1] - text_texture.get_height()/2
-        ]
-    window.blit(text_texture, coord)
+    # Fabrique la texture
+    def create_texture(self):
+        # Chargement des textures ligne par ligne
+        self.text_texture = [self.font.render(t, True, self.text_color) for t in self.text.split('\n')]
+        # Adaptation des textures par rapport à la taille de l'écran
+        if self.screensize_adaptation:
+            for i in range(0, self.text_texture.__len__()):
+                self.text_texture[i] = pygame.transform.scale(
+                    self.text_texture[i],
+                    [
+                        self.setting.screensize[0] / self.setting.default_screensize[0] *
+                        self.text_texture[i].get_width(),
+                        self.setting.screensize[1] / self.setting.default_screensize[1] *
+                        self.text_texture[i].get_height()
+                    ])
 
+    # Change les coordonnées
+    def change_coord(self, coord):
+        self.coord = coord
 
-# Fait le rendu de text sur plusieur ligne
-def render_text_multilign(window, coord, font, text, text_color, is_center=True,
-                 screensize_adaption=False, screensize=[0, 0], interligne=0):
-    text_texture = [font.render(t, True, text_color) for t in text.split('\n')]
-    # adapte la taille du texte à la taille de l'écran
-    default_screensize = [1344, 704]
-    dh = font.render("oo", True, text_color).get_width() + interligne
-    if screensize_adaption:
-        dh = dh * screensize[1] / default_screensize[1]
-    for i in range(0, text_texture.__len__()):
-        if screensize_adaption:
-            text_texture[i] = pygame.transform.scale(
-                text_texture[i],
-                [
-                    screensize[0] / default_screensize[0] * text_texture[i].get_width(),
-                    screensize[1] / default_screensize[1] * text_texture[i].get_height()
-                ])
+    # Change le texte
+    def change_text(self, text):
+        self.text = text
+        self.create_texture()
 
-        if is_center:
-            _coord = [
-                coord[0] - text_texture[i].get_width()/2,
-                coord[1] - text_texture[i].get_height()/2 + dh * i
-            ]
-        else:
-            _coord = [
-                coord[0],
-                coord[1] + dh * i
-        ]
-        window.blit(text_texture[i], _coord)
+    # Change le police de charactère
+    def change_font(self, font):
+        self.font = font
+        self.create_texture()
+
+    # Change la couleur du texte
+    def change_text_color(self, text_color):
+        self.text_color = text_color
+        self.create_texture()
+
+    # Affiche le text sur la fenêtre
+    def render(self, window):
+        # Calcul de la différence de position entre 2 lignes
+        dh = self.font.get_linesize() + self.interligne
+        if self.screensize_adaptation:
+            dh = dh * self.setting.screensize[1] / self.setting.default_screensize[1]
+        for i in range(0, self.text_texture.__len__()):
+            # change les coordonnées si centré
+            if self.is_center:
+                _coord = [
+                    self.coord[0] - self.text_texture[i].get_width() / 2,
+                    self.coord[1] + dh * (i - 1/2)
+                ]
+            else:
+                _coord = [
+                    self.coord[0],
+                    self.coord[1] + dh * i
+                ]
+            # Affichage du texte
+            window.blit(self.text_texture[i], _coord)

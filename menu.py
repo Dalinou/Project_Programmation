@@ -59,7 +59,14 @@ class Menu:
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
             self.setting
         )
-
+        # Création de texte
+        self.Text = text_render.Text(
+            self.setting,
+            [self.setting.screensize[0] / 2, self.setting.screensize[1] / 5],
+            self.text_font,
+            "Game of the programmation project ",
+            pygame.Color("#36B500"),
+        )
         # Curseur
         self.texture_cursor = pygame.image.load("Texture/Cursor.png")
         # Coordonnée des différents objets
@@ -119,14 +126,7 @@ class Menu:
             # Affichage du fond d'écran
             self.window.blit(self.texture_background, (0, 0))
             # Affichage de texte
-            text_render.render_text(
-                self.window,
-                [self.setting.screensize[0] / 2, self.setting.screensize[1] / 5],
-                self.text_font,
-                "Game of the programmation project ",
-                pygame.Color("#36B500"),
-                screensize_adaption=True, screensize=self.setting.screensize
-            )
+            self.Text.render(self.window)
             # Affichage des boutons
             self.button_continue.render(self.window)
             self.button_new_game.render(self.window)
