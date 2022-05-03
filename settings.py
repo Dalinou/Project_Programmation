@@ -85,13 +85,13 @@ class SettingScreen:
         self.text_font = pygame.font.Font("Game_font.TTF", 72)
 
         # Chargement des textures
-        self.texture_background = self.setting.get_texture("Texture/Background.png")
+        self.texture_background = self.setting.get_texture("Texture/Setting background.png")
         # Chargement bouton back
         self.button_back = button.Button(
             [self.setting.screensize[0] / 2, self.setting.screensize[1] * 4 / 5],
             2,
             0,
-            ["Texture/Button up.png", "Texture/Button down.png"],
+            ["Texture/Button up 2.png", "Texture/Button down 2.png"],
             self.button_font,
             ["Back", "Back"],
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
@@ -102,7 +102,7 @@ class SettingScreen:
             [self.setting.screensize[0] / 4, self.setting.screensize[1] * 2 / 5],
             2,
             0,
-            ["Texture/Button up.png", "Texture/Button down.png"],
+            ["Texture/Button up setting.png", "Texture/Button down setting.png"],
             self.button_font,
             ["%(1)s*%(2)s" % {'1': self.setting.screensize[0], '2': self.setting.screensize[1]},
              "%(1)s*%(2)s" % {'1': self.setting.screensize[0], '2': self.setting.screensize[1]}],
@@ -114,7 +114,7 @@ class SettingScreen:
             [self.setting.screensize[0] / 2, self.setting.screensize[1] * 2 / 5],
             2,
             0,
-            ["Texture/Button up.png", "Texture/Button down.png"],
+            ["Texture/Button up setting.png", "Texture/Button down setting.png"],
             self.button_font,
             ["Fps: %s" % self.setting.fps, "Fps: %s" % self.setting.fps],
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
@@ -125,7 +125,7 @@ class SettingScreen:
             [self.setting.screensize[0] * 3 / 4, self.setting.screensize[1] * 2 / 5],
             2,
             0,
-            ["Texture/Button up.png", "Texture/Button down.png"],
+            ["Texture/Button up setting.png", "Texture/Button down setting.png"],
             self.button_font,
             ["Fullscreen: On", "Fullscreen: On"] if self.setting.fullscreen else ["Fullscreen: Off", "Fullscreen: Off"],
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
