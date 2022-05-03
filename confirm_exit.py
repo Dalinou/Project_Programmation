@@ -3,7 +3,7 @@ import os
 import sys
 import button
 
-
+'''
 class Exit:
     def __init__(self, window, clock, setting):
 
@@ -36,3 +36,4 @@ class Exit:
                     x = False
                 else:
                     print("Veuillez répondre 'y' ou 'n'")
+'''
