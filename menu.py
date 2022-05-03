@@ -3,6 +3,7 @@ import os
 import button
 import text_render
 
+
 # Classe pour l'écran de menu
 # Reste dans la classe jusqu'à changement d'écran
 # Revoie l'écran à charger ou "exit"
@@ -26,7 +27,8 @@ class Menu:
             self.button_font,
             ["Continue", "Continue", "Continue"],
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400"), pygame.Color("#D17642")],
-            screensize_adaption=True, screensize=self.setting.screensize
+            self.setting,
+            screensize_adaption=True
         )
         self.button_new_game = button.Button(
             [self.setting.screensize[0] * 1 / 5, self.setting.screensize[1] * 4 / 5],
@@ -36,7 +38,8 @@ class Menu:
             self.button_font,
             ["New Game", "New Game"],
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
-            screensize_adaption=True, screensize=self.setting.screensize
+            self.setting,
+            screensize_adaption=True
         )
         self.button_setting = button.Button(
             [self.setting.screensize[0] * 4 / 5, self.setting.screensize[1] * 2 / 5],
@@ -46,7 +49,8 @@ class Menu:
             self.button_font,
             ["Settings", "Settings"],
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
-            screensize_adaption=True, screensize=self.setting.screensize
+            self.setting,
+            screensize_adaption=True
         )
         self.button_exit = button.Button(
             [self.setting.screensize[0] * 4/5, self.setting.screensize[1] * 4 / 5],
@@ -56,7 +60,8 @@ class Menu:
             self.button_font,
             ["Exit", "Exit"],
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
-            screensize_adaption=True, screensize=self.setting.screensize
+            self.setting,
+            screensize_adaption=True
         )
 
         # Curseur
