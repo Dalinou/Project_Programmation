@@ -27,8 +27,7 @@ class Menu:
             self.button_font,
             ["Continue", "Continue", "Continue"],
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400"), pygame.Color("#D17642")],
-            self.setting,
-            screensize_adaption=True
+            self.setting
         )
         self.button_new_game = button.Button(
             [self.setting.screensize[0] * 1 / 5, self.setting.screensize[1] * 4 / 5],
@@ -38,8 +37,7 @@ class Menu:
             self.button_font,
             ["New Game", "New Game"],
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
-            self.setting,
-            screensize_adaption=True
+            self.setting
         )
         self.button_setting = button.Button(
             [self.setting.screensize[0] * 4 / 5, self.setting.screensize[1] * 2 / 5],
@@ -49,8 +47,7 @@ class Menu:
             self.button_font,
             ["Settings", "Settings"],
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
-            self.setting,
-            screensize_adaption=True
+            self.setting
         )
         self.button_exit = button.Button(
             [self.setting.screensize[0] * 4/5, self.setting.screensize[1] * 4 / 5],
@@ -60,8 +57,7 @@ class Menu:
             self.button_font,
             ["Exit", "Exit"],
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
-            self.setting,
-            screensize_adaption=True
+            self.setting
         )
 
         # Curseur

@@ -95,8 +95,7 @@ class SettingScreen:
             self.button_font,
             ["Back", "Back"],
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
-            self.setting,
-            screensize_adaption=True
+            self.setting
         )
         # Chargement bouton sreensize
         self.button_screensize = button.Button(
@@ -108,8 +107,7 @@ class SettingScreen:
             ["%(1)s*%(2)s" % {'1': self.setting.screensize[0], '2': self.setting.screensize[1]},
              "%(1)s*%(2)s" % {'1': self.setting.screensize[0], '2': self.setting.screensize[1]}],
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
-            self.setting,
-            screensize_adaption=True
+            self.setting
         )
         # Chargement bouton fps
         self.button_fps = button.Button(
@@ -120,8 +118,7 @@ class SettingScreen:
             self.button_font,
             ["Fps: %s" % self.setting.fps, "Fps: %s" % self.setting.fps],
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
-            self.setting,
-            screensize_adaption=True
+            self.setting
         )
         # Chargement bouton fullscreen
         self.button_fullscreen = button.Button(
@@ -132,8 +129,7 @@ class SettingScreen:
             self.button_font,
             ["Fullscreen: On", "Fullscreen: On"] if self.setting.fullscreen else ["Fullscreen: Off", "Fullscreen: Off"],
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
-            self.setting,
-            screensize_adaption=True
+            self.setting
         )
         # Curseur
         self.texture_cursor = pygame.image.load("Texture/Cursor.png")

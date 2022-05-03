@@ -3,7 +3,7 @@ import pygame
 
 class Button:
     def __init__(self, coord, nb_state, init_state, background_filename, font, text, text_color, setting,
-                 is_center=True, screensize_adaption=False):
+                 is_center=True, screensize_adaption=True):
         # Recupération des variables
         self.nb_state = nb_state
         self.state = init_state

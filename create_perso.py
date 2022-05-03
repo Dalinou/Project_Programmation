@@ -21,8 +21,7 @@ class CreateWarning:
             self.font,
             ["Continue", "Continue"],
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
-            self.setting,
-            screensize_adaption=True
+            self.setting
         )
         # Bouton pour retourner au menu
         self.button_back = button.Button(
@@ -33,8 +32,7 @@ class CreateWarning:
             self.font,
             ["Back", "Back"],
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
-            self.setting,
-            screensize_adaption=True
+            self.setting
         )
         self.texture_cursor = pygame.image.load("Texture/Cursor.png")
         # Coordonnée des différents objets
