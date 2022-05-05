@@ -3,6 +3,7 @@ import os
 import button
 
 
+# Ecran de warning si sauvegarde existante
 class CreateWarning:
     def __init__(self, window, clock, setting):
         # Paramètre de l'écran
@@ -81,6 +82,7 @@ class CreateWarning:
             pygame.display.update()
 
 
+# Ecran de création de perso
 class CreatePerso:
     def __init__(self, window, clock, setting):
         # Paramètre de l'écran
