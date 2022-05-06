@@ -1,3 +1,0 @@
-screensize: 1536, 864
-fps: 120
-fullscreen: True
