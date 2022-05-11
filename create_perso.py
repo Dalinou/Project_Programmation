@@ -1,6 +1,7 @@
 import pygame
 import os
 import button
+import text_render
 
 
 # Ecran de warning si sauvegarde existante
@@ -10,7 +11,8 @@ class CreateWarning:
         self.window = window
         self.clock = clock
         self.setting = setting
-        self.font = pygame.font.Font("Game_font.TTF", 48)
+        self.button_font = pygame.font.Font("Game_font.TTF", 48)
+        self.text_font = pygame.font.Font("Game_font.TTF", 72)
         # Chargement des textures
         self.texture_background = self.setting.get_texture("Texture/Background.png")
         # Bouton pour continuer
@@ -19,7 +21,7 @@ class CreateWarning:
             2,
             0,
             ["Texture/Button up.png", "Texture/Button down.png"],
-            self.font,
+            self.button_font,
             ["Continue", "Continue"],
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
             self.setting
@@ -30,7 +32,7 @@ class CreateWarning:
             2,
             0,
             ["Texture/Button up.png", "Texture/Button down.png"],
-            self.font,
+            self.button_font,
             ["Back", "Back"],
             [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
             self.setting
@@ -89,8 +91,102 @@ class CreatePerso:
         self.window = window
         self.clock = clock
         self.setting = setting
+        self.button_font = pygame.font.Font("Game_font.TTF", 48)
+        self.text_font = pygame.font.Font("Game_font.TTF", 72)
         # Chargement des textures
-        self.texture_background = self.setting.get_texture("Texture/Menu/Background.png")
+        self.texture_background = self.setting.get_texture("Texture/Background.png")
+        # Chargement bouton Man
+        self.button_man = button.Button(
+            [self.setting.screensize[0] * 1 / 5, self.setting.screensize[1] * 2 / 5],
+            2,
+            0,
+            ["Texture/Button up 2.png", "Texture/Button down 2.png"],
+            self.button_font,
+            ["Man", "Man"],
+            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            self.setting
+        )
+        # Chargement bouton Woman
+        self.button_woman = button.Button(
+            [self.setting.screensize[0] * 1 / 5, self.setting.screensize[1] * 3 / 5],
+            2,
+            0,
+            ["Texture/Button up 2.png", "Texture/Button down 2.png"],
+            self.button_font,
+            ["Woman", "Woman"],
+            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            self.setting
+        )
+        # Chargement bouton back
+        self.button_back = button.Button(
+            [self.setting.screensize[0] * 1 / 5, self.setting.screensize[1] * 4 / 5],
+            2,
+            0,
+            ["Texture/Button up 2.png", "Texture/Button down 2.png"],
+            self.button_font,
+            ["Back", "Back"],
+            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            self.setting
+        )
+        # Création de texte
+        self.Text = text_render.Text(
+            self.setting,
+            [self.setting.screensize[0] / 2, self.setting.screensize[1] / 5],
+            self.text_font,
+            "Choix du genre",
+            pygame.Color("#36B500"),
+        )
+        # Curseur
+        self.texture_cursor = pygame.image.load("Texture/Cursor.png")
+        # Coordonnée des différents objects
+        self.cursor_coord = (0, 0)
 
     def gameloop(self):
-        ...
+        # clock.tick pour respecter le fps
+        while True:
+            self.clock.tick(self.setting.fps)
+            for event in pygame.event.get():
+                # Lecture des entrées et interprétation
+                # Si alt-f4 ou croix rouge
+                if event.type == pygame.QUIT:
+                    return "exit"
+                # Si mouvement de la souris
+                if event.type == pygame.MOUSEMOTION:
+                    # récupération des coordonnées de la souris
+                    self.cursor_coord = event.pos
+                    if self.button_man.is_coord_on(self.cursor_coord):
+                        self.button_man.set_state(1)
+                    else:
+                        self.button_man.set_state(0)
+                    # regarde si la souris est sur le bouton femme
+                    if self.button_woman.is_coord_on(self.cursor_coord):
+                        self.button_woman.set_state(1)
+                    else:
+                        self.button_woman.set_state(0)
+                    # bouton back pour revenir au menu
+                    if self.button_back.is_coord_on(self.cursor_coord):
+                        self.button_back.set_state(1)
+                    else:
+                        self.button_back.set_state(0)
+
+                # Si Click de la souris
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.button_man.state == 1:
+                        return "man"
+                    if self.button_woman.state == 1:
+                        return "woman"
+                    if self.button_back.state == 1:
+                        return "menu"
+
+            # Affichage du fond d'écran
+            self.window.blit(self.texture_background, (0, 0))
+            # Affichage de texte
+            self.Text.render(self.window)
+            # Affichage des boutons
+            self.button_man.render(self.window)
+            self.button_woman.render(self.window)
+            self.button_back.render(self.window)
+            #  Affichage du curseur
+            self.window.blit(self.texture_cursor, self.cursor_coord)
+            # Actualisation de l'affichage
+            pygame.display.update()

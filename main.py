@@ -24,8 +24,9 @@ while state != "exit":
         screen = menu.Menu(window, clock, setting)
         state = screen.gameloop()
     elif state == "create":
-        state = "menu"
-        # state = create.gameloop()
+        # state = "menu"
+        screen = create_perso.CreatePerso(window, clock, setting)
+        state = screen.gameloop()
     elif state == "warning":
         screen = create_perso.CreateWarning(window, clock, setting)
         state = screen.gameloop()
