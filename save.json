@@ -1,0 +1,36 @@
+[
+  {
+    "__personnage__": true,
+    "classe_type": "Mage",
+    "gender": "M",
+    "def": 3,
+    "atk": 20,
+    "pv_max": 100,
+    "pv": 0,
+    "location": {
+      "Map": 1,
+      "x": 5,
+      "y": 2
+    }
+  },
+  {
+    "__quest_advencement__": true,
+    "Q1": 3,
+    "Q2": 0,
+    "Q3": 0
+  },
+  {
+    "__map_data__": true,
+    "map id": 1,
+    "Monster state": [
+      true, true, false, true
+    ]
+  },
+  {
+    "__map_data__": true,
+    "map id": 2,
+    "Monster state": [
+      true, true, false, true, true, true
+    ]
+  }
+]
