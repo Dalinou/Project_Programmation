@@ -1,0 +1,38 @@
+[
+  {
+    "__classe__": true,
+    "classe name": "Guerrier",
+    "def": 15,
+    "atk": 10,
+    "pv": 100,
+    "descriptiion": "Le guerrier est un combattant au corps à corps possédant une défense élevée. Son attaque spéciale ",
+    "atk type":[
+      "base",
+      "gros coup bien violent"
+    ]
+  },
+  {
+    "__classe__": true,
+    "classe name": "Mage",
+    "def": 3,
+    "atk": 20,
+    "pv": 100,
+    "descriptiion": "blabla",
+    "atk type":[
+      "base",
+      "boule de feu"
+    ]
+  },
+  {
+    "__classe__": true,
+    "classe name": "Voleur",
+    "def": 10,
+    "atk": 15,
+    "pv": 100,
+    "descriptiion": "blabla",
+    "atk type":[
+      "base",
+      "vol de vie"
+    ]
+  }
+]
