@@ -133,12 +133,12 @@ class CreatePerso:
             self.setting,
             [self.setting.screensize[0] / 2, self.setting.screensize[1] / 5],
             self.text_font,
-            "Choix du genre",
+            "Création de Personnage",
             pygame.Color("#36B500"),
         )
         # bouton pour la classe guerrier
         self.button_guerrier = button.Button(
-            [self.setting.screensize[0] / 2, self.setting.screensize[1] / 2],
+            [self.setting.screensize[0] / 2, self.setting.screensize[1] * 2 / 5],
             2,
             0,
             ["Texture/Button up.png", "Texture/Button down.png"],
@@ -149,7 +149,7 @@ class CreatePerso:
         )
         # bouton pour la classe mage
         self.button_mage = button.Button(
-            [self.setting.screensize[0] / 2, self.setting.screensize[1] / 2],
+            [self.setting.screensize[0] / 2, self.setting.screensize[1] * 3 / 5],
             2,
             0,
             ["Texture/Button up.png", "Texture/Button down.png"],
@@ -160,7 +160,7 @@ class CreatePerso:
         )
         # bouton pour la classe voleur
         self.button_voleur = button.Button(
-            [self.setting.screensize[0] / 2, self.setting.screensize[1] / 2],
+            [self.setting.screensize[0] / 2, self.setting.screensize[1] * 4 / 5],
             2,
             0,
             ["Texture/Button up.png", "Texture/Button down.png"],
@@ -240,6 +240,9 @@ class CreatePerso:
             self.button_man.render(self.window)
             self.button_woman.render(self.window)
             self.button_back.render(self.window)
+            self.button_guerrier.render(self.window)
+            self.button_mage.render(self.window)
+            self.button_voleur.render(self.window)
             #  Affichage du curseur
             self.window.blit(self.texture_cursor, self.cursor_coord)
             # Actualisation de l'affichage
