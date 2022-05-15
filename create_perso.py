@@ -137,7 +137,7 @@ class CreatePerso:
             pygame.Color("#36B500"),
         )
         # bouton pour la classe guerrier
-        self.button_back = button.Button(
+        self.button_guerrier = button.Button(
             [self.setting.screensize[0] / 2, self.setting.screensize[1] / 2],
             2,
             0,
@@ -148,7 +148,7 @@ class CreatePerso:
             self.setting
         )
         # bouton pour la classe mage
-        self.button_back = button.Button(
+        self.button_mage = button.Button(
             [self.setting.screensize[0] / 2, self.setting.screensize[1] / 2],
             2,
             0,
@@ -159,7 +159,7 @@ class CreatePerso:
             self.setting
         )
         # bouton pour la classe voleur
-        self.button_back = button.Button(
+        self.button_voleur = button.Button(
             [self.setting.screensize[0] / 2, self.setting.screensize[1] / 2],
             2,
             0,
