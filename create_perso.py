@@ -136,6 +136,39 @@ class CreatePerso:
             "Choix du genre",
             pygame.Color("#36B500"),
         )
+        # bouton pour la classe guerrier
+        self.button_back = button.Button(
+            [self.setting.screensize[0] / 2, self.setting.screensize[1] / 2],
+            2,
+            0,
+            ["Texture/Button up.png", "Texture/Button down.png"],
+            self.button_font,
+            ["Guerrier", "Guerrier"],
+            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            self.setting
+        )
+        # bouton pour la classe mage
+        self.button_back = button.Button(
+            [self.setting.screensize[0] / 2, self.setting.screensize[1] / 2],
+            2,
+            0,
+            ["Texture/Button up.png", "Texture/Button down.png"],
+            self.button_font,
+            ["Mage", "Mage"],
+            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            self.setting
+        )
+        # bouton pour la classe voleur
+        self.button_back = button.Button(
+            [self.setting.screensize[0] / 2, self.setting.screensize[1] / 2],
+            2,
+            0,
+            ["Texture/Button up.png", "Texture/Button down.png"],
+            self.button_font,
+            ["Voleur", "Voleur"],
+            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            self.setting
+        )
         # Curseur
         self.texture_cursor = pygame.image.load("Texture/Cursor.png")
         # Coordonnée des différents objects
@@ -168,6 +201,21 @@ class CreatePerso:
                         self.button_back.set_state(1)
                     else:
                         self.button_back.set_state(0)
+                    #bouton classe guerrier
+                    if self.button_guerrier.is_coord_on(self.cursor_coord):
+                        self.button_guerrier.set_state(1)
+                    else:
+                        self.button_guerrier.set_state(0)
+                    # bouton classe mage
+                    if self.button_mage.is_coord_on(self.cursor_coord):
+                        self.button_mage.set_state(1)
+                    else:
+                        self.button_mage.set_state(0)
+                    # bouton classe voleur
+                    if self.button_voleur.is_coord_on(self.cursor_coord):
+                        self.button_voleur.set_state(1)
+                    else:
+                        self.button_voleur.set_state(0)
 
                 # Si Click de la souris
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -177,6 +225,12 @@ class CreatePerso:
                         return "woman"
                     if self.button_back.state == 1:
                         return "menu"
+                    if self.button_guerrier.state == 1:
+                        return "guerrier"
+                    if self.button_mage.state == 1:
+                        return "mage"
+                    if self.button_voleur.state == 1:
+                        return "voleur"
 
             # Affichage du fond d'écran
             self.window.blit(self.texture_background, (0, 0))
