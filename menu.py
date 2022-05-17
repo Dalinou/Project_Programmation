@@ -2,6 +2,7 @@ import pygame
 import os
 import button
 import text_render
+# TODO penser à changer le 'save.txt' en 'save.json'
 
 
 # Classe pour l'écran de menu
