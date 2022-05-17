@@ -8,8 +8,14 @@
     "description": "Le guerrier est un combattant au corps à corps possédant une défense élevée. Son attaque spéciale ",
     "atk type":[
       "base",
-      "gros coup bien violent"
-    ]
+      "gros coup bien violent qui fait bien mal et qui peut te peter le poignet si tu tape le mur"
+    ],
+    "texture": {
+      "face M": "Gu_fM.png",
+      "face F": "Gu_fF.png",
+      "top M": "Gu_tM.png",
+      "top F": "Gu_tF.png"
+    }
   },
   {
     "__classe__": true,
@@ -21,7 +27,13 @@
     "atk type":[
       "base",
       "boule de feu"
-    ]
+    ],
+    "texture": {
+      "face M": "Ma_fM.png",
+      "face F": "Ma_fF.png",
+      "top M": "Ma_tM.png",
+      "top F": "Ma_tF.png"
+    }
   },
   {
     "__classe__": true,
@@ -33,6 +45,12 @@
     "atk type":[
       "base",
       "vol de vie"
-    ]
+    ],
+    "texture": {
+      "face M": "Vo_fM.png",
+      "face F": "Vo_fF.png",
+      "top M": "Vo_tM.png",
+      "top F": "Vo_tF.png"
+    }
   }
 ]
