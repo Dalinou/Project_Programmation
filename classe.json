@@ -5,7 +5,7 @@
     "def": 15,
     "atk": 10,
     "pv": 100,
-    "descriptiion": "Le guerrier est un combattant au corps à corps possédant une défense élevée. Son attaque spéciale ",
+    "description": "Le guerrier est un combattant au corps à corps possédant une défense élevée. Son attaque spéciale ",
     "atk type":[
       "base",
       "gros coup bien violent"
@@ -17,7 +17,7 @@
     "def": 3,
     "atk": 20,
     "pv": 100,
-    "descriptiion": "blabla",
+    "description": "blabla",
     "atk type":[
       "base",
       "boule de feu"
@@ -29,7 +29,7 @@
     "def": 10,
     "atk": 15,
     "pv": 100,
-    "descriptiion": "blabla",
+    "description": "blabla",
     "atk type":[
       "base",
       "vol de vie"

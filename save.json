@@ -1,11 +1,11 @@
 [
   {
     "__personnage__": true,
-    "classe_type": "Mage",
+    "classe": "Mage",
     "gender": "M",
     "def": 3,
     "atk": 20,
-    "pv_max": 100,
+    "pv max": 100,
     "pv": 0,
     "location": {
       "Map": 1,
