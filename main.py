@@ -3,7 +3,11 @@ import menu
 import settings
 import create_perso
 
+# initiation de pygame
 pygame.font.init()
+pygame.init()
+# Mise en invisible du curseur de windows
+pygame.mouse.set_visible(False)
 # Paramètre
 setting = settings.SettingReader()
 
@@ -24,7 +28,6 @@ while state != "exit":
         screen = menu.Menu(window, clock, setting)
         state = screen.gameloop()
     elif state == "create":
-        # state = "menu"
         screen = create_perso.CreatePerso(window, clock, setting)
         state = screen.gameloop()
     elif state == "warning":
