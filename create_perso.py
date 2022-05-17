@@ -23,7 +23,7 @@ class CreateWarning:
             ["Texture/Button up.png", "Texture/Button down.png"],
             self.button_font,
             ["Continue", "Continue"],
-            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            [pygame.Color("#000000"), pygame.Color("#000000")],
             self.setting
         )
         # Bouton pour retourner au menu
@@ -34,7 +34,7 @@ class CreateWarning:
             ["Texture/Button up.png", "Texture/Button down.png"],
             self.button_font,
             ["Back", "Back"],
-            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            [pygame.Color("#000000"), pygame.Color("#000000")],
             self.setting
         )
         self.texture_cursor = pygame.image.load("Texture/Cursor.png")
@@ -94,38 +94,38 @@ class CreatePerso:
         self.button_font = pygame.font.Font("Game_font.TTF", 48)
         self.text_font = pygame.font.Font("Game_font.TTF", 72)
         # Chargement des textures
-        self.texture_background = self.setting.get_texture("Texture/Background.png")
+        self.texture_background = self.setting.get_texture("Texture/Background CreatePerso.png")
         # Chargement bouton Man
         self.button_man = button.Button(
-            [self.setting.screensize[0] * 1 / 5, self.setting.screensize[1] * 2 / 5],
+            [self.setting.screensize[0] * 1.25 / 10, self.setting.screensize[1] * 4 / 10],
             2,
             0,
-            ["Texture/Button up 2.png", "Texture/Button down 2.png"],
+            ["Texture/Button up choice.png", "Texture/Button down choice.png"],
             self.button_font,
             ["Man", "Man"],
-            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            [pygame.Color("#000000"), pygame.Color("#000000")],
             self.setting
         )
         # Chargement bouton Woman
         self.button_woman = button.Button(
-            [self.setting.screensize[0] * 1 / 5, self.setting.screensize[1] * 3 / 5],
+            [self.setting.screensize[0] * 1.25 / 10, self.setting.screensize[1] * 6 / 10],
             2,
             0,
-            ["Texture/Button up 2.png", "Texture/Button down 2.png"],
+            ["Texture/Button up choice.png", "Texture/Button down choice.png"],
             self.button_font,
             ["Woman", "Woman"],
-            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            [pygame.Color("#000000"), pygame.Color("#000000")],
             self.setting
         )
         # Chargement bouton back
         self.button_back = button.Button(
-            [self.setting.screensize[0] * 1 / 5, self.setting.screensize[1] * 4 / 5],
+            [self.setting.screensize[0] * 1.25 / 15, self.setting.screensize[1] * 1 / 15],
             2,
             0,
-            ["Texture/Button up 2.png", "Texture/Button down 2.png"],
+            ["Texture/Button Back up.png", "Texture/Button Back down.png"],
             self.button_font,
-            ["Back", "Back"],
-            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            ["", ""],
+            [pygame.Color("#000000"), pygame.Color("#000000")],
             self.setting
         )
         # Création de texte
@@ -134,39 +134,39 @@ class CreatePerso:
             [self.setting.screensize[0] / 2, self.setting.screensize[1] / 5],
             self.text_font,
             "Création de Personnage",
-            pygame.Color("#36B500"),
+            pygame.Color("#000000"),
         )
         # bouton pour la classe guerrier
         self.button_guerrier = button.Button(
-            [self.setting.screensize[0] / 2, self.setting.screensize[1] * 2 / 5],
+            [self.setting.screensize[0] * 8.75 / 10, self.setting.screensize[1] * 4 / 10],
             2,
             0,
-            ["Texture/Button up.png", "Texture/Button down.png"],
+            ["Texture/Button up choice.png", "Texture/Button down choice.png"],
             self.button_font,
             ["Guerrier", "Guerrier"],
-            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            [pygame.Color("#000000"), pygame.Color("#000000")],
             self.setting
         )
         # bouton pour la classe mage
         self.button_mage = button.Button(
-            [self.setting.screensize[0] / 2, self.setting.screensize[1] * 3 / 5],
+            [self.setting.screensize[0] * 8.75 / 10, self.setting.screensize[1] * 6 / 10],
             2,
             0,
-            ["Texture/Button up.png", "Texture/Button down.png"],
+            ["Texture/Button up choice.png", "Texture/Button down choice.png"],
             self.button_font,
             ["Mage", "Mage"],
-            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            [pygame.Color("#000000"), pygame.Color("#000000")],
             self.setting
         )
         # bouton pour la classe voleur
         self.button_voleur = button.Button(
-            [self.setting.screensize[0] / 2, self.setting.screensize[1] * 4 / 5],
+            [self.setting.screensize[0] * 8.75 / 10, self.setting.screensize[1] * 8 / 10],
             2,
             0,
-            ["Texture/Button up.png", "Texture/Button down.png"],
+            ["Texture/Button up choice.png", "Texture/Button down choice.png"],
             self.button_font,
             ["Voleur", "Voleur"],
-            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            [pygame.Color("#000000"), pygame.Color("#000000")],
             self.setting
         )
         # Curseur

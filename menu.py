@@ -27,7 +27,7 @@ class Menu:
             ["Texture/Button up 2.png", "Texture/Button down 2.png", "Texture/Button gray 2.png"],
             self.button_font,
             ["Continue", "Continue", "Continue"],
-            [pygame.Color("#CB4F00"), pygame.Color("#FE6400"), pygame.Color("#D17642")],
+            [pygame.Color("#000000"), pygame.Color("#000000"), pygame.Color("#000000")],
             self.setting
         )
         self.button_new_game = button.Button(
@@ -37,7 +37,7 @@ class Menu:
             ["Texture/Button up 2.png", "Texture/Button down 2.png"],
             self.button_font,
             ["New Game", "New Game"],
-            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            [pygame.Color("#000000"), pygame.Color("#000000")],
             self.setting
         )
         self.button_setting = button.Button(
@@ -47,7 +47,7 @@ class Menu:
             ["Texture/Button up 2.png", "Texture/Button down 2.png"],
             self.button_font,
             ["Settings", "Settings"],
-            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            [pygame.Color("#000000"), pygame.Color("#000000")],
             self.setting
         )
         self.button_exit = button.Button(
@@ -57,7 +57,7 @@ class Menu:
             ["Texture/Button up 2.png", "Texture/Button down 2.png"],
             self.button_font,
             ["Exit", "Exit"],
-            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            [pygame.Color("#000000"), pygame.Color("#000000")],
             self.setting
         )
         # Création de texte

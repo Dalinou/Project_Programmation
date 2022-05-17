@@ -102,7 +102,7 @@ class SettingScreen:
             ["Texture/Button up 2.png", "Texture/Button down 2.png"],
             self.button_font,
             ["Back", "Back"],
-            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            [pygame.Color("#000000"), pygame.Color("#000000")],
             self.setting
         )
         # Chargement bouton sreensize
@@ -114,7 +114,7 @@ class SettingScreen:
             self.button_font,
             ["%(1)s*%(2)s" % {'1': self.setting.screensize[0], '2': self.setting.screensize[1]},
              "%(1)s*%(2)s" % {'1': self.setting.screensize[0], '2': self.setting.screensize[1]}],
-            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            [pygame.Color("#FF7F00"), pygame.Color("#FF7F00")],
             self.setting
         )
         # Chargement bouton fps
@@ -125,7 +125,7 @@ class SettingScreen:
             ["Texture/Button up setting.png", "Texture/Button down setting.png"],
             self.button_font,
             ["Fps: %s" % self.setting.fps, "Fps: %s" % self.setting.fps],
-            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            [pygame.Color("#FF7F00"), pygame.Color("#FF7F00")],
             self.setting
         )
         # Chargement bouton fullscreen
@@ -136,7 +136,7 @@ class SettingScreen:
             ["Texture/Button up setting.png", "Texture/Button down setting.png"],
             self.button_font,
             ["Fullscreen: On", "Fullscreen: On"] if self.setting.fullscreen else ["Fullscreen: Off", "Fullscreen: Off"],
-            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            [pygame.Color("#FF7F00"), pygame.Color("#FF7F00")],
             self.setting
         )
         # Charge la texture du curseur sans redimentionnement
@@ -153,7 +153,7 @@ class SettingScreen:
             [self.setting.screensize[0] / 2, self.setting.screensize[1] / 5],
             self.text_font,
             "Settings",
-            pygame.Color("#36B500"),
+            pygame.Color("#4C0099"),
         )
 
     # boucle de l'écran
