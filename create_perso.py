@@ -201,7 +201,7 @@ class CreatePerso:
                         self.button_back.set_state(1)
                     else:
                         self.button_back.set_state(0)
-                    #bouton classe guerrier
+                    # bouton classe guerrier
                     if self.button_guerrier.is_coord_on(self.cursor_coord):
                         self.button_guerrier.set_state(1)
                     else:
@@ -220,17 +220,17 @@ class CreatePerso:
                 # Si Click de la souris
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.button_man.state == 1:
-                        return "man"
+                        genre = "man"
                     if self.button_woman.state == 1:
-                        return "woman"
+                        genre = "woman"
                     if self.button_back.state == 1:
                         return "menu"
                     if self.button_guerrier.state == 1:
-                        return "guerrier"
+                        classe = "Guerrier"
                     if self.button_mage.state == 1:
-                        return "mage"
+                        classe = "Mage"
                     if self.button_voleur.state == 1:
-                        return "voleur"
+                        classe = "Voleur"
 
             # Affichage du fond d'écran
             self.window.blit(self.texture_background, (0, 0))
