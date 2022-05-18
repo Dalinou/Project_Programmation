@@ -8,6 +8,10 @@ pygame.font.init()
 pygame.init()
 # Mise en invisible du curseur de windows
 pygame.mouse.set_visible(False)
+# changement du nom de la fenêtre et de l'icone
+pygame.display.set_caption("Nom du jeu")
+pygame.display.set_icon(pygame.image.load("Texture/Game Icon.png"))
+
 # Paramètre
 setting = settings.SettingReader()
 
