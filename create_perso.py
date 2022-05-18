@@ -42,16 +42,10 @@ class CreateWarning:
             self.setting,
             [self.setting.screensize[0] / 2, self.setting.screensize[1] / 5],
             self.text_font,
-            "Attention si vous continuez, vous allez",
+            "Attention si vous continuez, vous allez\nperdre la précédente sauvegarde !!",
             pygame.Color("#FF0000"),
         )
-        self.Text2 = text_render.Text(
-            self.setting,
-            [self.setting.screensize[0] / 2, self.setting.screensize[1] * 2 / 6],
-            self.text_font,
-            "perdre la précédente sauvegarde !!",
-            pygame.Color("#FF0000"),
-        )
+
         self.texture_cursor = pygame.image.load("Texture/Cursor.png")
         # Coordonnée des différents objets
         self.cursor_coord = (0, 0)
@@ -92,7 +86,6 @@ class CreateWarning:
             self.window.blit(self.texture_background, (0, 0))
             # Affichage de texte
             self.Text.render(self.window)
-            self.Text2.render(self.window)
             # Affichage des boutons en fonction de leur état
             self.button_continue.render(self.window)
             self.button_back.render(self.window)
