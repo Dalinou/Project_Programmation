@@ -103,6 +103,7 @@ class CreatePerso:
         self.clock = clock
         self.setting = setting
         self.button_font = pygame.font.Font("Game_font.TTF", 48)
+        self.input_box_font = pygame.font.Font("Game_font.TTF", 30)
         self.text_font = pygame.font.Font("Game_font.TTF", 72)
         # Chargement des textures
         self.texture_background = self.setting.get_texture("Texture/Background CreatePerso.png")
@@ -180,10 +181,26 @@ class CreatePerso:
             [pygame.Color("#000000"), pygame.Color("#000000")],
             self.setting
         )
+        # création de l'espace pour entrer son pseudo
+        self.input_box = button.Button(
+            [self.setting.screensize[0] * 8.75 / 10, self.setting.screensize[1] * 8 / 10],
+            2,
+            0,
+            ["Texture/Button up 2.png", "Texture/Button down 2.png"],
+            self.input_box_font,
+            ["Insérer texte", "Insérer texte"],
+            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            self.setting
+        )
         # Curseur
         self.texture_cursor = pygame.image.load("Texture/Cursor.png")
         # Coordonnée des différents objects
         self.cursor_coord = (0, 0)
+        # nombre de caractère max pour l'input box
+        self.input_box_max_length = 16
+        # Boolean pour l'inputbox
+        self.input_box_input = False
+        self.input_box_text = ""
 
     def gameloop(self):
         # clock.tick pour respecter le fps
@@ -242,6 +259,38 @@ class CreatePerso:
                         classe = "Mage"
                     if self.button_voleur.state == 1:
                         classe = "Voleur"
+                    # check clic sur l'input box
+                    coord = event.pos
+                    if self.input_box.is_coord_on(coord):
+                        # si il y a un clique sur l'input box, autorise l'entrée de caractère
+                        self.input_box_input = True
+                        self.input_box.set_state(1)
+                    else:
+                        # sinon l'entrée de caractère dans l'input box n'est pas activée
+                        self.input_box_input = False
+                        self.input_box.set_state(0)
+
+                # si l'entrée dans l'input box est activée et qu'on apuie sur une touche, permet l'entrée de caract
+                elif event.type == pygame.KEYDOWN and self.input_box_input:
+                    # Touche enter, echap, tab
+                    if event.key == pygame.K_RETURN or event.key == pygame.K_ESCAPE or event.key == pygame.K_TAB:
+                        self.input_box_input = False
+                        self.input_box.set_state(0)
+                    # Touche effacer
+                    elif event.key == pygame.K_BACKSPACE:
+                        self.input_box_text = self.input_box_text[:-1]
+                    # Touche suppr
+                    elif event.key == pygame.K_DELETE:
+                        self.input_box_text = ""
+                    # Autre touche si text dans la limite de longueur (16)
+                    elif self.input_box_text.__len__() < self.input_box_max_length:
+                        # Ajout du charactère
+                        self.input_box_text += event.unicode
+                    # Actualisation du text sur le bouton
+                    self.input_box.change_text(
+                        [self.input_box_text, self.input_box_text]
+                        if self.input_box_text.__len__() != 0
+                        else ["Insérer texte", "Insérer texte"])
 
             # Affichage du fond d'écran
             self.window.blit(self.texture_background, (0, 0))
@@ -254,6 +303,7 @@ class CreatePerso:
             self.button_guerrier.render(self.window)
             self.button_mage.render(self.window)
             self.button_voleur.render(self.window)
+            self.input_box.render(self.window)
             #  Affichage du curseur
             self.window.blit(self.texture_cursor, self.cursor_coord)
             # Actualisation de l'affichage
