@@ -18,7 +18,7 @@ class Menu:
         self.text_font = pygame.font.Font("Game_font.TTF", 72)
 
         # Chargement des textures
-        self.texture_background = self.setting.get_texture("Texture/Background.png")
+        self.texture_background = self.setting.get_texture("Texture/Background 2.png")
         # Chargement des boutons
         self.button_continue = button.Button(
             [self.setting.screensize[0] * 1 / 5, self.setting.screensize[1] * 2 / 5],
@@ -66,7 +66,7 @@ class Menu:
             [self.setting.screensize[0] / 2, self.setting.screensize[1] / 5],
             self.text_font,
             "Game of the programmation project ",
-            pygame.Color("#36B500"),
+            pygame.Color("#0080ff"),
         )
         # Curseur
         self.texture_cursor = pygame.image.load("Texture/Cursor.png")

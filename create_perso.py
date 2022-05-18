@@ -14,13 +14,13 @@ class CreateWarning:
         self.button_font = pygame.font.Font("Game_font.TTF", 48)
         self.text_font = pygame.font.Font("Game_font.TTF", 72)
         # Chargement des textures
-        self.texture_background = self.setting.get_texture("Texture/Background.png")
+        self.texture_background = self.setting.get_texture("Texture/Background 2.png")
         # Bouton pour continuer
         self.button_continue = button.Button(
             [self.setting.screensize[0] / 2, self.setting.screensize[1] * 3 / 4],
             2,
             0,
-            ["Texture/Button up.png", "Texture/Button down.png"],
+            ["Texture/Button up 2.png", "Texture/Button down 2.png"],
             self.button_font,
             ["Continue", "Continue"],
             [pygame.Color("#000000"), pygame.Color("#000000")],
@@ -31,11 +31,26 @@ class CreateWarning:
             [self.setting.screensize[0] / 2, self.setting.screensize[1] / 2],
             2,
             0,
-            ["Texture/Button up.png", "Texture/Button down.png"],
+            ["Texture/Button up 2.png", "Texture/Button down 2.png"],
             self.button_font,
             ["Back", "Back"],
             [pygame.Color("#000000"), pygame.Color("#000000")],
             self.setting
+        )
+        # Message avertissement
+        self.Text = text_render.Text(
+            self.setting,
+            [self.setting.screensize[0] / 2, self.setting.screensize[1] / 5],
+            self.text_font,
+            "Attention si vous continuez, vous allez",
+            pygame.Color("#FF0000"),
+        )
+        self.Text2 = text_render.Text(
+            self.setting,
+            [self.setting.screensize[0] / 2, self.setting.screensize[1] * 2 / 6],
+            self.text_font,
+            "perdre la précédente sauvegarde !!",
+            pygame.Color("#FF0000"),
         )
         self.texture_cursor = pygame.image.load("Texture/Cursor.png")
         # Coordonnée des différents objets
@@ -75,6 +90,9 @@ class CreateWarning:
 
             # Affichage du fond d'écran
             self.window.blit(self.texture_background, (0, 0))
+            # Affichage de texte
+            self.Text.render(self.window)
+            self.Text2.render(self.window)
             # Affichage des boutons en fonction de leur état
             self.button_continue.render(self.window)
             self.button_back.render(self.window)
