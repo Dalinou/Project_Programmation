@@ -1,0 +1,28 @@
+[
+  {
+    "__monster__": true,
+    "name": "loup",
+    "def": 10,
+    "atk": 15,
+    "pv": 30,
+    "texture": "loup.png"
+
+  },
+  {
+    "__monster__": true,
+    "name": "gobelin",
+    "def": 15,
+    "atk": 5,
+    "pv": 50,
+    "texture": "gobelin.png"
+
+  },
+  {
+    "__monster__": true,
+    "name": "orc",
+    "def": 20,
+    "atk": 10,
+    "pv": 50,
+    "texture": "orc.png"
+  }
+]
