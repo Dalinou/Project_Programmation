@@ -2,6 +2,8 @@ import pygame
 import os
 import button
 import text_render
+import classe
+import json
 
 
 # Ecran de warning si sauvegarde existante
@@ -13,6 +15,7 @@ class CreateWarning:
         self.setting = setting
         self.button_font = pygame.font.Font("Game_font.TTF", 48)
         self.text_font = pygame.font.Font("Game_font.TTF", 72)
+
         # Chargement des textures
         self.texture_background = self.setting.get_texture("Texture/Background 2.png")
         # Bouton pour continuer
@@ -107,6 +110,17 @@ class CreatePerso:
         self.text_font = pygame.font.Font("Game_font.TTF", 72)
         # Chargement des textures
         self.texture_background = self.setting.get_texture("Texture/Background CreatePerso.png")
+        # Chargement des données des classes
+        # Ouverture du fichier
+        with open("classe.json") as data:
+            # Ouverture du fichier à l'aide du décodeur json et décoder classe.decode
+            z = json.load(data, object_hook=classe.decode)
+        # sert à désigner chaque classe par son nom, non un numéro (pas forcément fixe)
+        self.classe_list = {z[i].classe_name: z[i] for i in range(z.__len__())}
+        # Initialisation des variables de sélection
+        self.gender = "M"
+        self.classe_name = "Guerrier"
+
         # Chargement bouton Man
         self.button_man = button.Button(
             [self.setting.screensize[0] * 8.75 / 10, self.setting.screensize[1] * 4 / 10],
@@ -248,17 +262,17 @@ class CreatePerso:
                 # Si Click de la souris
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.button_man.state == 1:
-                        genre = "man"
+                        self.gender = "M"
                     if self.button_woman.state == 1:
-                        genre = "woman"
+                        self.gender = "F"
                     if self.button_back.state == 1:
                         return "menu"
                     if self.button_guerrier.state == 1:
-                        classe = "Guerrier"
+                        self.classe_name = "Guerrier"
                     if self.button_mage.state == 1:
-                        classe = "Mage"
+                        self.classe_name = "Mage"
                     if self.button_voleur.state == 1:
-                        classe = "Voleur"
+                        self.classe_name = "Voleur"
                     # check clic sur l'input box
                     coord = event.pos
                     if self.input_box.is_coord_on(coord):
@@ -294,6 +308,12 @@ class CreatePerso:
 
             # Affichage du fond d'écran
             self.window.blit(self.texture_background, (0, 0))
+
+            # affichage de l'aperçu du personnage sélectionné
+            texture_name = "face M" if self.gender == "M" else "face F"
+            self.window.blit(self.classe_list[self.classe_name].texture[texture_name],
+                             [self.setting.screensize[0] / 2, self.setting.screensize[1] / 2])
+
             # Affichage de texte
             self.Text.render(self.window)
             # Affichage des boutons

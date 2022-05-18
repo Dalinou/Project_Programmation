@@ -1,4 +1,5 @@
 import json
+import pygame
 # pour recupérer les classes
 ''' 
 # Ouverture du fichier
@@ -12,6 +13,7 @@ z = {z[i].classe_name: z[i] for i in range(z.__len__())}
 
 class Classe:
     def __init__(self, classe_name, defense, atk, pv, description, atk_type, texture):
+        # Recuperation des variables
         self.classe_name = classe_name
         self.defense = defense
         self.atk = atk
@@ -19,6 +21,9 @@ class Classe:
         self.description = description
         self.atk_type = atk_type
         self.texture = texture
+        # Recuperation des textures
+        for name in self.texture:
+            self.texture[name] = pygame.image.load(self.texture[name])
 
 
 def decode(dct):

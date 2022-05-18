@@ -11,10 +11,10 @@
       "gros coup bien violent qui fait bien mal et qui peut te peter le poignet si tu tape le mur"
     ],
     "texture": {
-      "face M": "Gu_fM.png",
-      "face F": "Gu_fF.png",
-      "top M": "Gu_tM.png",
-      "top F": "Gu_tF.png"
+      "face M": "Texture/Guerrier_m.png",
+      "face F": "Texture/Guerrier_f.png",
+      "top M": "Texture/Default.png",
+      "top F": "Texture/Default.png"
     }
   },
   {
@@ -29,10 +29,10 @@
       "boule de feu"
     ],
     "texture": {
-      "face M": "Ma_fM.png",
-      "face F": "Ma_fF.png",
-      "top M": "Ma_tM.png",
-      "top F": "Ma_tF.png"
+      "face M": "Texture/Mage_m.png",
+      "face F": "Texture/Mage_f.png",
+      "top M": "Texture/Default.png",
+      "top F": "Texture/Default.png"
     }
   },
   {
@@ -47,10 +47,10 @@
       "vol de vie"
     ],
     "texture": {
-      "face M": "Vo_fM.png",
-      "face F": "Vo_fF.png",
-      "top M": "Vo_tM.png",
-      "top F": "Vo_tF.png"
+      "face M": "Texture/Voleur_m.png",
+      "face F": "Texture/Voleur_f.png",
+      "top M": "Texture/Default.png",
+      "top F": "Texture/Default.png"
     }
   }
 ]
