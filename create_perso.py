@@ -311,8 +311,10 @@ class CreatePerso:
 
             # affichage de l'aperçu du personnage sélectionné
             texture_name = "face M" if self.gender == "M" else "face F"
-            self.window.blit(self.classe_list[self.classe_name].texture[texture_name],
-                             [self.setting.screensize[0] / 2, self.setting.screensize[1] / 2])
+            texture = self.classe_list[self.classe_name].texture[texture_name]
+            self.window.blit(texture,
+                             [self.setting.screensize[0] / 2 - texture.get_width() / 2,
+                              self.setting.screensize[1] / 2 - texture.get_height() / 2])
 
             # Affichage de texte
             self.Text.render(self.window)
