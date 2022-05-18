@@ -202,8 +202,19 @@ class CreatePerso:
             0,
             ["Texture/Button up 2.png", "Texture/Button down 2.png"],
             self.input_box_font,
-            ["Insérer texte", "Insérer texte"],
-            [pygame.Color("#CB4F00"), pygame.Color("#FE6400")],
+            ["Enter name", "Enter name"],
+            [pygame.Color("#000000"), pygame.Color("#000000")],
+            self.setting
+        )
+        # Création du bouton de confirmation
+        self.button_confirm = button.Button(
+            [self.setting.screensize[0]/2, self.setting.screensize[1] * 8 / 10],
+            3,
+            2,
+            ["Texture/Button up 2.png", "Texture/Button down 2.png", "Texture/Button gray 2.png"],
+            self.button_font,
+            ["Confirm", "Confirm", "Need a name"],
+            [pygame.Color("#000000"), pygame.Color("#000000"), pygame.Color("#000000")],
             self.setting
         )
         # Curseur
@@ -258,6 +269,13 @@ class CreatePerso:
                         self.button_voleur.set_state(1)
                     else:
                         self.button_voleur.set_state(0)
+                    # bouton confirm
+                    if self.input_box_text.__len__() < 3:
+                        self.button_confirm.set_state(2)
+                    elif self.button_confirm.is_coord_on(self.cursor_coord):
+                        self.button_confirm.set_state(1)
+                    else:
+                        self.button_confirm.set_state(0)
 
                 # Si Click de la souris
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -304,7 +322,15 @@ class CreatePerso:
                     self.input_box.change_text(
                         [self.input_box_text, self.input_box_text]
                         if self.input_box_text.__len__() != 0
-                        else ["Insérer texte", "Insérer texte"])
+                        else ["Enter name", "Enter name"])
+                    # Actualisation du bouton confirm
+                    if self.input_box_text.__len__() < 3:
+                        self.button_confirm.set_state(2)
+                    else:
+                        if self.button_confirm.is_coord_on(self.cursor_coord):
+                            self.button_confirm.set_state(1)
+                        else:
+                            self.button_confirm.set_state(0)
 
             # Affichage du fond d'écran
             self.window.blit(self.texture_background, (0, 0))
@@ -312,6 +338,9 @@ class CreatePerso:
             # affichage de l'aperçu du personnage sélectionné
             texture_name = "face M" if self.gender == "M" else "face F"
             texture = self.classe_list[self.classe_name].texture[texture_name]
+            # Passage d'une texture de 32*32 en plus grand (facteur 7.5)
+            texture = pygame.transform.scale(texture,
+                                             [texture.get_width()*8, texture.get_height()*8])
             self.window.blit(texture,
                              [self.setting.screensize[0] / 2 - texture.get_width() / 2,
                               self.setting.screensize[1] / 2 - texture.get_height() / 2])
@@ -326,6 +355,7 @@ class CreatePerso:
             self.button_mage.render(self.window)
             self.button_voleur.render(self.window)
             self.input_box.render(self.window)
+            self.button_confirm.render(self.window)
             #  Affichage du curseur
             self.window.blit(self.texture_cursor, self.cursor_coord)
             # Actualisation de l'affichage
