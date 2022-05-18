@@ -108,7 +108,7 @@ class CreatePerso:
         self.texture_background = self.setting.get_texture("Texture/Background CreatePerso.png")
         # Chargement bouton Man
         self.button_man = button.Button(
-            [self.setting.screensize[0] * 1.25 / 10, self.setting.screensize[1] * 4 / 10],
+            [self.setting.screensize[0] * 8.75 / 10, self.setting.screensize[1] * 4 / 10],
             2,
             0,
             ["Texture/Button up choice.png", "Texture/Button down choice.png"],
@@ -119,7 +119,7 @@ class CreatePerso:
         )
         # Chargement bouton Woman
         self.button_woman = button.Button(
-            [self.setting.screensize[0] * 1.25 / 10, self.setting.screensize[1] * 6 / 10],
+            [self.setting.screensize[0] * 8.75 / 10, self.setting.screensize[1] * 6 / 10],
             2,
             0,
             ["Texture/Button up choice.png", "Texture/Button down choice.png"],
@@ -149,7 +149,7 @@ class CreatePerso:
         )
         # bouton pour la classe guerrier
         self.button_guerrier = button.Button(
-            [self.setting.screensize[0] * 8.75 / 10, self.setting.screensize[1] * 4 / 10],
+            [self.setting.screensize[0] * 1.25 / 10, self.setting.screensize[1] * 4 / 10],
             2,
             0,
             ["Texture/Button up choice.png", "Texture/Button down choice.png"],
@@ -160,7 +160,7 @@ class CreatePerso:
         )
         # bouton pour la classe mage
         self.button_mage = button.Button(
-            [self.setting.screensize[0] * 8.75 / 10, self.setting.screensize[1] * 6 / 10],
+            [self.setting.screensize[0] * 1.25 / 10, self.setting.screensize[1] * 6 / 10],
             2,
             0,
             ["Texture/Button up choice.png", "Texture/Button down choice.png"],
@@ -171,7 +171,7 @@ class CreatePerso:
         )
         # bouton pour la classe voleur
         self.button_voleur = button.Button(
-            [self.setting.screensize[0] * 8.75 / 10, self.setting.screensize[1] * 8 / 10],
+            [self.setting.screensize[0] * 1.25 / 10, self.setting.screensize[1] * 8 / 10],
             2,
             0,
             ["Texture/Button up choice.png", "Texture/Button down choice.png"],
