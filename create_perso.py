@@ -124,23 +124,23 @@ class CreatePerso:
         # Chargement bouton Man
         self.button_man = button.Button(
             [self.setting.screensize[0] * 8.75 / 10, self.setting.screensize[1] * 4 / 10],
-            2,
+            3,
             0,
-            ["Texture/Button up choice.png", "Texture/Button down choice.png"],
+            ["Texture/Button up choice.png", "Texture/Button down choice.png", "Texture/Button selectionned.png"],
             self.button_font,
-            ["Man", "Man"],
-            [pygame.Color("#000000"), pygame.Color("#000000")],
+            ["Man", "Man", "Man"],
+            [pygame.Color("#000000"), pygame.Color("#000000"), pygame.Color("#000000")],
             self.setting
         )
         # Chargement bouton Woman
         self.button_woman = button.Button(
             [self.setting.screensize[0] * 8.75 / 10, self.setting.screensize[1] * 6 / 10],
-            2,
+            3,
             0,
-            ["Texture/Button up choice.png", "Texture/Button down choice.png"],
+            ["Texture/Button up choice.png", "Texture/Button down choice.png", "Texture/Button selectionned.png"],
             self.button_font,
-            ["Woman", "Woman"],
-            [pygame.Color("#000000"), pygame.Color("#000000")],
+            ["Woman", "Woman", "Woman"],
+            [pygame.Color("#000000"), pygame.Color("#000000"), pygame.Color("#000000")],
             self.setting
         )
         # Chargement bouton back
@@ -165,34 +165,34 @@ class CreatePerso:
         # bouton pour la classe guerrier
         self.button_guerrier = button.Button(
             [self.setting.screensize[0] * 1.25 / 10, self.setting.screensize[1] * 4 / 10],
-            2,
+            3,
             0,
-            ["Texture/Button up choice.png", "Texture/Button down choice.png"],
+            ["Texture/Button up choice.png", "Texture/Button down choice.png", "Texture/Button selectionned.png"],
             self.button_font,
-            ["Guerrier", "Guerrier"],
-            [pygame.Color("#000000"), pygame.Color("#000000")],
+            ["Guerrier", "Guerrier", "Guerrier"],
+            [pygame.Color("#000000"), pygame.Color("#000000"), pygame.Color("#000000")],
             self.setting
         )
         # bouton pour la classe mage
         self.button_mage = button.Button(
             [self.setting.screensize[0] * 1.25 / 10, self.setting.screensize[1] * 6 / 10],
-            2,
+            3,
             0,
-            ["Texture/Button up choice.png", "Texture/Button down choice.png"],
+            ["Texture/Button up choice.png", "Texture/Button down choice.png", "Texture/Button selectionned.png"],
             self.button_font,
-            ["Mage", "Mage"],
-            [pygame.Color("#000000"), pygame.Color("#000000")],
+            ["Mage", "Mage", "Mage"],
+            [pygame.Color("#000000"), pygame.Color("#000000"), pygame.Color("#000000")],
             self.setting
         )
         # bouton pour la classe voleur
         self.button_voleur = button.Button(
             [self.setting.screensize[0] * 1.25 / 10, self.setting.screensize[1] * 8 / 10],
-            2,
+            3,
             0,
-            ["Texture/Button up choice.png", "Texture/Button down choice.png"],
+            ["Texture/Button up choice.png", "Texture/Button down choice.png", "Texture/Button selectionned.png"],
             self.button_font,
-            ["Voleur", "Voleur"],
-            [pygame.Color("#000000"), pygame.Color("#000000")],
+            ["Voleur", "Voleur", "Voleur"],
+            [pygame.Color("#000000"), pygame.Color("#000000"), pygame.Color("#000000")],
             self.setting
         )
         # création de l'espace pour entrer son pseudo
@@ -301,7 +301,6 @@ class CreatePerso:
                         # sinon l'entrée de caractère dans l'input box n'est pas activée
                         self.input_box_input = False
                         self.input_box.set_state(0)
-
                 # si l'entrée dans l'input box est activée et qu'on apuie sur une touche, permet l'entrée de caract
                 elif event.type == pygame.KEYDOWN and self.input_box_input:
                     # Touche enter, echap, tab
@@ -331,6 +330,18 @@ class CreatePerso:
                             self.button_confirm.set_state(1)
                         else:
                             self.button_confirm.set_state(0)
+
+                #Affichage des boutons selectionnés
+                if self.gender == "M":
+                    self.button_man.set_state(2)
+                if self.gender == "F":
+                    self.button_woman.set_state(2)
+                if self.classe_name == "Guerrier":
+                    self.button_guerrier.set_state(2)
+                if self.classe_name == "Mage":
+                    self.button_mage.set_state(2)
+                if self.classe_name == "Voleur":
+                    self.button_voleur.set_state(2)
 
             # Affichage du fond d'écran
             self.window.blit(self.texture_background, (0, 0))
