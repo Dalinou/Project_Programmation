@@ -18,7 +18,7 @@ class Text:
         # Création des textures
         self.create_texture()
 
-    # Fabrique la texture
+    # Fabrique la texture du texte
     def create_texture(self):
         # Chargement des textures ligne par ligne
         self.text_texture = [self.font.render(t, True, self.text_color) for t in self.text.split('\n')]
@@ -57,10 +57,12 @@ class Text:
     def render(self, window):
         # Calcul de la différence de position entre 2 lignes
         dh = self.font.get_linesize() + self.interligne
+        # Adapte la valeur de dh à la résolution de l'écran
         if self.screensize_adaptation:
             dh = dh * self.setting.screensize[1] / self.setting.default_screensize[1]
+        # Boucle qui affiche ligne par ligne le texte
         for i in range(0, self.text_texture.__len__()):
-            # change les coordonnées si centré
+            # change les coordonnées si centré + gestion du \n
             if self.is_center:
                 _coord = [
                     self.coord[0] - self.text_texture[i].get_width() / 2,

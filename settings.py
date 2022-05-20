@@ -5,7 +5,7 @@ import text_render
 import json
 
 
-# Classe de lecture des parametres
+# Classe de lecture/écriture des parametres depuis le fichier de paramètrage setting.json
 class SettingReader:
     def __init__(self):
         # Nom du fichier
@@ -28,7 +28,7 @@ class SettingReader:
         else:
             self.write_file()
 
-    # lis le fichier .json
+    # lis le fichier .json et en ressort les données de paramètrage
     def read_file(self):
         # Charge le contenuedu fichier et le mets dans un tableau
         data = json.load(open(self.filename))
@@ -39,7 +39,7 @@ class SettingReader:
         # Réécrit le fichier pour mettre les valeurs par default si besoin
         self.write_file()
 
-    # écrit le fichier .json
+    # écrit le fichier .json avec les données de paramètrage
     def write_file(self):
         # Crée un tableau avec le bon format de tableau
         data = {
@@ -51,7 +51,7 @@ class SettingReader:
         # json.dumps sert à transformé le tableau en chaine de caractère, il fait aussi de l'indentation
         open(self.filename, 'w').write(json.dumps(data, indent=2, sort_keys=True))
 
-    # change la valeur du paramètre et réecrit le fichier
+    # change la valeur d'un des paramètres et change le fichier .json
     def set_screensize(self, screensize=(1344, 704)):
         self.screensize = screensize
         self.write_file()
@@ -73,13 +73,14 @@ class SettingReader:
 
     # Charge la texture et l'adapte à la taille de l'écran
     def get_texture(self, filename):
-        # texture la texture
+        # chargement de la texture
         texture = pygame.image.load(filename)
         # Calcule la nouvelle résolution en fct de la résolution de l'écran
         newsize = (
             self.screensize[0] * texture.get_width() / self.default_screensize[0],
             self.screensize[1] * texture.get_height() / self.default_screensize[1])
         # Renvoie la texture
+        # pygame.transform.scale sert à mettre la texture à une nouvelle resolution
         return pygame.transform.scale(texture, newsize)
 
 
@@ -144,7 +145,6 @@ class SettingScreen:
         # Coordonnée des différents objets
         self.cursor_coord = (0, 0)
         # Liste des différentes valeurs pour screen_size et fps
-        # Doivent être dans le même ordre que les textures
         self.fps_list = (30, 60, 120)
         self.screensize_list = ([800, 576], [1024, 786], [1280, 800], [1344, 704])
         # Création du texte
