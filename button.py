@@ -2,7 +2,7 @@ import pygame
 import text_render
 
 
-# Cette classe est une classe sert à avoir des boutons, on peut les afficher "render(window)",
+# Cette classe est une classe qui sert à avoir des boutons, on peut les afficher "render(window)",
 # changer le texte, sa couleur, sa position, son état...
 class Button:
     def __init__(self, coord, nb_state, init_state, background_filename, font, text, text_color, setting,
@@ -35,7 +35,7 @@ class Button:
             self.coord[0] + self.background_texture[self.state].get_width() / 2,
             self.coord[1] + self.background_texture[self.state].get_height() / 2
         ]
-        # Création du
+        # Création du texte
         self.text = [
             text_render.Text(
                 self.setting,

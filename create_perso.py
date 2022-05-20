@@ -45,10 +45,10 @@ class CreateWarning:
             self.setting,
             [self.setting.screensize[0] / 2, self.setting.screensize[1] / 5],
             self.text_font,
-            "Attention si vous continuez, vous allez\nperdre la précédente sauvegarde !!",
+            "Attention si vous continuez, vous allez\nperdre votre sauvegarde !!",
             pygame.Color("#FF0000"),
         )
-
+        # chargement du curseur
         self.texture_cursor = pygame.image.load("Texture/Cursor.png")
         # Coordonnée des différents objets
         self.cursor_coord = (0, 0)
@@ -228,8 +228,8 @@ class CreatePerso:
         self.input_box_text = ""
 
     def gameloop(self):
-        # clock.tick pour respecter le fps
         while True:
+            # clock.tick pour respecter le fps
             self.clock.tick(self.setting.fps)
             for event in pygame.event.get():
                 # Lecture des entrées et interprétation
@@ -240,7 +240,9 @@ class CreatePerso:
                 if event.type == pygame.MOUSEMOTION:
                     # récupération des coordonnées de la souris
                     self.cursor_coord = event.pos
+                    #bouton homme
                     if self.button_man.is_coord_on(self.cursor_coord):
+                        # change l'état du bouton si la souris est dessus
                         self.button_man.set_state(1)
                     else:
                         self.button_man.set_state(0)
@@ -277,7 +279,8 @@ class CreatePerso:
                     else:
                         self.button_confirm.set_state(0)
 
-                # Si Click de la souris
+                # Si Click de la souris sur les différents bouton,
+                # on verifie ou est la souris pour activer le bon bouton
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.button_man.state == 1:
                         self.gender = "M"
@@ -331,7 +334,7 @@ class CreatePerso:
                         else:
                             self.button_confirm.set_state(0)
 
-                #Affichage des boutons selectionnés
+                # Affichage des boutons selectionnés
                 if self.gender == "M":
                     self.button_man.set_state(2)
                 if self.gender == "F":
