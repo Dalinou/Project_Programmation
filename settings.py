@@ -72,9 +72,14 @@ class SettingReader:
         self.write_file()
 
     # Charge la texture et l'adapte à la taille de l'écran
-    def get_texture(self, filename):
+    def get_texture(self, filename, adapt_texture=True):
         # chargement de la texture
         texture = pygame.image.load(filename)
+        # Change la résolution de la texture et la renvoie
+        return self.adapt_texture(texture) if adapt_texture else texture
+
+    # Change la résolution de la texture en fonction de la résolution de l'écran
+    def adapt_texture(self, texture):
         # Calcule la nouvelle résolution en fct de la résolution de l'écran
         newsize = (
             self.screensize[0] * texture.get_width() / self.default_screensize[0],
@@ -82,6 +87,7 @@ class SettingReader:
         # Renvoie la texture
         # pygame.transform.scale sert à mettre la texture à une nouvelle resolution
         return pygame.transform.scale(texture, newsize)
+
 
 
 class SettingScreen:

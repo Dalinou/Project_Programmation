@@ -115,6 +115,10 @@ class CreatePerso:
         with open("classe.json") as data:
             # Ouverture du fichier à l'aide du décodeur json et décoder classe.decode
             z = json.load(data, object_hook=classe.decode)
+        # Adaptation de la texture à la tailles de l'écran
+        for element in z:
+            element.texture["face M"] = self.setting.adapt_texture(element.texture["face M"])
+            element.texture["face F"] = self.setting.adapt_texture(element.texture["face F"])
         # sert à désigner chaque classe par son nom, non un numéro (pas forcément fixe)
         self.classe_list = {z[i].classe_name: z[i] for i in range(z.__len__())}
         # Initialisation des variables de sélection
