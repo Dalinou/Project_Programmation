@@ -4,6 +4,7 @@ import button
 import text_render
 import classe
 import json
+import save
 
 
 # Ecran de warning si sauvegarde existante
@@ -298,6 +299,11 @@ class CreatePerso:
                         self.classe_name = "Mage"
                     if self.button_voleur.state == 1:
                         self.classe_name = "Voleur"
+                    # Si clique sur le bouton de confirmation de création de perso
+                    if self.button_confirm.state == 1:
+                        save.init_save("save.json", self.classe_list[self.classe_name], self.gender, [0, 0, "Map 0"],
+                                       self.input_box_text)
+                        return "game"
                     # check clic sur l'input box
                     coord = event.pos
                     if self.input_box.is_coord_on(coord):
