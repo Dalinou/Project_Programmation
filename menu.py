@@ -2,7 +2,6 @@ import pygame
 import os
 import button
 import text_render
-# TODO penser à changer le 'save.txt' en 'save.json'
 
 
 # Classe pour l'écran de menu
@@ -23,7 +22,7 @@ class Menu:
         self.button_continue = button.Button(
             [self.setting.screensize[0] * 1 / 5, self.setting.screensize[1] * 2 / 5],
             3,
-            0 if os.path.exists("save.txt") else 2,
+            0 if os.path.exists("save.json") else 2,
             ["Texture/Button up 2.png", "Texture/Button down 2.png", "Texture/Button gray 2.png"],
             self.button_font,
             ["Continue", "Continue", "Continue"],
@@ -87,7 +86,7 @@ class Menu:
                     # récupération des coordonnées de la souris
                     self.cursor_coord = event.pos
                     # regarde si une sauvegarde existe
-                    if not os.path.exists("save.txt"):
+                    if not os.path.exists("save.json"):
                         self.button_continue.set_state(2)
                     # regarde si la souris est sur le bouton continue
                     elif self.button_continue.is_coord_on(self.cursor_coord):
@@ -115,7 +114,7 @@ class Menu:
                     if self.button_continue.state == 1:
                         return "game"
                     if self.button_new_game.state == 1:
-                        if not os.path.exists("save.txt"):
+                        if not os.path.exists("save.json"):
                             return "create"
                         else:
                             return "warning"

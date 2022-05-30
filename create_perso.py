@@ -79,7 +79,7 @@ class CreateWarning:
                     self.cursor_coord = event.pos
                     if self.button_continue.state == 1:
                         # détruit le fichier de sauvegarde
-                        os.remove("save.txt")
+                        os.remove("save.json")
                         # renvoies la valeur permettant d'aller à l'écran de création de personnage
                         return "create"
                     if self.button_back.state == 1:
