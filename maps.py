@@ -1,69 +1,3 @@
-'''
-import numpy as np
-import random as random
-import pygame
-import sys
-import math
-import json
-
-
-def decode(dct):
-    if "__map__" in dct:
-        return dct["map data"]
-    return dct
-
-
-map = [[]]
-with open("test.json") as data:
-    # Ouverture du fichier à l'aide du décodeur json et décoder classe.decode
-    map = json.load(data, object_hook=decode)[0]
-
-pygame.init()
-# Donnée de dimension de l'affichage
-pas = [32, 32]
-dim = [map.__len__(), map[0].__len__()]
-print(map)
-res = [pas[0]*dim[0], pas[1]*dim[1]]
-
-# création de la fenetre
-windows = pygame.display.set_mode(res)
-# création de la clock
-Clock = pygame.time.Clock()
-# Chargement des textures
-Mire = pygame.image.load('Texture/Mire 1.png')
-Herbe = pygame.image.load('Texture/Herbe 1.png')
-Sable = pygame.image.load('Texture/Sable 1.png')
-Eau = pygame.image.load('Texture/Eau 1.png')
-# Création de la carte
-carte = map
-
-
-# Fonction d'actualisation de l'affichage
-def affich():
-    # affichage du fond  (carte)
-    for i in range(0, dim[0]):
-        for j in range(0, dim[1]):
-            if carte[j][i] == 'S':
-                windows.blit(Sable, (i * pas[0], j * pas[1]))
-            elif carte[j][i] == 'H':
-                windows.blit(Herbe, (i * pas[0], j * pas[1]))
-            elif carte[j][i] == 'E':
-                windows.blit(Eau, (i * pas[0], j * pas[1]))
-
-
-# Boucle de fonctionnement
-while True:
-    # Tempo pour être à 120 Ips
-    Clock.tick(120)
-    # Lecture des entrées
-    for event in pygame.event.get():
-        # Alt-f4 ou croix rouge
-        if event.type == pygame.QUIT:
-            sys.exit()
-    affich()
-    pygame.display.update()
-'''
-
 import json
 import pygame.image
 import settings
@@ -72,29 +6,32 @@ import sys
 
 # TODO Commentaire !!!
 class Maps:
-    def __init__(self, coord_init):
+    def __init__(self, filename, coord_init, setting):
+        self.setting = setting
+        self.filename = filename
         self.coord = coord_init
         self.map = {}
         self.tile = {}
+        self.tilesize = None
         self.decode()
-        self.tilesize = [32,32]
 
-    def render(self, window, setting, sprite_list):
+    def render(self, window, sprite_list):
         map_ = self.map[self.coord[2]]
         off = [3, 3]
-        coord0 = [setting.screensize[0] / 2 - map_.res[0] * self.tilesize[0] / 2,
-                  setting.screensize[1] / 2 - map_.res[1] * self.tilesize[1] / 2]
+        coord0 = [self.setting.screensize[0] / 2 - map_.res[0] * self.tilesize[0] / 2,
+                  self.setting.screensize[1] / 2 - map_.res[1] * self.tilesize[1] / 2]
 
         if coord0[0] + self.tilesize[0] * (self.coord[0] - off[0]) < 0:
             coord0[0] = 0 - (0 if self.coord[0] <= off[0] else self.coord[0] - 3) * self.tilesize[0]
-        elif coord0[0] + self.tilesize[0] * (self.coord[0] + off[0] + 1) >= setting.screensize[0]:
-            coord0[0] = max(setting.screensize[0] / self.tilesize[0] - self.coord[0] - off[0] - 1,
-                            setting.screensize[0] / self.tilesize[0] - map_.res[0]) * self.tilesize[0]
+        elif coord0[0] + self.tilesize[0] * (self.coord[0] + off[0] + 1) >= self.setting.screensize[0]:
+            coord0[0] = max(self.setting.screensize[0] / self.tilesize[0] - self.coord[0] - off[0] - 1,
+                            self.setting.screensize[0] / self.tilesize[0] - map_.res[0]) * self.tilesize[0]
         if coord0[1] + self.tilesize[1] * (self.coord[1] - off[1]) < 0:
             coord0[1] = 0 - (0 if self.coord[1] <= off[1] else self.coord[1] - 3) * self.tilesize[1]
-        elif coord0[1] + self.tilesize[1] * (self.coord[1] + off[1] + 1) >= setting.screensize[1]:
-            coord0[1] = max(setting.screensize[1]/self.tilesize[1] - self.coord[1] - off[1] - 1,
-                            setting.screensize[1] / self.tilesize[1] - map_.res[1]) * self.tilesize[1]
+        elif coord0[1] + self.tilesize[1] * (self.coord[1] + off[1] + 1) >= self.setting.screensize[1]:
+            coord0[1] = max(self.setting.screensize[1]/self.tilesize[1] - self.coord[1] - off[1] - 1,
+                            self.setting.screensize[1] / self.tilesize[1] - map_.res[1]) * self.tilesize[1]
+        window.blit(map_.background, (0, 0))
         for i in range(0, map_.res[1]):
             for j in range(0, map_.res[0]):
                 window.blit(self.tile[map_.map[i][j]],
@@ -105,24 +42,26 @@ class Maps:
                                          self.tilesize[1] * el.coord[1] + coord0[1]])
 
     def decode(self):
-        data = json.load(open("maps.json"))
+        data = json.load(open(self.filename))
         if "__maps__" in data:
             self.tilesize = data["tilesize"]
             for element in data["data"]:
                 if "__map__" in element:
-                    self.map[element["__map__"]] = Map(element)
+                    self.map[element["__map__"]] = Map(self.setting, element)
                 elif "__tile__" in element:
                     self.tile[element["__tile__"]] = pygame.image.load(element["texture"])
 
 
 class Map:
-    def __init__(self, data):
+    def __init__(self, setting, data):
         if "__map__" in data:
             self.res = data["res"]
             self.map = data["map data"]
+            self.background = setting.get_texture(data["background"])
         else:
             self.res = [0, 0]
             self.map = [[]]
+            self.background = pygame.image.load("Texture/Default.png")
 
 
 class Sprite:
@@ -131,6 +70,7 @@ class Sprite:
         self.texture = texture
 
 
+'''
 # initiation de pygame
 pygame.font.init()
 pygame.init()
@@ -154,7 +94,7 @@ s_list = []
 s_list.append(Sprite([3, 9, "Test map 1"], pygame.image.load('Texture/Guerrier_m.png')))
 s_list.append(Sprite(origine, pygame.image.load('Texture/Mire 1.png')))
 s_list.append(Sprite([4, 7, "Test map 1"], pygame.image.load('Texture/Mage_m.png')))
-map = Maps(origine)
+map = Maps("maps.json", origine)
 # Warning : Ici origine est copié dans s.list[1] et dans map, les valeurs des 2 sont donc liée
 # (si l'une change l'autre aussi)
 print(setting.screensize[0]/32)
@@ -180,3 +120,4 @@ while True:
                     else map.map[map.coord[2]].res[0] - 1
     map.render(window, setting, s_list)
     pygame.display.update()
+'''

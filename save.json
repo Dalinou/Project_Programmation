@@ -1,21 +1,21 @@
 [
   {
     "__personnage__": true,
-    "name": "Nom",
-    "class": "Guerrier",
+    "name": "Arthur",
+    "classe": "Voleur",
     "gender": "M",
-    "def": 15,
-    "atk": 10,
+    "def": 10,
+    "atk": 15,
     "pv": 100,
-    "pvmax": 100,
+    "pv max": 100,
     "atk type": [
       "base",
-      "gros coup bien violent qui fait bien mal et qui peut te peter le poignet si tu tape le mur"
+      "vol de vie"
     ],
     "location": [
       0,
       0,
-      "Map 0"
+      "Test map 1"
     ]
   }
 ]

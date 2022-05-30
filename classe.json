@@ -12,9 +12,7 @@
     ],
     "texture": {
       "face M": "Texture/Guerrier_m.png",
-      "face F": "Texture/Guerrier_f.png",
-      "top M": "Texture/Default.png",
-      "top F": "Texture/Default.png"
+      "face F": "Texture/Guerrier_f.png"
     }
   },
   {
@@ -30,9 +28,7 @@
     ],
     "texture": {
       "face M": "Texture/Mage_m.png",
-      "face F": "Texture/Mage_f.png",
-      "top M": "Texture/Default.png",
-      "top F": "Texture/Default.png"
+      "face F": "Texture/Mage_f.png"
     }
   },
   {
@@ -48,9 +44,7 @@
     ],
     "texture": {
       "face M": "Texture/Voleur_m.png",
-      "face F": "Texture/Voleur_f.png",
-      "top M": "Texture/Default.png",
-      "top F": "Texture/Default.png"
+      "face F": "Texture/Voleur_f.png"
     }
   }
 ]

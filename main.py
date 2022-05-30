@@ -2,6 +2,7 @@ import pygame
 import menu
 import settings
 import create_perso
+import game
 
 # initiation de pygame
 pygame.font.init()
@@ -39,6 +40,9 @@ while state != "exit":
         state = screen.gameloop()
     elif state == "paramètre":
         screen = settings.SettingScreen(window, clock, setting)
+        state = screen.gameloop()
+    elif state == "game":
+        screen = game.GameScreen(window, clock, setting)
         state = screen.gameloop()
     else:
         state = "menu"
