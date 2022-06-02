@@ -42,27 +42,33 @@
     },
     {
       "__tile__": "H",
-      "texture": "Texture/Herbe 1.png"
+      "texture": "Texture/Herbe 1.png",
+      "is walkable": true
     },
     {
       "__tile__": "E",
-      "texture": "Texture/Eau 1.png"
+      "texture": "Texture/Eau 1.png",
+      "is walkable": true
     },
     {
       "__tile__": "S",
-      "texture": "Texture/Sable 1.png"
+      "texture": "Texture/Sable 1.png",
+      "is walkable": true
     },
     {
       "__tile__": "A",
-      "texture": "Texture/Arbre_herbe.png"
+      "texture": "Texture/Arbre_herbe.png",
+      "is walkable": true
     },
     {
       "__tile__": "T",
-      "texture": "Texture/Terre.png"
+      "texture": "Texture/Terre.png",
+      "is walkable": true
     },
     {
       "__tile__": "R",
-      "texture": "Texture/Roche.png"
+      "texture": "Texture/Roche.png",
+      "is walkable": true
     }
   ]
 }

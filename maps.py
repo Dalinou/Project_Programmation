@@ -41,7 +41,7 @@ class Maps:
         # affichage les tuiles de la carte
         for i in range(0, map_.res[1]):
             for j in range(0, map_.res[0]):
-                window.blit(self.tile[map_.map[i][j]],
+                window.blit(self.tile[map_.map[i][j]].texture,
                             [j * self.tilesize[0] + coord0[0], i * self.tilesize[1] + coord0[1]])
         # affichage de la liste de sprite donnée, un sprite doit avoir comme donnée : une coordonée et une texture
         for el in sprite_list:
@@ -61,7 +61,7 @@ class Maps:
                 if "__map__" in element:
                     self.map[element["__map__"]] = Map(self.setting, element)
                 elif "__tile__" in element:
-                    self.tile[element["__tile__"]] = pygame.image.load(element["texture"])
+                    self.tile[element["__tile__"]] = Tile(element)
 
 
 # Classe qui stocke les données d'une carte
@@ -75,6 +75,16 @@ class Map:
             self.res = [0, 0]
             self.map = [[]]
             self.background = pygame.image.load("Texture/Default.png")
+
+
+class Tile:
+    def __init__(self, data):
+        if "__tile__" in data:
+            self.texture = pygame.image.load(data["texture"])
+            self.is_walkable = data["is walkable"]
+        else:
+            self.texture = pygame.image.load("Texture/Default.png")
+            self.is_walkable = True
 
 
 # class type pour ce qu'il faut comment attribut
