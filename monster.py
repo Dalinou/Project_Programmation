@@ -12,13 +12,14 @@ class Monster:
             self.pv = data["pv"]
             self.atk = data["atk"]
             self.defense = data["defense"]
-            self.texture = data["pygame.image.load(texture)"]
+        self.texture = pygame.image.load(data["texture"])
 
-    def monster(type):
-        # look in monster.json
-        with open("monster.json") as data:
-            z = json.load(data)
-            z = {z[i]["type"]: z[i] for i in range(z.__len__())}
-            if type in z:
-                data = z[type]
-                return Monster(data)
+
+def monster(type_):
+    # look in monster.json
+    with open("monster.json") as data:
+        z = json.load(data)
+        z = {z[i]["type_"]: z[i] for i in range(z.__len__())}
+        if type_ in z:
+            data = z[type_]
+            return Monster(data)
