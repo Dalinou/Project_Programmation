@@ -41,6 +41,20 @@
       ]
     },
     {
+      "__map__":  "Fight map",
+      "res": [7, 7],
+      "background": "Texture/Background.png",
+      "map data": [
+        ["H", "H", "H", "H", "H", "H", "H"],
+        ["H", "H", "H", "H", "H", "H", "H"],
+        ["H", "H", "H", "H", "H", "H", "H"],
+        ["H", "H", "H", "H", "H", "H", "H"],
+        ["H", "H", "H", "H", "H", "H", "H"],
+        ["H", "H", "H", "H", "H", "H", "H"],
+        ["H", "H", "H", "H", "H", "H", "H"]
+      ]
+    },
+    {
       "__tile__": "H",
       "texture": "Texture/Herbe 1.png",
       "is walkable": true
