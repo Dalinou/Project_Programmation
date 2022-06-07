@@ -48,7 +48,7 @@
     {
       "__tile__": "E",
       "texture": "Texture/Eau 1.png",
-      "is walkable": true
+      "is walkable": false
     },
     {
       "__tile__": "S",
@@ -58,7 +58,7 @@
     {
       "__tile__": "A",
       "texture": "Texture/Arbre_herbe.png",
-      "is walkable": true
+      "is walkable": false
     },
     {
       "__tile__": "T",
@@ -68,7 +68,7 @@
     {
       "__tile__": "R",
       "texture": "Texture/Roche.png",
-      "is walkable": true
+      "is walkable": false
     }
   ]
 }

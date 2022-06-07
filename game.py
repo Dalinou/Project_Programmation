@@ -52,17 +52,30 @@ class GameScreen:
                     if self.button_save.state == 1:
                         return "menu"
                 elif event.type == pygame.KEYDOWN:
-                    # Mouvement de la mire + vérification si tjrs dans la carte
+                    # Mouvement du joueur + vérification si tjrs dans la carte
                     if event.key == pygame.K_UP:
-                        self.perso.coord[1] = self.perso.coord[1] - 1 if self.perso.coord[1] > 0 else 0
+                        dest = self.maps.map[self.perso.coord[2]].map[self.perso.coord[0]][self.perso.coord[1]-1]
+                        is_walkable = self.maps.tile[dest].is_walkable
+                        print(is_walkable)
+                        if is_walkable:
+                            self.perso.coord[1] = self.perso.coord[1] - 1 if self.perso.coord[1] > 0 else 0
                     elif event.key == pygame.K_LEFT:
+                        dest = self.maps.map[self.perso.coord[2]].map[self.perso.coord[0]][self.perso.coord[1] - 1]
+                        is_walkable = self.maps.tile[dest].is_walkable
                         self.perso.coord[0] = self.perso.coord[0] - 1 if self.perso.coord[0] > 0 else 0
+
                     elif event.key == pygame.K_DOWN:
+                        dest = self.maps.map[self.perso.coord[2]].map[self.perso.coord[0]][self.perso.coord[1] - 1]
+                        is_walkable = self.maps.tile[dest].is_walkable
                         self.perso.coord[1] = self.perso.coord[1] + 1 if self.perso.coord[1] < self.maps.map[self.perso.coord[2]].res[1] - 1 \
-                            else self.maps.map[self.perso.coord[2]].res[1] - 1
+                        else self.maps.map[self.perso.coord[2]].res[1] - 1
+
                     elif event.key == pygame.K_RIGHT:
+                        dest = self.maps.map[self.perso.coord[2]].map[self.perso.coord[0]][self.perso.coord[1] - 1]
+                        is_walkable = self.maps.tile[dest].is_walkable
                         self.perso.coord[0] = self.perso.coord[0] + 1 if self.perso.coord[0] < self.maps.map[self.perso.coord[2]].res[0] - 1 \
-                            else self.maps.map[self.perso.coord[2]].res[0] - 1
+                        else self.maps.map[self.perso.coord[2]].res[0] - 1
+
             self.maps.coord = self.perso.coord
             self.maps.render(self.window, [self.perso])
             self.button_save.render(self.window)
