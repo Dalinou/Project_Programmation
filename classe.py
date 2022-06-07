@@ -12,12 +12,13 @@ z = {z[i].classe_name: z[i] for i in range(z.__len__())}
 
 
 class Classe:
-    def __init__(self, classe_name, defense, atk, pv, description, atk_type, texture):
+    def __init__(self, classe_name, defense, atk, pv, mvt, description, atk_type, texture):
         # Recuperation des variables
         self.classe_name = classe_name
         self.defense = defense
         self.atk = atk
         self.pv = pv
+        self.mvt = mvt
         self.description = description
         self.atk_type = atk_type
         self.texture = texture
@@ -29,7 +30,7 @@ class Classe:
 # permet de récuperer les informations contenus dans le json
 def decode(dct):
     if "__classe__" in dct:
-        return Classe(dct["classe name"], dct["def"], dct["atk"], dct["pv"],
+        return Classe(dct["classe name"], dct["def"], dct["atk"], dct["pv"], dct["mvt"],
                       dct["description"], dct["atk type"], dct["texture"])
     return dct
 

@@ -1,16 +1,16 @@
 [
   {
     "__personnage__": true,
-    "name": "Arthur",
-    "classe": "Voleur",
-    "gender": "M",
-    "def": 10,
-    "atk": 15,
+    "name": "121212112",
+    "classe": "Mage",
+    "gender": "F",
+    "def": 3,
+    "atk": 20,
     "pv": 100,
     "pv max": 100,
     "atk type": [
       "base",
-      "vol de vie"
+      "boule de feu"
     ],
     "location": [
       0,

@@ -11,6 +11,7 @@ class Personnage:
             self.pv_max = data["pv max"]
             self.atk = data["atk"]
             self.defense = data["def"]
+            self.mvt = data["mvt"]
             self.coord = data["location"]
             with open("classe.json") as data:
                 # Ouverture du fichier à l'aide du décodeur json et décoder classe.decode
@@ -26,7 +27,8 @@ class Personnage:
             "gender": self.gender,
             "pv": self.pv,
             "pv max": self.pv_max,
-            "atk": self.atk
+            "atk": self.atk,
+            "mvt": self.mvt
 
         }
 

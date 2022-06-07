@@ -12,6 +12,7 @@ class Monster:
             self.pv = data["pv"]
             self.atk = data["atk"]
             self.defense = data["defense"]
+            self.mvt = data["mvt"]
             self.texture = pygame.image.load(data["texture"])
 
 

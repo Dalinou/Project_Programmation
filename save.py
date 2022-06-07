@@ -23,7 +23,7 @@ def dump_save(filename, data):
 # Data doit comptenir les données de classe
 # gender de genre et location les coordonnées initials
 def init_save(filename, classe, gender, location_init, name):
-    data = json.dumps([{"__personnage__": True, "name": name, "classe": classe.classe_name, "gender": gender, "def": classe.defense,
-             "atk": classe.atk, "pv": classe.pv, "pv max": classe.pv, "atk type": classe.atk_type,
-             "location": location_init}], indent=2)
+    data = json.dumps([{"__personnage__": True, "name": name, "classe": classe.classe_name, "gender": gender,
+             "atk": classe.atk, "pv": classe.pv, "pv max": classe.pv, "atk type": classe.atk_type, "def": classe.defense,
+             "mvt": classe.mvt, "location": location_init}], indent=2)
     open(filename, 'w').write(data)

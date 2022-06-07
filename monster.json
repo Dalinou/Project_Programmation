@@ -5,6 +5,7 @@
     "def": 10,
     "atk": 15,
     "pv": 30,
+    "mvt": 5,
     "texture": "loup.png"
 
   },
@@ -14,6 +15,7 @@
     "def": 15,
     "atk": 5,
     "pv": 50,
+    "mvt": 3,
     "texture": "gobelin.png"
 
   },
@@ -23,6 +25,7 @@
     "def": 20,
     "atk": 10,
     "pv": 50,
+    "mvt": 2,
     "texture": "orc.png"
   }
 ]
