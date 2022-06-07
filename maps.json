@@ -11,14 +11,14 @@
         ["T", "A", "A", "A", "H", "A", "A", "A", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H"],
         ["T", "H", "A", "H", "A", "A", "A", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H"],
         ["T", "A", "H", "H", "A", "H", "A", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H"],
-        ["T", "A", "A", "A", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H"],
-        ["T", "T", "A", "H", "A", "A", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H"],
+        ["T", "A", "A", "A", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "AHG", "AHD", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H"],
+        ["T", "T", "A", "H", "A", "A", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "ABG", "ABD", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H"],
         ["H", "T", "H", "A", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H"],
         ["H", "T", "A", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H"],
         ["H", "T", "T", "T", "T", "T", "T", "T", "T", "T", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H"],
         ["H", "H", "T", "T", "A", "H", "A", "T", "T", "T", "T", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H"],
-        ["A", "A", "H", "H", "A", "A", "H", "H", "H", "T", "T", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H"],
-        ["H", "H", "A", "H", "A", "H", "A", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H"],
+        ["A", "A", "H", "H", "A", "A", "H", "H", "H", "T", "T", "H", "H", "H", "H", "H", "H", "H", "MHG", "MHD", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H"],
+        ["H", "H", "A", "H", "A", "H", "A", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "MBG", "MBD", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H"],
         ["H", "A", "A", "A", "A", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H"],
         ["H", "H", "H", "H", "H", "A", "H", "H", "E", "E", "E", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H"],
         ["H", "H", "H", "A", "H", "H", "H", "H", "E", "E", "E", "E", "E", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H"],
@@ -82,6 +82,46 @@
     {
       "__tile__": "R",
       "texture": "Texture/Roche.png",
+      "is walkable": true
+    },
+    {
+      "__tile__": "MBG",
+      "texture": "Texture/Maison_bas_gauche.png",
+      "is walkable": false
+    },
+    {
+      "__tile__": "MBD",
+      "texture": "Texture/Maison_bas_droite.png",
+      "is walkable": false
+    },
+    {
+      "__tile__": "MHG",
+      "texture": "Texture/Maison_haut_gauche.png",
+      "is walkable": false
+    },
+    {
+      "__tile__": "MHD",
+      "texture": "Texture/Maison_haut_droite.png",
+      "is walkable": false
+    },
+    {
+      "__tile__": "ABG",
+      "texture": "Texture/Arbre_bas_gauche.png",
+      "is walkable": false
+    },
+    {
+      "__tile__": "ABD",
+      "texture": "Texture/Arbre_bas_droite.png",
+      "is walkable": false
+    },
+    {
+      "__tile__": "AHG",
+      "texture": "Texture/Arbre_haut_gauche.png",
+      "is walkable": false
+    },
+    {
+      "__tile__": "AHD",
+      "texture": "Texture/Arbre_haut_droite.png",
       "is walkable": false
     }
   ]

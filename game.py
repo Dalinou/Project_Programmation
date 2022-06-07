@@ -22,7 +22,7 @@ class GameScreen:
             [self.setting.screensize[0] * 1.25 / 15, self.setting.screensize[1] * 1 / 15],
             2,
             0,
-            ["Texture/Button Back up.png", "Texture/Button Back down.png"],
+            ["Texture/Button Back up game.png", "Texture/Button Back down game.png"],
             self.button_font,
             [" ", " "],
             [pygame.Color("#000000"), pygame.Color("#000000"), pygame.Color("#000000")],
