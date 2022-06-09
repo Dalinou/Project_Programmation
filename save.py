@@ -13,6 +13,7 @@ def load_save(filename):
                 perso = personnage.Personnage(data)
     return perso
 
+
 # Sauvegarde la sauvegarde de data dans filename
 def dump_save(filename, data):
     ...
@@ -22,8 +23,6 @@ def dump_save(filename, data):
 # Initialisation de la sauvegarde
 # Data doit comptenir les données de classe
 # gender de genre et location les coordonnées initials
-def init_save(filename, classe, gender, location_init, name):
-    data = json.dumps([{"__personnage__": True, "name": name, "classe": classe.classe_name, "gender": gender,
-             "atk": classe.atk, "pv": classe.pv, "pv max": classe.pv, "atk type": classe.atk_type, "def": classe.defense,
-             "mvt": classe.mvt, "location": location_init}], indent=2)
+def init_save(filename, classe, gender, init_location, name):
+    data = json.dumps([personnage.gen_perso(classe, gender, init_location, name)], indent=2)
     open(filename, 'w').write(data)

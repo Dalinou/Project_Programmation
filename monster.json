@@ -1,31 +1,31 @@
 [
   {
     "__monster__": true,
-    "name": "loup",
+    "type": "Loup",
     "def": 10,
     "atk": 15,
     "pv": 30,
     "mvt": 5,
-    "texture": "loup.png"
+    "texture": "Texture/Loup.png"
 
   },
   {
     "__monster__": true,
-    "name": "gobelin",
+    "type": "Gobelin",
     "def": 15,
     "atk": 5,
     "pv": 50,
     "mvt": 3,
-    "texture": "gobelin.png"
+    "texture": "Texture/Gobelin.png"
 
   },
   {
     "__monster__": true,
-    "name": "orc",
+    "type": "Orc",
     "def": 20,
     "atk": 10,
     "pv": 50,
     "mvt": 2,
-    "texture": "orc.png"
+    "texture": "Texture/Orc.png"
   }
 ]
