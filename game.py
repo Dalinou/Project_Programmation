@@ -1,8 +1,5 @@
-import json
 import pygame.image
-
 import save
-import settings
 import sys
 import maps
 import button
@@ -55,39 +52,39 @@ class GameScreen:
                 elif event.type == pygame.KEYDOWN:
                     # Mouvement du joueur + vérification si tjrs dans la carte
                     if event.key == pygame.K_UP:
-                        dest = self.maps.map[self.perso.coord[2]]\
-                            .map[self.perso.coord[1] - 1 if self.perso.coord[1] > 0 else 0][self.perso.coord[0]]
+                        dest = self.maps.map[self.perso.location[2]]\
+                            .map[self.perso.location[1] - 1 if self.perso.location[1] > 0 else 0][self.perso.location[0]]
                         is_walkable = self.maps.tile[dest].is_walkable
                         if is_walkable:
-                            self.perso.coord[1] = self.perso.coord[1] - 1 if self.perso.coord[1] > 0 else 0
+                            self.perso.location[1] = self.perso.location[1] - 1 if self.perso.location[1] > 0 else 0
                     elif event.key == pygame.K_LEFT:
-                        dest = self.maps.map[self.perso.coord[2]]\
-                            .map[self.perso.coord[1]][self.perso.coord[0] - 1 if self.perso.coord[0] > 0 else 0]
+                        dest = self.maps.map[self.perso.location[2]]\
+                            .map[self.perso.location[1]][self.perso.location[0] - 1 if self.perso.location[0] > 0 else 0]
                         is_walkable = self.maps.tile[dest].is_walkable
                         if is_walkable:
-                            self.perso.coord[0] = self.perso.coord[0] - 1 if self.perso.coord[0] > 0 else 0
+                            self.perso.location[0] = self.perso.location[0] - 1 if self.perso.location[0] > 0 else 0
                     elif event.key == pygame.K_DOWN:
-                        dest = self.maps.map[self.perso.coord[2]]\
-                            .map[self.perso.coord[1] + 1 if self.perso.coord[1] <
-                                self.maps.map[self.perso.coord[2]].res[1] - 1 else
-                                self.maps.map[self.perso.coord[2]].res[1] - 1][self.perso.coord[0]]
+                        dest = self.maps.map[self.perso.location[2]]\
+                            .map[self.perso.location[1] + 1 if self.perso.location[1] <
+                                self.maps.map[self.perso.location[2]].res[1] - 1 else
+                                self.maps.map[self.perso.location[2]].res[1] - 1][self.perso.location[0]]
                         is_walkable = self.maps.tile[dest].is_walkable
                         if is_walkable:
-                            self.perso.coord[1] = self.perso.coord[1] + 1 if self.perso.coord[1] <\
-                                self.maps.map[self.perso.coord[2]].res[1] - 1 else\
-                                self.maps.map[self.perso.coord[2]].res[1] - 1
+                            self.perso.location[1] = self.perso.location[1] + 1 if self.perso.location[1] <\
+                                self.maps.map[self.perso.location[2]].res[1] - 1 else\
+                                self.maps.map[self.perso.location[2]].res[1] - 1
                     elif event.key == pygame.K_RIGHT:
-                        dest = self.maps.map[self.perso.coord[2]].map[self.perso.coord[1]]\
-                            [self.perso.coord[0] + 1 if self.perso.coord[0] <
-                                self.maps.map[self.perso.coord[2]].res[0] - 1
-                                else self.maps.map[self.perso.coord[2]].res[0] - 1]
+                        dest = self.maps.map[self.perso.location[2]].map[self.perso.location[1]]\
+                            [self.perso.location[0] + 1 if self.perso.location[0] <
+                                self.maps.map[self.perso.location[2]].res[0] - 1
+                                else self.maps.map[self.perso.location[2]].res[0] - 1]
                         is_walkable = self.maps.tile[dest].is_walkable
                         if is_walkable:
-                            self.perso.coord[0] = self.perso.coord[0] + 1 if self.perso.coord[0] <\
-                                self.maps.map[self.perso.coord[2]].res[0] - 1 \
-                                else self.maps.map[self.perso.coord[2]].res[0] - 1
+                            self.perso.location[0] = self.perso.location[0] + 1 if self.perso.location[0] <\
+                                self.maps.map[self.perso.location[2]].res[0] - 1 \
+                                else self.maps.map[self.perso.location[2]].res[0] - 1
 
-            self.maps.coord = self.perso.coord
+            self.maps.location = self.perso.location
             self.maps.render(self.window, [self.perso, *self.sprite_list])
             self.button_save.render(self.window)
             self.window.blit(self.texture_cursor, self.cursor_coord)
@@ -112,6 +109,36 @@ class FightScreen:
             ["Texture/Button Back up.png", "Texture/Button Back down.png"],
             self.button_font,
             [" ", " "],
+            [pygame.Color("#000000"), pygame.Color("#000000")],
+            self.setting
+        )
+        self.button_comp_1 = button.Button(
+            [self.setting.screensize[0] * 1 / 5, self.setting.screensize[1] * 4 / 5],
+            3,
+            0,
+            ["Texture/Button up.png", "Texture/Button down.png", "Texture/Button gray.png"],
+            self.button_font,
+            ["Up", "Down", "Gray"],
+            [pygame.Color("#000000"), pygame.Color("#000000"), pygame.Color("#000000")],
+            self.setting
+        )
+        self.button_comp_2 = button.Button(
+            [self.setting.screensize[0] * 1 / 2, self.setting.screensize[1] * 4 / 5],
+            3,
+            0,
+            ["Texture/Button up.png", "Texture/Button down.png", "Texture/Button gray.png"],
+            self.button_font,
+            ["Up", "Down", "Gray"],
+            [pygame.Color("#000000"), pygame.Color("#000000"), pygame.Color("#000000")],
+            self.setting
+        )
+        self.button_continue = button.Button(
+            [self.setting.screensize[0] * 4 / 5, self.setting.screensize[1] * 4 / 5],
+            3,
+            0,
+            ["Texture/Button up.png", "Texture/Button down.png", "Texture/Button gray.png"],
+            self.button_font,
+            ["Up", "Down", "Gray"],
             [pygame.Color("#000000"), pygame.Color("#000000"), pygame.Color("#000000")],
             self.setting
         )
@@ -121,9 +148,13 @@ class FightScreen:
 
     # Gestion du combat
     def gameloop(self, perso, monster):
-        display_perso = maps.Sprite(perso.coord, perso.texture)
-        display_monster = maps.Sprite(monster.coord, monster.texture)
+        display_perso = maps.Sprite([0, 3, "Fight map"], perso.texture)
+        display_monster = maps.Sprite([6, 3, "Fight map"], monster.texture)
+        state = "Player"  # Ou "Monster"
+        is_comp_use = False
+        move_left = perso.mvt
         while True:
+            active_disp = display_perso if state == "Player" else display_monster
             # clock.tick pour respecter le fps
             self.clock.tick(self.setting.fps)
             for event in pygame.event.get():
@@ -142,43 +173,50 @@ class FightScreen:
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if self.button_save.state == 1:
                         return "menu"
-                elif event.type == pygame.KEYDOWN:
+                elif event.type == pygame.KEYDOWN and move_left > 0:
                     # Mouvement de la mire + vérification si tjrs dans la carte
                     if event.key == pygame.K_UP:
-                        dest = self.maps.map[display_perso.coord[2]] \
-                            .map[display_perso.coord[1] - 1 if display_perso.coord[1] >0 else 0][display_perso.coord[0]]
+                        dest = self.maps.map[active_disp.location[2]] \
+                            .map[active_disp.location[1] - 1 if active_disp.location[1] >0 else 0][active_disp.location[0]]
                         is_walkable = self.maps.tile[dest].is_walkable
                         if is_walkable:
-                            display_perso.coord[1] = display_perso.coord[1] - 1 if display_perso.coord[1] > 0 else 0
+                            move_left -= 1
+                            active_disp.location[1] = active_disp.location[1] - 1 if active_disp.location[1] > 0 else 0
                     elif event.key == pygame.K_LEFT:
-                        dest = self.maps.map[display_perso.coord[2]] \
-                            .map[display_perso.coord[1]][display_perso.coord[0] - 1 if display_perso.coord[0] > 0 else 0]
+                        dest = self.maps.map[active_disp.location[2]] \
+                            .map[active_disp.location[1]][active_disp.location[0] - 1 if active_disp.location[0] > 0 else 0]
                         is_walkable = self.maps.tile[dest].is_walkable
                         if is_walkable:
-                            display_perso.coord[0] = display_perso.coord[0] - 1 if display_perso.coord[0] > 0 else 0
+                            move_left -= 1
+                            active_disp.location[0] = active_disp.location[0] - 1 if active_disp.location[0] > 0 else 0
                     elif event.key == pygame.K_DOWN:
-                        dest = self.maps.map[display_perso.coord[2]] \
-                            .map[display_perso.coord[1] + 1 if display_perso.coord[1] <
-                                                            self.maps.map[display_perso.coord[2]].res[1] - 1 else
-                        self.maps.map[display_perso.coord[2]].res[1] - 1][display_perso.coord[0]]
+                        dest = self.maps.map[active_disp.location[2]] \
+                            .map[active_disp.location[1] + 1 if active_disp.location[1] <
+                                                            self.maps.map[active_disp.location[2]].res[1] - 1 else
+                        self.maps.map[active_disp.location[2]].res[1] - 1][active_disp.location[0]]
                         is_walkable = self.maps.tile[dest].is_walkable
                         if is_walkable:
-                            display_perso.coord[1] = display_perso.coord[1] + 1 if display_perso.coord[1] < \
-                                                                             self.maps.map[display_perso.coord[2]].res[
+                            move_left -= 1
+                            active_disp.location[1] = active_disp.location[1] + 1 if active_disp.location[1] < \
+                                                                             self.maps.map[active_disp.location[2]].res[
                                                                                  1] - 1 else \
-                                self.maps.map[display_perso.coord[2]].res[1] - 1
+                                self.maps.map[active_disp.location[2]].res[1] - 1
                     elif event.key == pygame.K_RIGHT:
-                        dest = self.maps.map[display_perso.coord[2]].map[display_perso.coord[1]] \
-                            [display_perso.coord[0] + 1 if display_perso.coord[0] <
-                                                        self.maps.map[display_perso.coord[2]].res[0] - 1
-                            else self.maps.map[display_perso.coord[2]].res[0] - 1]
+                        dest = self.maps.map[active_disp.location[2]].map[active_disp.location[1]] \
+                            [active_disp.location[0] + 1 if active_disp.location[0] <
+                                                        self.maps.map[active_disp.location[2]].res[0] - 1
+                            else self.maps.map[active_disp.location[2]].res[0] - 1]
                         is_walkable = self.maps.tile[dest].is_walkable
                         if is_walkable:
-                            display_perso.coord[0] = display_perso.coord[0] + 1 if display_perso.coord[0] < \
-                                                                             self.maps.map[display_perso.coord[2]].res[
+                            move_left -= 1
+                            active_disp.location[0] = active_disp.location[0] + 1 if active_disp.location[0] < \
+                                                                             self.maps.map[active_disp.location[2]].res[
                                                                                  0] - 1 \
-                                else self.maps.map[display_perso.coord[2]].res[0] - 1
-            self.maps.render(self.window, [perso, monster])
+                                else self.maps.map[active_disp.location[2]].res[0] - 1
+            self.maps.render(self.window, [display_perso, display_monster])
             self.button_save.render(self.window)
+            self.button_comp_1.render(self.window)
+            self.button_comp_2.render(self.window)
+            self.button_continue.render(self.window)
             self.window.blit(self.texture_cursor, self.cursor_coord)
             pygame.display.update()
