@@ -1,0 +1,50 @@
+[
+  {
+    "__atk_def__": "coup dague",
+    "range": [0, 1],
+    "atk ratio": 1,
+    "delay": 1,
+    "special effect": {}
+  },
+  {
+    "__atk_def__": "attaque monstre",
+    "range": [0, 1],
+    "atk ratio": 1,
+    "delay": 1,
+    "special effect": {}
+  },
+  {
+    "__atk_def__": "eclair",
+    "range": [1, 4],
+    "atk ratio": 1,
+    "delay": 1,
+    "special effect": {
+      "coucou": 1
+    }
+  },
+  {
+    "__atk_def__": "protection",
+    "range": [-1, -1],
+    "atk ratio": 0,
+    "delay": 3,
+    "special effect": {
+      "bonus def": [10, 2]
+    }
+  },
+  {
+    "__atk_def__": "boule de feu",
+    "range": [3, 5],
+    "atk ratio": 2.5,
+    "delay": 3,
+    "special effect": {}
+  },
+  {
+    "__atk_def__": "vol de vie",
+    "range": [0, 1],
+    "atk ratio": 0.5,
+    "delay": 3,
+    "special effect": {
+      "regen": 10
+    }
+  }
+]

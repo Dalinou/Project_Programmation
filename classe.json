@@ -8,8 +8,8 @@
     "mvt": 3,
     "description": "Le guerrier est un combattant au corps à corps possédant une défense élevée. Son attaque spéciale ",
     "atk type":[
-      "base",
-      "gros coup bien violent qui fait bien mal et qui peut te peter le poignet si tu tape le mur"
+      "coup dague",
+      "protection"
     ],
     "texture": {
       "face M": "Texture/Guerrier_m.png",
@@ -25,7 +25,7 @@
     "mvt": 3,
     "description": "blabla",
     "atk type":[
-      "base",
+      "eclair",
       "boule de feu"
     ],
     "texture": {
@@ -42,8 +42,8 @@
     "mvt": 4,
     "description": "blabla",
     "atk type":[
-      "base",
-      "vol de vie"
+      "coup dague",
+      ""
     ],
     "texture": {
       "face M": "Texture/Voleur_m.png",
