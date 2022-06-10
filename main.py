@@ -28,7 +28,7 @@ state = "menu"
 
 while state != "exit":
     setting.read_file()
-    # regarde l'état du jeu
+    # regarde l'état du jeu et lance la gameloop voulu en fonction de cet etat
     if state == "menu":
         screen = menu.Menu(window, clock, setting)
         state = screen.gameloop()
@@ -44,5 +44,6 @@ while state != "exit":
     elif state == "game":
         screen = game.GameScreen(window, clock, setting)
         state = screen.gameloop()
+    # si l'état pour une raison quelconque a une valeur inconnu, on retourne au menu
     else:
         state = "menu"

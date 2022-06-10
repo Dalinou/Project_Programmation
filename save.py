@@ -1,6 +1,8 @@
 import json
 import personnage
 
+# permet de gérer la sauvegarde et de la lire, notamment grâce à un .json
+
 
 # Chargement de la sauvergarde, renvoie un object Map
 def load_save(filename):

@@ -1,6 +1,9 @@
 import json
 import classe
 
+# Classe qui permet d'initialiser les attributs du personnage , soit en provenance de classe.json pour les premières
+# puis par la suite en les récupérant directement dans la sauvegarde
+
 
 class Personnage:
     def __init__(self, data):
@@ -15,6 +18,7 @@ class Personnage:
             self.mvt = data["mvt"]
             self.location = data["location"]
             self.atk_type = data["atk type"]
+            # récupération des textures
             with open("classe.json") as data:
                 # Ouverture du fichier à l'aide du décodeur json et décoder classe.decode
                 z = json.load(data, object_hook=classe.decode)
@@ -22,11 +26,15 @@ class Personnage:
                 z = {z[i].classe_name: z[i] for i in range(z.__len__())}
             self.texture = z[self.classe].texture["face " + self.gender]
 
+    # permet de sauvegarder les valeurs des différentes variables
+
     def save(self):
         return {"__personnage__": True, "name": self.name, "classe": self.classe, "gender": self.gender,
                 "atk": self.atk, "pv": self.pv, "pv max": self.pv,
                 "atk type": self.atk_type, "def": self.defense,
                 "mvt": self.mvt, "location": self.location}
+
+# fonction qui gère la création d'un nouveau personnage
 
 
 def gen_perso(classe_, gender, init_location, name):

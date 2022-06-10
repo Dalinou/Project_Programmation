@@ -3,7 +3,8 @@ import json
 import pygame
 
 
-# classe qui gère les statistiques des monstres ainsi que leur mouvements
+# classe qui gère les statistiques des monstres ainsi que leur mouvements, en récupérant les valeurs de base dans
+# le .json
 class Monster:
     def __init__(self, data):
         # création des variables pour les statistiques des monstres + leur texture
@@ -16,9 +17,12 @@ class Monster:
             self.location = data["location"]
             self.texture = pygame.image.load(data["texture"])
 
+    # permet de sauvegarder les données des monstres
     def save(self):
         return {"__monster__": True, "type": self.type, "atk": self.atk, "pv": self.pv, "pv max": self.pv,
                 "def": self.defense, "mvt": self.mvt, "location": self.location}
+
+# fonction qui permet de générer un monstre sur la carte
 
 
 def gen_monster(type_, init_location):

@@ -88,6 +88,7 @@ class SettingReader:
         # pygame.transform.scale sert à mettre la texture à une nouvelle resolution
         return pygame.transform.scale(texture, newsize)
 
+# création et gestion de l'écran settings
 
 
 class SettingScreen:
