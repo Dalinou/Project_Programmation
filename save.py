@@ -24,5 +24,5 @@ def dump_save(filename, data):
 # Data doit comptenir les données de classe
 # gender de genre et location les coordonnées initials
 def init_save(filename, classe, gender, init_location, name):
-    data = json.dumps([personnage.gen_perso(classe, gender, init_location, name)], indent=2)
+    data = json.dumps([personnage.gen_perso(classe, gender, init_location, name).save()], indent=2)
     open(filename, 'w').write(data)

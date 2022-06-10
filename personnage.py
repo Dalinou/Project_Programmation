@@ -29,7 +29,7 @@ class Personnage:
                 "mvt": self.mvt, "location": self.location}
 
 
-def gen_perso(classe_, name, gender, init_location):
+def gen_perso(classe_, gender, init_location, name):
     with open("classe.json") as data:
         # Ouverture du fichier à l'aide du décodeur json et décoder classe.decode
         z = json.load(data, object_hook=classe.decode)
