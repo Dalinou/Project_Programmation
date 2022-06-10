@@ -111,6 +111,7 @@ class Menu:
 
                 # Si Click de la souris
                 if event.type == pygame.MOUSEBUTTONDOWN:
+                    # retourne différentes valeurs pour orienter le joueur sur le bon écran par la suite
                     if self.button_continue.state == 1:
                         return "game"
                     if self.button_new_game.state == 1:

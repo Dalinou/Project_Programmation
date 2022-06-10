@@ -2,8 +2,7 @@ import json
 import pygame.image
 
 
-# TODO Commentaire !!!
-# Classe Maps sert à stocké les informations de cartes, elle fait aussi la gestion de son affichage
+# Classe Maps sert à stocker les informations des cartes, elle fait aussi la gestion de son affichage
 class Maps:
     def __init__(self, filename, init_location, setting):
         self.setting = setting
@@ -15,11 +14,11 @@ class Maps:
         # fait le décodage de maps.json
         self.decode()
 
-    # Fonction pour fait le rendu de la carte, centré autour du perso
+    # Fonction pour faire le rendu de la carte, centré autour du perso
     def render(self, window, sprite_list):
-        # selectionne la carte à utilisé
+        # selectionne la carte à utiliser
         map_ = self.map[self.location[2]]
-        # définit l'offset minimun par rapport au bord avant de bougé
+        # définit l'offset minimun par rapport au bord avant de bouger
         off = [3, 3]
         # définit les coordonées de la case en (0, 0)
         location0 = [self.setting.screensize[0] / 2 - map_.res[0] * self.tilesize[0] / 2,
@@ -75,6 +74,9 @@ class Map:
             self.res = [0, 0]
             self.map = [[]]
             self.background = pygame.image.load("Texture/Default.png")
+
+
+# définit les cases qui compose la carte, leur texture et si le personnage peut marcher dessus
 
 
 class Tile:
