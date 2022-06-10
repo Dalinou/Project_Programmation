@@ -57,37 +57,13 @@ class GameScreen:
                 elif event.type == pygame.KEYDOWN:
                     # Mouvement du joueur + vérification si tjrs dans la carte
                     if event.key == pygame.K_UP:
-                        dest = self.maps.map[self.perso.location[2]]\
-                            .map[self.perso.location[1] - 1 if self.perso.location[1] > 0 else 0][self.perso.location[0]]
-                        is_walkable = self.maps.tile[dest].is_walkable
-                        if is_walkable:
-                            self.perso.location[1] = self.perso.location[1] - 1 if self.perso.location[1] > 0 else 0
+                        move_sprite(self.maps, self.perso, "up")
                     elif event.key == pygame.K_LEFT:
-                        dest = self.maps.map[self.perso.location[2]]\
-                            .map[self.perso.location[1]][self.perso.location[0] - 1 if self.perso.location[0] > 0 else 0]
-                        is_walkable = self.maps.tile[dest].is_walkable
-                        if is_walkable:
-                            self.perso.location[0] = self.perso.location[0] - 1 if self.perso.location[0] > 0 else 0
+                        move_sprite(self.maps, self.perso, "left")
                     elif event.key == pygame.K_DOWN:
-                        dest = self.maps.map[self.perso.location[2]]\
-                            .map[self.perso.location[1] + 1 if self.perso.location[1] <
-                                self.maps.map[self.perso.location[2]].res[1] - 1 else
-                                self.maps.map[self.perso.location[2]].res[1] - 1][self.perso.location[0]]
-                        is_walkable = self.maps.tile[dest].is_walkable
-                        if is_walkable:
-                            self.perso.location[1] = self.perso.location[1] + 1 if self.perso.location[1] <\
-                                self.maps.map[self.perso.location[2]].res[1] - 1 else\
-                                self.maps.map[self.perso.location[2]].res[1] - 1
+                        move_sprite(self.maps, self.perso, "down")
                     elif event.key == pygame.K_RIGHT:
-                        dest = self.maps.map[self.perso.location[2]].map[self.perso.location[1]]\
-                            [self.perso.location[0] + 1 if self.perso.location[0] <
-                                self.maps.map[self.perso.location[2]].res[0] - 1
-                                else self.maps.map[self.perso.location[2]].res[0] - 1]
-                        is_walkable = self.maps.tile[dest].is_walkable
-                        if is_walkable:
-                            self.perso.location[0] = self.perso.location[0] + 1 if self.perso.location[0] <\
-                                self.maps.map[self.perso.location[2]].res[0] - 1 \
-                                else self.maps.map[self.perso.location[2]].res[0] - 1
+                        move_sprite(self.maps, self.perso, "right")
 
             self.maps.location = self.perso.location
             self.maps.render(self.window, [self.perso, *self.sprite_list])
@@ -163,7 +139,6 @@ class FightScreen:
         is_comp_use = False
         move_left = perso.mvt
         while True:
-            active_disp = display_perso if state == "Player" else display_monster
             # clock.tick pour respecter le fps
             self.clock.tick(self.setting.fps)
             for event in pygame.event.get():
@@ -179,49 +154,52 @@ class FightScreen:
                         self.button_save.set_state(1)
                     else:
                         self.button_save.set_state(0)
+                    if is_comp_use or state == "Monster":
+                        self.button_comp_1.set_state(2)
+                        self.button_comp_2.set_state(2)
+                    else:
+                        if self.button_comp_1.is_coord_on(self.cursor_coord):
+                            # change l'état du bouton si la souris est dessus
+                            self.button_comp_1.set_state(1)
+                        else:
+                            self.button_comp_1.set_state(0)
+                        if self.button_comp_2.is_coord_on(self.cursor_coord):
+                            # change l'état du bouton si la souris est dessus
+                            self.button_comp_2.set_state(1)
+                        else:
+                            self.button_comp_2.set_state(0)
+                    if state == "Player":
+                        if self.button_continue.is_coord_on(self.cursor_coord):
+                            self.button_continue.set_state(1)
+                        else:
+                            self.button_continue.set_state(0)
+                    else:
+                        self.button_continue.set_state(2)
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if self.button_save.state == 1:
                         return "menu"
-                elif event.type == pygame.KEYDOWN and move_left > 0:
+                    if self.button_continue.state == 1 and state == "Player":
+                        state = "Monster"
+                        move_left = monster.mvt
+                        active_disp = display_monster
+                        is_comp_use = False
+                        self.button_continue.set_state(2)
+                        self.button_comp_1.set_state(2)
+                        self.button_comp_2.set_state(2)
+                elif event.type == pygame.KEYDOWN and move_left > 0 and state == "Player":
                     # Mouvement de la mire + vérification si tjrs dans la carte
                     if event.key == pygame.K_UP:
-                        dest = self.maps.map[active_disp.location[2]] \
-                            .map[active_disp.location[1] - 1 if active_disp.location[1] >0 else 0][active_disp.location[0]]
-                        is_walkable = self.maps.tile[dest].is_walkable
-                        if is_walkable:
+                        if move_sprite(self.maps, display_perso, "up"):
                             move_left -= 1
-                            active_disp.location[1] = active_disp.location[1] - 1 if active_disp.location[1] > 0 else 0
                     elif event.key == pygame.K_LEFT:
-                        dest = self.maps.map[active_disp.location[2]] \
-                            .map[active_disp.location[1]][active_disp.location[0] - 1 if active_disp.location[0] > 0 else 0]
-                        is_walkable = self.maps.tile[dest].is_walkable
-                        if is_walkable:
+                        if move_sprite(self.maps, display_perso, "left"):
                             move_left -= 1
-                            active_disp.location[0] = active_disp.location[0] - 1 if active_disp.location[0] > 0 else 0
                     elif event.key == pygame.K_DOWN:
-                        dest = self.maps.map[active_disp.location[2]] \
-                            .map[active_disp.location[1] + 1 if active_disp.location[1] <
-                                                            self.maps.map[active_disp.location[2]].res[1] - 1 else
-                        self.maps.map[active_disp.location[2]].res[1] - 1][active_disp.location[0]]
-                        is_walkable = self.maps.tile[dest].is_walkable
-                        if is_walkable:
+                        if move_sprite(self.maps, display_perso, "down"):
                             move_left -= 1
-                            active_disp.location[1] = active_disp.location[1] + 1 if active_disp.location[1] < \
-                                                                             self.maps.map[active_disp.location[2]].res[
-                                                                                 1] - 1 else \
-                                self.maps.map[active_disp.location[2]].res[1] - 1
                     elif event.key == pygame.K_RIGHT:
-                        dest = self.maps.map[active_disp.location[2]].map[active_disp.location[1]] \
-                            [active_disp.location[0] + 1 if active_disp.location[0] <
-                                                        self.maps.map[active_disp.location[2]].res[0] - 1
-                            else self.maps.map[active_disp.location[2]].res[0] - 1]
-                        is_walkable = self.maps.tile[dest].is_walkable
-                        if is_walkable:
+                        if move_sprite(self.maps, display_perso, "right"):
                             move_left -= 1
-                            active_disp.location[0] = active_disp.location[0] + 1 if active_disp.location[0] < \
-                                                                             self.maps.map[active_disp.location[2]].res[
-                                                                                 0] - 1 \
-                                else self.maps.map[active_disp.location[2]].res[0] - 1
             self.maps.render(self.window, [display_perso, display_monster])
             self.button_save.render(self.window)
             self.button_comp_1.render(self.window)
@@ -229,3 +207,32 @@ class FightScreen:
             self.button_continue.render(self.window)
             self.window.blit(self.texture_cursor, self.cursor_coord)
             pygame.display.update()
+
+
+# Fonction qui déplace un sprite dans une direction donné en vérifiant si l'on peut aller sur la case de déstination
+def move_sprite(maps, sprite, direction):
+    if direction == "up" and sprite.location[1] > 0:
+        dest = maps.map[sprite.location[2]].map[sprite.location[1] - 1][sprite.location[0]]
+        is_walkable = maps.tile[dest].is_walkable
+        if is_walkable:
+            sprite.location[1] = sprite.location[1] - 1
+            return True
+    elif direction == "left" and sprite.location[0] > 0:
+        dest = maps.map[sprite.location[2]].map[sprite.location[1]][sprite.location[0] - 1]
+        is_walkable = maps.tile[dest].is_walkable
+        if is_walkable:
+            sprite.location[0] = sprite.location[0] - 1
+            return True
+    elif direction == "down" and sprite.location[1] < maps.map[sprite.location[2]].res[1] - 1:
+        dest = maps.map[sprite.location[2]].map[sprite.location[1] + 1][sprite.location[0]]
+        is_walkable = maps.tile[dest].is_walkable
+        if is_walkable:
+            sprite.location[1] = sprite.location[1] + 1
+            return True
+    elif direction == "right" and sprite.location[0] < maps.map[sprite.location[2]].res[0] - 1:
+        dest = maps.map[sprite.location[2]].map[sprite.location[1]][sprite.location[0] + 1]
+        is_walkable = maps.tile[dest].is_walkable
+        if is_walkable:
+            sprite.location[0] = sprite.location[0] + 1
+            return True
+    return False
