@@ -9,7 +9,8 @@ with open("classe.json") as data:
 # sert à désigner chaque classe par son nom, non un numéro (pas forcément fixe)
 z = {z[i].classe_name: z[i] for i in range(z.__len__())}
 '''
-
+# cette classe permet de récuperer les statistiques de base de chaque classe qui ont été fixées dans le
+# .json et de les associer à une variable, ce qui permet de modifier ces valeurs sans toucher à la valeur de base
 
 class Classe:
     def __init__(self, classe_name, defense, atk, pv, mvt, description, atk_type, texture):

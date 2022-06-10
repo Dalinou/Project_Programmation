@@ -7,7 +7,9 @@ import json
 import save
 
 
-# Ecran de warning si sauvegarde existante
+# Ecran de warning si sauvegarde existante, permet d'informer l'utilisateur que si il continue sa sauvegarde sera
+# supprimée et il accèdera à l'écran de création de personnage, sinon il retournera au menu
+
 class CreateWarning:
     def __init__(self, window, clock, setting):
         # Paramètre de l'écran
@@ -77,11 +79,13 @@ class CreateWarning:
                 # gère les cliques de la souris
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.cursor_coord = event.pos
+                    # si le joueur clique sur le bouton continuer
                     if self.button_continue.state == 1:
                         # détruit le fichier de sauvegarde
                         os.remove("save.json")
                         # renvoies la valeur permettant d'aller à l'écran de création de personnage
                         return "create"
+                    # si me joueur clique sur le bouton retour
                     if self.button_back.state == 1:
                         # renvoies la valeur permettant de retourner au menu
                         return "menu"
@@ -99,7 +103,8 @@ class CreateWarning:
             pygame.display.update()
 
 
-# Ecran de création de perso
+# Ecran de création de personnage, permet de créer son personnage puis d'accéder au jeu. Choix parmis 3 classes et
+# choix du sexe ainsi que du nom
 class CreatePerso:
     def __init__(self, window, clock, setting):
         # Paramètre de l'écran
@@ -245,7 +250,8 @@ class CreatePerso:
                 if event.type == pygame.MOUSEMOTION:
                     # récupération des coordonnées de la souris
                     self.cursor_coord = event.pos
-                    #bouton homme
+                    # on regarde si la souris est sur un des boutons suivant
+                    # bouton homme
                     if self.button_man.is_coord_on(self.cursor_coord):
                         # change l'état du bouton si la souris est dessus
                         self.button_man.set_state(1)
@@ -276,33 +282,34 @@ class CreatePerso:
                         self.button_voleur.set_state(1)
                     else:
                         self.button_voleur.set_state(0)
-                    # bouton confirm
+                    # boite pour entrer du texte
                     if self.input_box_text.__len__() < 3:
                         self.button_confirm.set_state(2)
+                    # bouton confirme
                     elif self.button_confirm.is_coord_on(self.cursor_coord):
                         self.button_confirm.set_state(1)
                     else:
                         self.button_confirm.set_state(0)
 
-                # Si Click de la souris sur les différents bouton,
-                # on verifie ou est la souris pour activer le bon bouton
+                # Ici on gère les cliques de souris. Si la souris est sur un bouton et que le joueur clique
+                # dessus, alors le bouton s'active et fait son effet
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.button_man.state == 1:
-                        self.gender = "M"
+                        self.gender = "M"  # change la valeur du genre
                     if self.button_woman.state == 1:
-                        self.gender = "F"
+                        self.gender = "F"  # change la valeur du genre
                     if self.button_back.state == 1:
-                        return "menu"
+                        return "menu"  # retour au menu
                     if self.button_guerrier.state == 1:
-                        self.classe_name = "Guerrier"
+                        self.classe_name = "Guerrier"  # change la valeur de la classe
                     if self.button_mage.state == 1:
-                        self.classe_name = "Mage"
+                        self.classe_name = "Mage"  # change la valeur de la classe
                     if self.button_voleur.state == 1:
-                        self.classe_name = "Voleur"
+                        self.classe_name = "Voleur"  # change la valeur de la classe
                     # Si clique sur le bouton de confirmation de création de perso
                     if self.button_confirm.state == 1:
                         save.init_save("save.json", self.classe_name, self.gender, [4, 0, "Test map 1"],
-                                       self.input_box_text)
+                                       self.input_box_text)  # sauvegarde les paramètres choisis par l'utilisateur
                         return "game"
                     # check clic sur l'input box
                     coord = event.pos
@@ -335,7 +342,7 @@ class CreatePerso:
                         [self.input_box_text, self.input_box_text]
                         if self.input_box_text.__len__() != 0
                         else ["Enter name", "Enter name"])
-                    # Actualisation du bouton confirm
+                    # Actualisation du bouton confirme qui n'est actif que si le pseudo fait + de 3 caractères
                     if self.input_box_text.__len__() < 3:
                         self.button_confirm.set_state(2)
                     else:
@@ -344,7 +351,7 @@ class CreatePerso:
                         else:
                             self.button_confirm.set_state(0)
 
-                # Affichage des boutons selectionnés
+                # Change l'apparence des boutons sélectionnés
                 if self.gender == "M":
                     self.button_man.set_state(2)
                 if self.gender == "F":

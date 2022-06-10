@@ -15,7 +15,7 @@ class Button:
         self.background_texture = [
             pygame.image.load(background_filename[i]) for i in range(0, self.nb_state)
         ]
-        # Adapte la  taille du bouton à la taile de l'écran
+        # Adapte la  taille du bouton à la taille de l'écran
         if screensize_adaptation:
             default_screensize = [1344, 704]
             # Pour chaque état
@@ -27,7 +27,7 @@ class Button:
                         self.setting.screensize[0] / default_screensize[0] * self.background_texture[i].get_width(),
                         self.setting.screensize[1] / default_screensize[1] * self.background_texture[i].get_height()
                     ])
-        # Centrage du boutton sur les coordonnées
+        # Centrage du bouton sur les coordonnées
         self.coord = [coord[0] - self.background_texture[0].get_width()/2,
                       coord[1] - self.background_texture[0].get_height()/2] if is_center else coord
         # Calcul des coordonnées du texte
@@ -53,7 +53,7 @@ class Button:
         if state < self.nb_state:
             self.state = state
 
-    # Change le text en recréant les textures textes
+    # Change le texte en recréant les textures textes
     def change_text(self, text):
         for i in range(0, self.nb_state):
             self.text[i].change_text(text[i])

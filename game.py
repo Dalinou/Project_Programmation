@@ -4,6 +4,9 @@ import sys
 import maps
 import button
 
+# cette classe défini l'écran principal du jeu, avec notamment la carte ou évolue le joueur tant qu'il n'est pas
+# en combat.
+
 
 class GameScreen:
     def __init__(self, window, clock, setting):
@@ -12,9 +15,11 @@ class GameScreen:
         self.clock = clock
         self.setting = setting
         self.button_font = pygame.font.Font("Game_font.TTF", 48)
+        # création de la carte
         self.maps = maps.Maps("maps.json", [0, 0, "Test map 1"], self.setting)
         self.perso = save.load_save("save.json")
         self.sprite_list = []
+        # création du bouton pour revenir au menu et sauvegarder
         self.button_save = button.Button(
             [self.setting.screensize[0] * 1.25 / 15, self.setting.screensize[1] * 1 / 15],
             2,
@@ -93,6 +98,9 @@ class GameScreen:
     # chargement savegarde du jeu
     # Gameloop de jeu
 
+# Cette classe prend le relais sur la précédente lorsque le joueur entre en combat, notamment en définissant
+# une nouvelle carte et de nouveau paramètre comme la limitation des mouvements etc
+
 
 class FightScreen:
     def __init__(self, window, clock, setting):
@@ -102,6 +110,7 @@ class FightScreen:
         self.setting = setting
         self.button_font = pygame.font.Font("Game_font.TTF", 48)
         self.maps = maps.Maps("maps.json", [3, 3, "Fight map"], self.setting)
+        # bouton sauvegarder
         self.button_save = button.Button(
             [self.setting.screensize[0] * 1.25 / 15, self.setting.screensize[1] * 1 / 15],
             2,
