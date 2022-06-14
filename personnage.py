@@ -32,7 +32,7 @@ class Personnage:
     # renvoie les données à sauvegarder
     def save(self):
         return {"__personnage__": True, "name": self.name, "classe": self.classe, "gender": self.gender,
-                "atk": self.atk, "pv": self.pv, "pv max": self.pv,
+                "atk": self.atk, "pv": self.pv, "pv max": self.pv_max,
                 "atk type": self.atk_type, "def": self.defense,
                 "mvt": self.mvt, "location": self.location}
 
