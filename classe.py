@@ -39,7 +39,7 @@ class Classe:
             self.texture[name] = pygame.image.load(self.texture[name])
 
 
-# permet de récuperer les informations contenus dans le json
+# permet de récuperer les informations contenus dans le json, utilisé par json.load
 def decode(dct):
     if "__classe__" in dct:
         return Classe(dct["classe name"], dct["def"], dct["atk"], dct["pv"], dct["mvt"],

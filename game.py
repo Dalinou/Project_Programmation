@@ -467,24 +467,38 @@ def dist(s1, s2):
 
 
 # Fonction qui gère l'attaque
-#  -1 si erreur, 0 sinon
 def fight(atk, display_atk, target, display_target, atk_type):
-    # Check si dans la range
-    if atk_type["range"] == [-1, -1] or atk_type["range"][0] <= \
-            dist(display_atk, display_target) <= atk_type["range"][1]:
-        target.pv -= max(atk.atk * atk_type["atk ratio"] - target.defense, 0)
-        for element in atk_type["special effect"]:
-            pass
-        if target.pv <= 0:
-            return 1
-        return 0
-    else:
-        return -1
+    """
+    :param atk: Définie l'attaquant, sera utilisé pour modifier les statistiques de l'attaquant
+    :param display_atk: Définie l'attanquant, sera utilisé pour récupérer la position de l'attaquant
+    :param target: Définie la cible, sera utilisé pour modifier les statistiques de la cible
+    :param display_target: Définie la cible, sera utilisé pour récupérer la position de la cible
+    :param atk_type: Définie le type d'attaque utilisé
+    :return: -1 si erreur, 0 si l'attaque à lieu et 1 si la cible est tué
+    """
+    # Check si l'attaquant à le droit d'utilisé cette attaque
+    if atk_type["__atk_def__"] in atk.atk_type:
+        # Check si dans la range
+        if atk_type["range"] == [-1, -1] or atk_type["range"][0] <= \
+                dist(display_atk, display_target) <= atk_type["range"][1]:
+            target.pv -= max(atk.atk * atk_type["atk ratio"] - target.defense, 0)
+            for element in atk_type["special effect"]:
+                pass
+            if target.pv <= 0:
+                return 1
+            return 0
+    return -1
 
 
 # Fonction qui fait se déplacer le monstre vers le joueur
-# -1 si erreur, 0 si dans la target_dist, 1 si à boucher
 def move_forward_player(maps, monster_, player, target_dist):
+    """
+    :param maps: object Maps
+    :param monster_: Sprite du monstre à déplacé
+    :param player: Sprite du joueur à ciblé
+    :param target_dist: distance cible du joueur à atteindre
+    :return: -1 si erreur, 0 si dans la target_dist, 1 si à boucher
+    """
     # Vérifie si sur la même map
     if monster_.location[2] == player.location[2]:
         # Choix de la 1° direction

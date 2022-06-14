@@ -91,7 +91,7 @@ class Tile:
             self.is_walkable = True
 
 
-# class type pour ce qu'il faut comment attribut
+# class minimun pour être affiché sur la carte
 class Sprite:
     def __init__(self, location, texture):
         self.location = location

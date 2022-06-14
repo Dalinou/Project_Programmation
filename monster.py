@@ -36,9 +36,8 @@ class Monster:
         return {"__monster__": True, "type": self.type, "atk": self.atk, "pv": self.pv, "pv max": self.pv_max,
                 "def": self.defense, "mvt": self.mvt, "location": self.location}
 
+
 # fonction qui permet de générer un monstre sur la carte
-
-
 def gen_monster(type_, init_location):
     """
     :param type_: attribut qui définit la race du monstre

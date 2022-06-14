@@ -50,11 +50,11 @@ def dump_save(filename, in_data):
     data = []
     if "personnage" in in_data:
         if in_data["personnage"].__class__ == personnage.Personnage:
-            data.append(in_data["personnage"].save())
+            data.append(in_data["personnage"].save)
     if "monster_list" in in_data:
         for element in in_data["monster_list"]:
             if element.__class__ == monster.Monster:
-                data.append(element.save())
+                data.append(element.save)
     data = json.dumps(data, indent=2)
     open(filename, 'w').write(data)
 
@@ -70,10 +70,10 @@ def init_save(filename, classe, gender, init_location, name):
     :param init_location: attribut qui définit la position initiale du personnage sur la carte
     :param name: attribut qui définit le nom du personnage
     """
-    data = [personnage.gen_perso(classe, gender, init_location, name).save(),
-            monster.gen_monster("Orc", [29, 15, "Test map 1"]).save(),
-            monster.gen_monster("Gobelin", [5, 5, "Test map 1"]).save(),
-            monster.gen_monster("Gobelin", [42, 26, "Test map 1"]).save(),
-            monster.gen_monster("Loup", [33, 5, "Test map 1"]).save()]
+    data = [personnage.gen_perso(classe, gender, init_location, name).save,
+            monster.gen_monster("Orc", [29, 15, "Test map 1"]).save,
+            monster.gen_monster("Gobelin", [5, 5, "Test map 1"]).save,
+            monster.gen_monster("Gobelin", [42, 26, "Test map 1"]).save,
+            monster.gen_monster("Loup", [33, 5, "Test map 1"]).save]
     data = json.dumps(data, indent=2)
     open(filename, 'w').write(data)

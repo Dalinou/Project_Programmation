@@ -31,6 +31,9 @@ class Personnage:
 
     # renvoie les données à sauvegarder
     def save(self):
+        """
+        :return: Les données à envoyer dans le json pour le bon fonctionnement de la sauvegarde
+        """
         return {"__personnage__": True, "name": self.name, "classe": self.classe, "gender": self.gender,
                 "atk": self.atk, "pv": self.pv, "pv max": self.pv_max,
                 "atk type": self.atk_type, "def": self.defense,
