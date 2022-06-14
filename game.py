@@ -317,6 +317,13 @@ class FightScreen:
 
 # Fonction qui déplace un sprite dans une direction donné en vérifiant si l'on peut aller sur la case de déstination
 def move_sprite(maps, sprite, direction):
+    """
+
+    :param maps: attribut étant la carte
+    :param sprite: attribut étant la case qu'on souhaite déplacer
+    :param direction: attribut étant la direction qu'on souhaite prendre (en haut, à droite, ...)
+    :return: un booléen (true or false) en fonction de si la sprite destination est marchable ou non
+    """
     if direction == "up" and sprite.location[1] > 0:
         dest = maps.map[sprite.location[2]].map[sprite.location[1] - 1][sprite.location[0]]
         is_walkable = maps.tile[dest].is_walkable
@@ -346,6 +353,12 @@ def move_sprite(maps, sprite, direction):
 
 # Fonction qui renvoie la distance entre deux entité
 def dist(s1, s2):
+    """
+
+    :param s1: attribut étant la sprite qu'on veut comparer à s2
+    :param s2: attribut étant une sprite qu'on compare à s1
+    :return: retourne le nombre de sprite (cases) qu'il y a entre s1 et s2
+    """
     if s1.location[2] != s2.location[2]:
         return -1
     else:
