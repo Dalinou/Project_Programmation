@@ -89,8 +89,9 @@ class GameScreen:
                     for i in self.monster_list:
                         if dist(self.perso, i) == 1:
                             temp = self.fight_screen.gameloop(self.perso, i)
-
-
+                            if temp == 0:
+                                self.monster_list.remove(i)
+                                self.raw_data["monster_list"] = self.monster_list
             self.maps.location = self.perso.location
             self.maps.render(self.window, [self.perso, *self.monster_list])
             self.button_save.render(self.window)
