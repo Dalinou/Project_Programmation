@@ -88,7 +88,8 @@ class GameScreen:
                     # gère l'entrée dans le combat si perso proche du monstre
                     for i in self.monster_list:
                         if dist(self.perso, i) == 1:
-                            self.fight_screen.gameloop(self.perso, i)
+                            temp = self.fight_screen.gameloop(self.perso, i)
+
 
             self.maps.location = self.perso.location
             self.maps.render(self.window, [self.perso, *self.monster_list])
@@ -268,7 +269,8 @@ class FightScreen:
                         atk_perso_1_delay = max(atk_perso_1_delay - 1, 0)
                         atk_perso_2_delay = max(atk_perso_2_delay - 1, 0)
                     if self.button_comp_1.state == 1 and atk_perso_1_delay == 0 and state == "Player":
-                        if fight(perso, display_perso, monster, display_monster, atk_perso_1) == 0:
+                        temp = fight(perso, display_perso, monster, display_monster, atk_perso_1)
+                        if temp == 0:
                             atk_perso_1_delay = atk_perso_1["delay"]
                             atk_perso_2_delay = max(atk_perso_2_delay, 1)
                             state = "Monster"
@@ -279,6 +281,8 @@ class FightScreen:
                             atk_monster_delay = max(atk_monster_delay - 1, 0)
                             atk_perso_1_delay = max(atk_perso_1_delay - 1, 0)
                             atk_perso_2_delay = max(atk_perso_2_delay - 1, 0)
+                        elif temp == 1:
+                            return 0
                     if self.button_comp_2.state == 1 and atk_perso_2_delay == 0 and state == "Player":
                         if fight(perso, display_perso, monster, display_monster, atk_perso_2) == 0:
                             atk_perso_2_delay = atk_perso_2["delay"]
@@ -291,6 +295,8 @@ class FightScreen:
                             atk_monster_delay = max(atk_monster_delay - 1, 0)
                             atk_perso_1_delay = max(atk_perso_1_delay - 1, 0)
                             atk_perso_2_delay = max(atk_perso_2_delay - 1, 0)
+                        elif temp == 1:
+                            return 0
                 elif event.type == pygame.KEYDOWN and move_left > 0 and state == "Player":
                     # Mouvement de la mire + vérification si tjrs dans la carte
                     if event.key == pygame.K_UP:
@@ -373,6 +379,8 @@ def fight(atk, display_atk, target, display_target, atk_type):
         target.pv -= max(atk.atk * atk_type["atk ratio"] - target.defense, 0)
         for element in atk_type["special effect"]:
             pass
+        if target.pv <= 0:
+            return 1
         return 0
     else:
         return -1
