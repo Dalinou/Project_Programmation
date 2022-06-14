@@ -173,11 +173,14 @@ class FightScreen:
 
     # Gestion du combat
     def gameloop(self, perso, monster):
-
+        # Duplicat des textures sur un sprite pour l'affichage sur la carte de combat
         display_perso = maps.Sprite([0, 3, "Fight map"], perso.texture)
         display_monster = maps.Sprite([6, 3, "Fight map"], monster.texture)
+        # Etat de combat (à qui le tour)
         state = "Player"  # Ou "Monster"
+        # Mouvement autorisé restant pour les deux
         move_left = perso.mvt
+        # chargement des attaques du perso et delay
         atk_perso_1 = self.atk_list[perso.atk_type[0]]
         atk_perso_1_delay = 0
         self.button_comp_1.change_text([atk_perso_1["__atk_def__"] for i in range(0, 3)])
@@ -186,6 +189,7 @@ class FightScreen:
         self.button_comp_2.change_text([atk_perso_2["__atk_def__"] for i in range(0, 3)])
         atk_monster = self.atk_list["attaque monstre"]
         atk_monster_delay = 0
+        # Création d'un delay entre chaque action du monstre
         monster_action_delay_max = self.setting.fps/30 * 6  # en nombre de frame
         monster_action_delay = monster_action_delay_max
         while True:
@@ -197,10 +201,12 @@ class FightScreen:
                 monster_action_delay -= 1
                 if monster_action_delay == 0:
                     monster_action_delay = monster_action_delay_max
+                    # Déplacement du monstre
                     temp = move_forward_player(self.maps, display_monster, display_perso, atk_monster["range"])
                     if temp == -1:
                         next = True
                     elif temp == 0:
+                        # attaque du monstre
                         temp2 = fight(monster, display_monster, perso, display_perso, atk_monster)
                         if temp2 == 1:
                             return 1
@@ -209,9 +215,11 @@ class FightScreen:
                         move_left -= 1
                 if move_left == 0:
                     next = True
+                    # attque du monstre s'il n'y a plus de monvement autorisé
                     temp2 = fight(monster, display_monster, perso, display_perso, atk_monster)
                     if temp2 == 1:
                         return 1
+                # Passage au joueur suivant
                 if next:
                     state = "Player"
                     move_left = perso.mvt
@@ -232,6 +240,7 @@ class FightScreen:
                         self.button_save.set_state(1)
                     else:
                         self.button_save.set_state(0)
+                    # regarde les boutons de compétance
                     if atk_perso_1_delay != 0 or state == "Monster":
                         self.button_comp_1.set_state(2)
                     else:
@@ -244,6 +253,7 @@ class FightScreen:
                                 self.button_comp_1.set_state(0)
                         else:
                             self.button_comp_1.set_state(2)
+                    # Regarde le deuxième bouton de compétance
                     if atk_perso_2_delay != 0 or state == "Monster":
                         if atk_perso_2["range"] == [-1, -1] or atk_perso_2["range"][0] <= \
                                 dist(display_perso, display_monster) <= atk_perso_2["range"][1]:
@@ -260,6 +270,7 @@ class FightScreen:
                             self.button_comp_2.set_state(1)
                         else:
                             self.button_comp_2.set_state(0)
+                    # Bouton continue
                     if state == "Player":
                         if self.button_continue.is_coord_on(self.cursor_coord):
                             self.button_continue.set_state(1)
@@ -268,9 +279,12 @@ class FightScreen:
                     else:
                         self.button_continue.set_state(2)
                 elif event.type == pygame.MOUSEBUTTONDOWN:
+                    # si click de la souris
                     if self.button_save.state == 1:
-                        return "menu"
+                        # retour à l'écran de jeu
+                        return None
                     if self.button_continue.state == 1 and state == "Player":
+                        # Changement de joueur
                         state = "Monster"
                         move_left = monster.mvt
                         self.button_continue.set_state(2)
@@ -280,6 +294,7 @@ class FightScreen:
                         atk_perso_1_delay = max(atk_perso_1_delay - 1, 0)
                         atk_perso_2_delay = max(atk_perso_2_delay - 1, 0)
                     if self.button_comp_1.state == 1 and atk_perso_1_delay == 0 and state == "Player":
+                        # Attaque de la 1° compétance du joueur
                         temp = fight(perso, display_perso, monster, display_monster, atk_perso_1)
                         if temp == 0:
                             atk_perso_1_delay = atk_perso_1["delay"]
@@ -295,7 +310,9 @@ class FightScreen:
                         elif temp == 1:
                             return 0
                     if self.button_comp_2.state == 1 and atk_perso_2_delay == 0 and state == "Player":
-                        if fight(perso, display_perso, monster, display_monster, atk_perso_2) == 0:
+                        # Attaque de la 2° compétance du joueur
+                        temp = fight(perso, display_perso, monster, display_monster, atk_perso_2)
+                        if temp == 0:
                             atk_perso_2_delay = atk_perso_2["delay"]
                             atk_perso_1_delay = max(atk_perso_1_delay, 1)
                             state = "Monster"
@@ -452,6 +469,7 @@ def dist(s1, s2):
 # Fonction qui gère l'attaque
 #  -1 si erreur, 0 sinon
 def fight(atk, display_atk, target, display_target, atk_type):
+    # Check si dans la range
     if atk_type["range"] == [-1, -1] or atk_type["range"][0] <= \
             dist(display_atk, display_target) <= atk_type["range"][1]:
         target.pv -= max(atk.atk * atk_type["atk ratio"] - target.defense, 0)
@@ -467,7 +485,9 @@ def fight(atk, display_atk, target, display_target, atk_type):
 # Fonction qui fait se déplacer le monstre vers le joueur
 # -1 si erreur, 0 si dans la target_dist, 1 si à boucher
 def move_forward_player(maps, monster_, player, target_dist):
+    # Vérifie si sur la même map
     if monster_.location[2] == player.location[2]:
+        # Choix de la 1° direction
         dir_set = ["right", "up", "left", "down"]  # right 0+, up 1-
         d0 = monster_.location[0] - player.location[0]
         d1 = monster_.location[1] - player.location[1]
@@ -511,6 +531,7 @@ def move_forward_player(maps, monster_, player, target_dist):
                     dir1 = 3
                 elif d1 > 0:
                     dir1 = 1
+        # Check des directions jusqu'au mouvement autorisé
         have_mov = False
         i = 0
         while not have_mov and i < 4:

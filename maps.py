@@ -77,10 +77,12 @@ class Map:
 
 
 # définit les cases qui compose la carte, leur texture et si le personnage peut marcher dessus
-
-
 class Tile:
     def __init__(self, data):
+        """
+
+        :param data: Toute les données de la tuile
+        """
         if "__tile__" in data:
             self.texture = pygame.image.load(data["texture"])
             self.is_walkable = data["is walkable"]
