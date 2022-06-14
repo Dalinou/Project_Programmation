@@ -15,6 +15,16 @@ z = {z[i].classe_name: z[i] for i in range(z.__len__())}
 
 class Classe:
     def __init__(self, classe_name, defense, atk, pv, mvt, description, atk_type, texture):
+        """
+        :param classe_name: nom du personnage
+        :param defense: attribut qui définit la protection du personnage
+        :param atk: attribut qui définit la protection du personnage
+        :param pv: attribut qui définit les points de vie du personnage
+        :param mvt: attribut qui définit les mouvements du personnage
+        :param description: //
+        :param atk_type: attribut qui définit les différents types d'attaque du personnage
+        :param texture: attribut qui définit la texture du personnage
+        """
         # Recuperation des variables
         self.classe_name = classe_name
         self.defense = defense

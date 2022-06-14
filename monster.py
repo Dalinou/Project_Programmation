@@ -7,6 +7,9 @@ import pygame
 # le .json
 class Monster:
     def __init__(self, data):
+        """
+        :param data: attribut qui contient toutes les données du monstre
+        """
         # création des variables pour les statistiques des monstres + leur texture
         if "__monster__" in data:
             self.type = data["type"]
@@ -26,6 +29,11 @@ class Monster:
 
 
 def gen_monster(type_, init_location):
+    """
+    :param type_: attribut qui définit la race du monstre
+    :param init_location: attribut qui définit la position initiale du monstre
+    :return: renvoie les données concernant le monstre
+    """
     # look in monster.json
     with open("monster.json") as data:
         z = json.load(data)

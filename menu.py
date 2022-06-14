@@ -9,6 +9,11 @@ import text_render
 # Revoie l'écran à charger ou "exit"
 class Menu:
     def __init__(self, window, clock, setting):
+        """
+        :param window: attribut qui définit l'objet fenêtre
+        :param clock: attribut qui crée un délai
+        :param setting: attribut qui définit les paramètres de la fenêtre
+        """
         # Paramètre de l'écran
         self.window = window
         self.clock = clock

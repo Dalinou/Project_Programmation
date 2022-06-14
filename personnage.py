@@ -7,6 +7,9 @@ import classe
 
 class Personnage:
     def __init__(self, data):
+        """
+        :param data: attribut qui contient toutes les données du personnage
+        """
         if "__personnage__" in data:
             self.name = data["name"]
             self.classe = data["classe"]
@@ -38,12 +41,20 @@ class Personnage:
 
 
 def gen_perso(classe_, gender, init_location, name):
+    """
+    :param classe_: attribut qui gère la profession du personnage
+    :param gender: attribut qui gère le sexe du personnage
+    :param init_location: attribut qui définit la position initiale du personnage
+    :param name: attribut qui définit le nom du personnage
+    :return:
+    """
     with open("classe.json") as data:
         # Ouverture du fichier à l'aide du décodeur json et décoder classe.decode
         z = json.load(data, object_hook=classe.decode)
     # sert à désigner chaque classe par son nom, non un numéro (pas forcément fixe)
     z = {z[i].classe_name: z[i] for i in range(z.__len__())}
     classe_ = z[classe_]
+    # retourne toutes les informations concernant le personnage
     return Personnage({"__personnage__": True, "name": name, "classe": classe_.classe_name, "gender": gender,
                        "atk": classe_.atk, "pv": classe_.pv, "pv max": classe_.pv, "atk type": classe_.atk_type,
                        "def": classe_.defense,
