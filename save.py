@@ -53,5 +53,7 @@ def dump_save(filename, in_data):
 # Data doit comptenir les données de classe
 # gender de genre et location les coordonnées initials
 def init_save(filename, classe, gender, init_location, name):
-    data = json.dumps([personnage.gen_perso(classe, gender, init_location, name).save()], indent=2)
+    data = [personnage.gen_perso(classe, gender, init_location, name).save(),
+            monster.gen_monster("Orc", [29, 15, "Test map 1"]).save()]
+    data = json.dumps(data, indent=2)
     open(filename, 'w').write(data)
