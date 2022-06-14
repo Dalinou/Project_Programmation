@@ -44,6 +44,9 @@ while state != "exit":
     elif state == "game":
         screen = game.GameScreen(window, clock, setting)
         state = screen.gameloop()
+    elif state == "game_over":
+        screen = game.GameOver(window, clock, setting)
+        state = screen.gameloop()
     # si l'état pour une raison quelconque a une valeur inconnu, on retourne au menu
     else:
         state = "menu"

@@ -3,7 +3,7 @@
     "__monster__": true,
     "type": "Loup",
     "def":0,
-    "atk": 15,
+    "atk": 20,
     "pv": 30,
     "mvt": 5,
     "texture": "Texture/Loup.png"
@@ -13,7 +13,7 @@
     "__monster__": true,
     "type": "Gobelin",
     "def": 5,
-    "atk": 5,
+    "atk": 10,
     "pv": 50,
     "mvt": 3,
     "texture": "Texture/Gobelin.png"
@@ -23,7 +23,7 @@
     "__monster__": true,
     "type": "Orc",
     "def": 8,
-    "atk": 10,
+    "atk": 15,
     "pv": 50,
     "mvt": 2,
     "texture": "Texture/Orc.png"

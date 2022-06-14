@@ -9,6 +9,8 @@ import sys
 import maps
 import button
 import json
+import os
+import text_render
 
 # cette classe défini l'écran principal du jeu, avec notamment la carte ou évolue le joueur tant qu'il n'est pas
 # en combat.
@@ -92,6 +94,10 @@ class GameScreen:
                             if temp == 0:
                                 self.monster_list.remove(i)
                                 self.raw_data["monster_list"] = self.monster_list
+                            elif temp == 1:
+                                os.remove("save.json")
+                                return "game_over"
+
             self.maps.location = self.perso.location
             self.maps.render(self.window, [self.perso, *self.monster_list])
             self.button_save.render(self.window)
@@ -325,6 +331,73 @@ class FightScreen:
             self.window.blit(self.texture_cursor, self.cursor_coord)
             pygame.display.update()
 
+# classe qui permet de gérer l'écran lorque le joueur a perdu
+
+
+class GameOver:
+    def __init__(self, window, clock, setting):
+        # Paramètre de l'écran
+        self.window = window
+        self.clock = clock
+        self.setting = setting
+        self.button_font = pygame.font.Font("Game_font.TTF", 48)
+        self.text_font = pygame.font.Font("Game_font.TTF", 72)
+        # Chargement des textures
+        self.texture_background = self.setting.get_texture("Texture/Background 2.png")
+        # Bouton pour revenir au menu
+        self.button_continue = button.Button(
+            [self.setting.screensize[0] / 2, self.setting.screensize[1] * 3 / 4],
+            2,
+            0,
+            ["Texture/Button up 2.png", "Texture/Button down 2.png"],
+            self.button_font,
+            ["Continue", "Continue"],
+            [pygame.Color("#000000"), pygame.Color("#000000")],
+            self.setting
+        )
+        # Message avertissement
+        self.Text = text_render.Text(
+            self.setting,
+            [self.setting.screensize[0] / 2, self.setting.screensize[1] / 5],
+            self.text_font,
+            "Game Over \n Retournez au menu et Réessayez",
+            pygame.Color("#FF0000"),
+        )
+        # chargement du curseur
+        self.texture_cursor = pygame.image.load("Texture/Cursor.png")
+        # Coordonnée des différents objets
+        self.cursor_coord = (0, 0)
+
+    def gameloop(self):
+        while True:
+            self.clock.tick(self.setting.fps)
+            for event in pygame.event.get():
+                # pour gérer la fermeture du jeu
+                if event.type == pygame.QUIT:
+                    return "exit"
+                if event.type == pygame.MOUSEMOTION:
+                    # récupération des coordonnées de la souris
+                    self.cursor_coord = event.pos
+                    # regarde si la souris est sur le bouton pour continuer
+                    if self.button_continue.is_coord_on(self.cursor_coord):
+                        self.button_continue.set_state(1)
+                    else:
+                        self.button_continue.set_state(0)
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    self.cursor_coord = event.pos
+                    # si le joueur clique sur le bouton continuer
+                    if self.button_continue.state == 1:
+                        return "menu"
+            # Affichage du fond d'écran
+            self.window.blit(self.texture_background, (0, 0))
+            # Affichage de texte
+            self.Text.render(self.window)
+            # Affichage des boutons en fonction de leur état
+            self.button_continue.render(self.window)
+            #  Affichage du curseur
+            self.window.blit(self.texture_cursor, self.cursor_coord)
+            # Actualisation de l'affichage
+            pygame.display.update()
 
 # Fonction qui déplace un sprite dans une direction donné en vérifiant si l'on peut aller sur la case de déstination
 def move_sprite(maps, sprite, direction):
