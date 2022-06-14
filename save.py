@@ -54,6 +54,9 @@ def dump_save(filename, in_data):
 # gender de genre et location les coordonnées initials
 def init_save(filename, classe, gender, init_location, name):
     data = [personnage.gen_perso(classe, gender, init_location, name).save(),
-            monster.gen_monster("Orc", [29, 15, "Test map 1"]).save()]
+            monster.gen_monster("Orc", [29, 15, "Test map 1"]).save(),
+            monster.gen_monster("Gobelin", [5, 5, "Test map 1"]).save(),
+            monster.gen_monster("Gobelin", [42, 26, "Test map 1"]).save(),
+            monster.gen_monster("Loup", [33, 5, "Test map 1"]).save()]
     data = json.dumps(data, indent=2)
     open(filename, 'w').write(data)
