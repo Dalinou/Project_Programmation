@@ -2,7 +2,7 @@
   {
     "__monster__": true,
     "type": "Loup",
-    "def": 10,
+    "def":0,
     "atk": 15,
     "pv": 30,
     "mvt": 5,
@@ -12,7 +12,7 @@
   {
     "__monster__": true,
     "type": "Gobelin",
-    "def": 15,
+    "def": 5,
     "atk": 5,
     "pv": 50,
     "mvt": 3,
@@ -22,7 +22,7 @@
   {
     "__monster__": true,
     "type": "Orc",
-    "def": 20,
+    "def": 8,
     "atk": 10,
     "pv": 50,
     "mvt": 2,
