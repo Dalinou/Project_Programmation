@@ -194,13 +194,17 @@ class FightScreen:
                     if temp == -1:
                         next = True
                     elif temp == 0:
-                        fight(monster, display_monster, perso, display_perso, atk_monster)
+                        temp2 = fight(monster, display_monster, perso, display_perso, atk_monster)
+                        if temp2 == 1:
+                            return 1
                         next = True
                     elif temp == 1:
                         move_left -= 1
                 if move_left == 0:
                     next = True
-                    fight(monster, display_monster, perso, display_perso, atk_monster)
+                    temp2 = fight(monster, display_monster, perso, display_perso, atk_monster)
+                    if temp2 == 1:
+                        return 1
                 if next:
                     state = "Player"
                     move_left = perso.mvt
