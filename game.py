@@ -71,6 +71,7 @@ class GameScreen:
                         self.button_save.set_state(0)
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if self.button_save.state == 1:
+                        save.dump_save("save.json", self.raw_data)
                         return "menu"
                 elif event.type == pygame.KEYDOWN:
                     # Mouvement du joueur + vérification si tjrs dans la carte
@@ -278,6 +279,8 @@ def move_sprite(maps, sprite, direction):
 
 
 # Fonction qui renvoie la distance entre deux entité
+
+
 def dist(s1, s2):
     if s1.location[2] != s2.location[2]:
         return -1
