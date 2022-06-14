@@ -29,8 +29,7 @@ class Personnage:
                 z = {z[i].classe_name: z[i] for i in range(z.__len__())}
             self.texture = z[self.classe].texture["face " + self.gender]
 
-    # permet de sauvegarder les valeurs des différentes variables
-
+    # renvoie les données à sauvegarder
     def save(self):
         return {"__personnage__": True, "name": self.name, "classe": self.classe, "gender": self.gender,
                 "atk": self.atk, "pv": self.pv, "pv max": self.pv,

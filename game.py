@@ -1,6 +1,9 @@
 import math
 
 import pygame.image
+
+import monster
+import personnage
 import save
 import sys
 import maps
@@ -20,8 +23,20 @@ class GameScreen:
         self.button_font = pygame.font.Font("Game_font.TTF", 48)
         # création de la carte
         self.maps = maps.Maps("maps.json", [0, 0, "Test map 1"], self.setting)
-        self.perso = save.load_save("save.json")
-        self.sprite_list = []
+        # Chargement de la sauvegarde et recupération du personnage et des monstres
+        # Chargement de la sauvegarde
+        # Donnée brut, a renvoyer lors d'un sauvegarde
+        self.raw_data = save.load_save("save_test.json")
+        # Récupération du personnage et de la liste des monstres
+        self.perso = None
+        self.monster_list = []
+        if "personnage" in self.raw_data:
+            if self.raw_data["personnage"].__class__ == personnage.Personnage:
+                self.perso = self.raw_data["personnage"]
+        if "monster_list" in self.raw_data:
+            for element in self.raw_data["monster_list"]:
+                if element.__class__ == monster.Monster:
+                    self.monster_list.append(element)
         # création du bouton pour revenir au menu et sauvegarder
         self.button_save = button.Button(
             [self.setting.screensize[0] * 1.25 / 15, self.setting.screensize[1] * 1 / 15],
@@ -69,7 +84,7 @@ class GameScreen:
                         move_sprite(self.maps, self.perso, "right")
 
             self.maps.location = self.perso.location
-            self.maps.render(self.window, [self.perso, *self.sprite_list])
+            self.maps.render(self.window, [self.perso, *self.monster_list])
             self.button_save.render(self.window)
             self.window.blit(self.texture_cursor, self.cursor_coord)
             pygame.display.update()
@@ -208,11 +223,8 @@ class FightScreen:
                         atk_perso_1_delay = max(atk_perso_1_delay - 1, 0)
                         atk_perso_2_delay = max(atk_perso_2_delay - 1, 0)
                     if self.button_comp_1.state == 1 and atk_perso_1_delay == 0:
-                        if atk_perso_1["range"] == [-1, -1] or atk_perso_1["range"][0] <=\
-                                dist(display_perso, display_monster) <= atk_perso_1["range"][1]:
-                            monster.pv -= max(perso.atk * atk_perso_1["atk ratio"] - monster.defense, 0)
-                            for element in atk_perso_1["special effect"]:
-                                ...
+                        fight(perso, display_perso, monster, display_monster, atk_perso_1)
+                        atk_perso_1_delay = atk_perso_1["delay"]
                 elif event.type == pygame.KEYDOWN and move_left > 0 and state == "Player":
                     # Mouvement de la mire + vérification si tjrs dans la carte
                     if event.key == pygame.K_UP:
@@ -264,9 +276,18 @@ def move_sprite(maps, sprite, direction):
             return True
     return False
 
+
 # Fonction qui renvoie la distance entre deux entité
 def dist(s1, s2):
     if s1.location[2] != s2.location[2]:
         return -1
     else:
         return math.sqrt(math.pow(s1.location[0]-s2.location[0], 2) + math.pow(s1.location[1]-s2.location[1], 2))
+
+
+def fight(atk, display_atk, target, display_target, atk_type):
+    if atk["range"] == [-1, -1] or atk["range"][0] <= \
+            dist(display_atk, display_target) <= atk["range"][1]:
+        target.pv -= max(atk.atk * atk_type["atk ratio"] - target.defense, 0)
+        for element in atk_type["special effect"]:
+            ...

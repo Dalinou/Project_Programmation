@@ -1,21 +1,35 @@
 [
   {
     "__personnage__": true,
-    "name": "AAA",
-    "classe": "Mage",
+    "name": "Dalinou",
+    "classe": "Guerrier",
     "gender": "M",
-    "atk": 20,
+    "atk": 10,
     "pv": 100,
     "pv max": 100,
     "atk type": [
-      "base",
-      "boule de feu"
+      "coup dague",
+      "protection"
     ],
-    "def": 3,
+    "def": 15,
     "mvt": 3,
     "location": [
+      4,
       0,
-      0,
+      "Test map 1"
+    ]
+  },
+  {
+    "__monster__": true,
+    "type": "Orc",
+    "atk": 10,
+    "pv": 50,
+    "pv max": 50,
+    "def": 20,
+    "mvt": 2,
+    "location": [
+      13,
+      21,
       "Test map 1"
     ]
   }
