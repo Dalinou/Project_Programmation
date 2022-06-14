@@ -21,6 +21,8 @@ class GameScreen:
         self.clock = clock
         self.setting = setting
         self.button_font = pygame.font.Font("Game_font.TTF", 48)
+        # initialise l'écran de combat
+        self.fight_screen = FightScreen(window, clock, setting)
         # création de la carte
         self.maps = maps.Maps("maps.json", [0, 0, "Test map 1"], self.setting)
         # Chargement de la sauvegarde et recupération du personnage et des monstres
@@ -83,6 +85,10 @@ class GameScreen:
                         move_sprite(self.maps, self.perso, "down")
                     elif event.key == pygame.K_RIGHT:
                         move_sprite(self.maps, self.perso, "right")
+                    # gère l'entrée dans le combat si perso proche du monstre
+                    for i in self.monster_list:
+                        if dist(self.perso, i) == 1:
+                            self.fight_screen.gameloop(self.perso, i)
 
             self.maps.location = self.perso.location
             self.maps.render(self.window, [self.perso, *self.monster_list])
