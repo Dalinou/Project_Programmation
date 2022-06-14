@@ -26,7 +26,7 @@ class GameScreen:
         # Chargement de la sauvegarde et recupération du personnage et des monstres
         # Chargement de la sauvegarde
         # Donnée brut, a renvoyer lors d'un sauvegarde
-        self.raw_data = save.load_save("save_test.json")
+        self.raw_data = save.load_save("save.json")
         # Récupération du personnage et de la liste des monstres
         self.perso = None
         self.monster_list = []

@@ -10,7 +10,7 @@ import personnage
 ''' code à mettre pour charger la sauvergarde
 # Chargement de la sauvegarde
 # Donnée brut, a renvoyer lors d'un sauvegarde
-raw_data = save.load_save("save_test.json")
+raw_data = save.load_save("save.json")
 # Récupération du personnage et de la liste des monstres
 perso = None
 monster_list = []
