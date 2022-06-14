@@ -178,9 +178,35 @@ class FightScreen:
         self.button_comp_2.change_text([atk_perso_2["__atk_def__"] for i in range(0, 3)])
         atk_monster = self.atk_list["attaque monstre"]
         atk_monster_delay = 0
+        monster_action_delay_max = self.setting.fps/30 * 6  # en nombre de frame
+        monster_action_delay = monster_action_delay_max
         while True:
             # clock.tick pour respecter le fps
             self.clock.tick(self.setting.fps)
+            # Fait jouer le monstre
+            if state == "Monster":
+                next = False
+                monster_action_delay -= 1
+                if monster_action_delay == 0:
+                    monster_action_delay = monster_action_delay_max
+                    temp = move_forward_player(self.maps, display_monster, display_perso, atk_monster["range"])
+                    if temp == -1:
+                        next = True
+                    elif temp == 0:
+                        fight(monster, display_monster, perso, display_perso, atk_monster)
+                        next = True
+                    elif temp == 1:
+                        move_left -= 1
+                if move_left == 0:
+                    next = True
+                    fight(monster, display_monster, perso, display_perso, atk_monster)
+                if next:
+                    state = "Player"
+                    move_left = perso.mvt
+                    self.button_continue.set_state(2)
+                    self.button_comp_1.set_state(2)
+                    self.button_comp_2.set_state(2)
+            # Gestion des entrer de l'utilisateur
             for event in pygame.event.get():
                 # Lecture des entrées et interprétation
                 # Si alt-f4 ou croix rouge
@@ -197,13 +223,25 @@ class FightScreen:
                     if atk_perso_1_delay != 0 or state == "Monster":
                         self.button_comp_1.set_state(2)
                     else:
-                        if self.button_comp_1.is_coord_on(self.cursor_coord):
-                            # change l'état du bouton si la souris est dessus
-                            self.button_comp_1.set_state(1)
+                        if atk_perso_1["range"] == [-1, -1] or atk_perso_1["range"][0] <= \
+                                dist(display_perso, display_monster) <= atk_perso_1["range"][1]:
+                            if self.button_comp_1.is_coord_on(self.cursor_coord):
+                                # change l'état du bouton si la souris est dessus
+                                self.button_comp_1.set_state(1)
+                            else:
+                                self.button_comp_1.set_state(0)
                         else:
-                            self.button_comp_1.set_state(0)
+                            self.button_comp_1.set_state(2)
                     if atk_perso_2_delay != 0 or state == "Monster":
-                        self.button_comp_2.set_state(2)
+                        if atk_perso_2["range"] == [-1, -1] or atk_perso_2["range"][0] <= \
+                                dist(display_perso, display_monster) <= atk_perso_2["range"][1]:
+                            if self.button_comp_2.is_coord_on(self.cursor_coord):
+                                # change l'état du bouton si la souris est dessus
+                                self.button_comp_2.set_state(1)
+                            else:
+                                self.button_comp_2.set_state(0)
+                        else:
+                            self.button_comp_2.set_state(2)
                     else:
                         if self.button_comp_2.is_coord_on(self.cursor_coord):
                             # change l'état du bouton si la souris est dessus
@@ -229,9 +267,30 @@ class FightScreen:
                         atk_monster_delay = max(atk_monster_delay - 1, 0)
                         atk_perso_1_delay = max(atk_perso_1_delay - 1, 0)
                         atk_perso_2_delay = max(atk_perso_2_delay - 1, 0)
-                    if self.button_comp_1.state == 1 and atk_perso_1_delay == 0:
-                        fight(perso, display_perso, monster, display_monster, atk_perso_1)
-                        atk_perso_1_delay = atk_perso_1["delay"]
+                    if self.button_comp_1.state == 1 and atk_perso_1_delay == 0 and state == "Player":
+                        if fight(perso, display_perso, monster, display_monster, atk_perso_1) == 0:
+                            atk_perso_1_delay = atk_perso_1["delay"]
+                            atk_perso_2_delay = max(atk_perso_2_delay, 1)
+                            state = "Monster"
+                            move_left = monster.mvt
+                            self.button_continue.set_state(2)
+                            self.button_comp_1.set_state(2)
+                            self.button_comp_2.set_state(2)
+                            atk_monster_delay = max(atk_monster_delay - 1, 0)
+                            atk_perso_1_delay = max(atk_perso_1_delay - 1, 0)
+                            atk_perso_2_delay = max(atk_perso_2_delay - 1, 0)
+                    if self.button_comp_2.state == 1 and atk_perso_2_delay == 0 and state == "Player":
+                        if fight(perso, display_perso, monster, display_monster, atk_perso_2) == 0:
+                            atk_perso_2_delay = atk_perso_2["delay"]
+                            atk_perso_1_delay = max(atk_perso_1_delay, 1)
+                            state = "Monster"
+                            move_left = monster.mvt
+                            self.button_continue.set_state(2)
+                            self.button_comp_1.set_state(2)
+                            self.button_comp_2.set_state(2)
+                            atk_monster_delay = max(atk_monster_delay - 1, 0)
+                            atk_perso_1_delay = max(atk_perso_1_delay - 1, 0)
+                            atk_perso_2_delay = max(atk_perso_2_delay - 1, 0)
                 elif event.type == pygame.KEYDOWN and move_left > 0 and state == "Player":
                     # Mouvement de la mire + vérification si tjrs dans la carte
                     if event.key == pygame.K_UP:
@@ -246,6 +305,7 @@ class FightScreen:
                     elif event.key == pygame.K_RIGHT:
                         if move_sprite(self.maps, display_perso, "right"):
                             move_left -= 1
+            # Affichage
             self.maps.render(self.window, [display_perso, display_monster])
             self.button_save.render(self.window)
             self.button_comp_1.render(self.window)
@@ -285,8 +345,6 @@ def move_sprite(maps, sprite, direction):
 
 
 # Fonction qui renvoie la distance entre deux entité
-
-
 def dist(s1, s2):
     if s1.location[2] != s2.location[2]:
         return -1
@@ -294,9 +352,76 @@ def dist(s1, s2):
         return math.sqrt(math.pow(s1.location[0]-s2.location[0], 2) + math.pow(s1.location[1]-s2.location[1], 2))
 
 
+# Fonction qui gère l'attaque
+#  -1 si erreur, 0 sinon
 def fight(atk, display_atk, target, display_target, atk_type):
-    if atk["range"] == [-1, -1] or atk["range"][0] <= \
-            dist(display_atk, display_target) <= atk["range"][1]:
+    if atk_type["range"] == [-1, -1] or atk_type["range"][0] <= \
+            dist(display_atk, display_target) <= atk_type["range"][1]:
         target.pv -= max(atk.atk * atk_type["atk ratio"] - target.defense, 0)
         for element in atk_type["special effect"]:
-            ...
+            pass
+        return 0
+    else:
+        return -1
+
+
+# Fonction qui fait se déplacer le monstre vers le joueur
+# -1 si erreur, 0 si dans la target_dist, 1 si à boucher
+def move_forward_player(maps, monster_, player, target_dist):
+    if monster_.location[2] == player.location[2]:
+        dir_set = ["right", "up", "left", "down"]  # right 0+, up 1-
+        d0 = monster_.location[0] - player.location[0]
+        d1 = monster_.location[1] - player.location[1]
+        dir0 = "0" if d0 > d1 else "1"
+        dir1 = 1
+        if target_dist[0] <= dist(monster_, player) <= target_dist[1]:
+            return 0
+        elif target_dist[0] > dist(monster_, player):
+            if dir0 == "0":
+                if d1 < 0:
+                    dir1 = 1
+                else:
+                    dir1 = 3
+            elif dir0 == "1":
+                if d1 < 0:
+                    dir1 = 2
+                else:
+                    dir1 = 0
+        elif target_dist[1] < dist(monster_, player):
+            if dir0 == "0":
+                if d0 == 0:
+                    if d1 == 0:
+                        return 0
+                    if d1 < 0:
+                        dir1 = 3
+                    elif d1 > 0:
+                        dir1 = 1
+                elif d0 < 0:
+                    dir1 = 0
+                elif d0 > 0:
+                    dir1 = 2
+            elif dir0 == "1":
+                if d1 == 0:
+                    if d0 == 0:
+                        return 0
+                    elif d0 < 0:
+                        dir1 = 0
+                    elif d0 > 0:
+                        dir1 = 2
+                if d1 < 0:
+                    dir1 = 3
+                elif d1 > 0:
+                    dir1 = 1
+        have_mov = False
+        i = 0
+        while not have_mov and i < 4:
+            if move_sprite(maps, monster_, dir_set[(dir1 + i) % 4]):
+                have_mov = True
+            else:
+                i += 1
+        if have_mov:
+            return 1
+        else:
+            return -1
+    else:
+        return -1

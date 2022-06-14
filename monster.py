@@ -54,16 +54,3 @@ def gen_monster(type_, init_location):
             data["location"] = init_location
             return Monster(data)
 
-# Fonction qui renvoie la distance entre deux entité
-def dist(s1, s2):
-    if s1.location[2] != s2.location[2]:
-        return -1
-    else:
-        return math.sqrt(math.pow(s1.location[0]-s2.location[0], 2) + math.pow(s1.location[1]-s2.location[1], 2))
-
-# Fonction qui fait se déplacer le monstre vers le joueur
-def move_forward_player(maps, monster_, player, traget_dist):
-    if monster_.location[2] == player.location[2]:
-        ...
-    else:
-        return -1
