@@ -255,6 +255,8 @@ class FightScreen:
                             self.button_comp_1.set_state(2)
                     # Regarde le deuxième bouton de compétance
                     if atk_perso_2_delay != 0 or state == "Monster":
+                        self.button_comp_2.set_state(2)
+                    else:
                         if atk_perso_2["range"] == [-1, -1] or atk_perso_2["range"][0] <= \
                                 dist(display_perso, display_monster) <= atk_perso_2["range"][1]:
                             if self.button_comp_2.is_coord_on(self.cursor_coord):
@@ -264,12 +266,6 @@ class FightScreen:
                                 self.button_comp_2.set_state(0)
                         else:
                             self.button_comp_2.set_state(2)
-                    else:
-                        if self.button_comp_2.is_coord_on(self.cursor_coord):
-                            # change l'état du bouton si la souris est dessus
-                            self.button_comp_2.set_state(1)
-                        else:
-                            self.button_comp_2.set_state(0)
                     # Bouton continue
                     if state == "Player":
                         if self.button_continue.is_coord_on(self.cursor_coord):
@@ -481,7 +477,8 @@ def fight(atk, display_atk, target, display_target, atk_type):
             dist(display_atk, display_target) <= atk_type["range"][1]:
         target.pv -= max(atk.atk * atk_type["atk ratio"] - target.defense, 0)
         for element in atk_type["special effect"]:
-            pass
+            if element == "regen":
+                atk.pv = min(atk.pv + atk_type["special effect"][element], atk.pv_max)
         if target.pv <= 0:
             return 1
         return 0

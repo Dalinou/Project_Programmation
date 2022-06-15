@@ -1,5 +1,6 @@
 import json
 import classe
+import pygame
 
 # Classe qui permet d'initialiser les attributs du personnage , soit en provenance de classe.json pour les premières
 # puis par la suite en les récupérant directement dans la sauvegarde
@@ -12,22 +13,34 @@ class Personnage:
         """
         if "__personnage__" in data:
             self.name = data["name"]
-            self.classe = data["classe"]
-            self.gender = data["gender"]
-            self.pv = data["pv"]
-            self.pv_max = data["pv max"]
-            self.atk = data["atk"]
-            self.defense = data["def"]
-            self.mvt = data["mvt"]
-            self.location = data["location"]
-            self.atk_type = data["atk type"]
-            # récupération des textures
-            with open("classe.json") as data:
-                # Ouverture du fichier à l'aide du décodeur json et décoder classe.decode
-                z = json.load(data, object_hook=classe.decode)
-                # sert à désigner chaque classe par son nom, non un numéro (pas forcément fixe)
-                z = {z[i].classe_name: z[i] for i in range(z.__len__())}
-            self.texture = z[self.classe].texture["face " + self.gender]
+            if self.name == "Diablo":
+                self.classe = "Devil"
+                self.gender = data["gender"]
+                self.pv = data["pv"]
+                self.pv_max = 666
+                self.atk = data["atk"]
+                self.defense = data["def"]
+                self.mvt = 13
+                self.location = data["location"]
+                self.atk_type = ["Voile de tenebre", "Malediction"]
+                self.texture = pygame.image.load("Texture/Diablo.png")
+            else:
+                self.classe = data["classe"]
+                self.gender = data["gender"]
+                self.pv = data["pv"]
+                self.pv_max = data["pv max"]
+                self.atk = data["atk"]
+                self.defense = data["def"]
+                self.mvt = data["mvt"]
+                self.location = data["location"]
+                self.atk_type = data["atk type"]
+                # récupération des textures
+                with open("classe.json") as data:
+                    # Ouverture du fichier à l'aide du décodeur json et décoder classe.decode
+                    z = json.load(data, object_hook=classe.decode)
+                    # sert à désigner chaque classe par son nom, non un numéro (pas forcément fixe)
+                    z = {z[i].classe_name: z[i] for i in range(z.__len__())}
+                self.texture = z[self.classe].texture["face " + self.gender]
 
     # renvoie les données à sauvegarder
     def save(self):
