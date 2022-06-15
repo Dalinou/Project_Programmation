@@ -69,7 +69,7 @@ class Menu:
             self.setting,
             [self.setting.screensize[0] / 2, self.setting.screensize[1] / 5],
             self.text_font,
-            "Game of the programmation project ",
+            "RPG ADVENTURE",
             pygame.Color("#0080ff"),
         )
         # Curseur
