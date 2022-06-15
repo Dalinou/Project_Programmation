@@ -46,5 +46,22 @@
     "special effect": {
       "regen": 10
     }
+  },
+  {
+    "__atk_def__": "Voile de tenebre",
+    "range": [2, 4],
+    "atk ratio": 2,
+    "delay": 2,
+    "special effect": {
+      "regen": 666
+    }
+  },
+  {
+    "__atk_def__": "Malediction",
+    "range": [0, 1],
+    "atk ratio": 13,
+    "delay": 4,
+    "special effect": {
+    }
   }
 ]
