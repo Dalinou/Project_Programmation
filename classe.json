@@ -43,7 +43,7 @@
     "description": "blabla",
     "atk type":[
       "coup dague",
-      ""
+      "vol de vie"
     ],
     "texture": {
       "face M": "Texture/Voleur_m.png",
