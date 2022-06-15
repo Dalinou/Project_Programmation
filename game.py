@@ -421,24 +421,28 @@ def move_sprite(maps, sprite, direction):
     :param direction: attribut étant la direction qu'on souhaite prendre (en haut, à droite, ...)
     :return: un booléen (true or false) en fonction de si la sprite destination est marchable ou non
     """
+    # Pour aller en haut
     if direction == "up" and sprite.location[1] > 0:
         dest = maps.map[sprite.location[2]].map[sprite.location[1] - 1][sprite.location[0]]
         is_walkable = maps.tile[dest].is_walkable
         if is_walkable:
             sprite.location[1] = sprite.location[1] - 1
             return True
+    # Pour aller à gauche
     elif direction == "left" and sprite.location[0] > 0:
         dest = maps.map[sprite.location[2]].map[sprite.location[1]][sprite.location[0] - 1]
         is_walkable = maps.tile[dest].is_walkable
         if is_walkable:
             sprite.location[0] = sprite.location[0] - 1
             return True
+    # Pour aller en bas
     elif direction == "down" and sprite.location[1] < maps.map[sprite.location[2]].res[1] - 1:
         dest = maps.map[sprite.location[2]].map[sprite.location[1] + 1][sprite.location[0]]
         is_walkable = maps.tile[dest].is_walkable
         if is_walkable:
             sprite.location[1] = sprite.location[1] + 1
             return True
+    # Pour aller à droite
     elif direction == "right" and sprite.location[0] < maps.map[sprite.location[2]].res[0] - 1:
         dest = maps.map[sprite.location[2]].map[sprite.location[1]][sprite.location[0] + 1]
         is_walkable = maps.tile[dest].is_walkable

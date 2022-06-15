@@ -48,21 +48,27 @@ state = "menu"
 while state != "exit":
     setting.read_file()
     # regarde l'état du jeu et lance la gameloop voulu en fonction de cet etat
+    # Fenêtre menu
     if state == "menu":
         screen = menu.Menu(window, clock, setting)
         state = screen.gameloop()
+    # Fenêtre création du personnage
     elif state == "create":
         screen = create_perso.CreatePerso(window, clock, setting)
         state = screen.gameloop()
+    # Fenêtre warning lorsqu'une sauvegarde existe
     elif state == "warning":
         screen = create_perso.CreateWarning(window, clock, setting)
         state = screen.gameloop()
+    # Fenêtre paramètres
     elif state == "paramètre":
         screen = settings.SettingScreen(window, clock, setting)
         state = screen.gameloop()
+    # Fenêtre du jeu
     elif state == "game":
         screen = game.GameScreen(window, clock, setting)
         state = screen.gameloop()
+    # Fenêtre de fin du jeu si le perso meurt
     elif state == "game_over":
         screen = game.GameOver(window, clock, setting)
         state = screen.gameloop()
