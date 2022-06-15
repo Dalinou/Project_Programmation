@@ -476,17 +476,15 @@ def fight(atk, display_atk, target, display_target, atk_type):
     :param atk_type: Définie le type d'attaque utilisé
     :return: -1 si erreur, 0 si l'attaque à lieu et 1 si la cible est tué
     """
-    # Check si l'attaquant à le droit d'utilisé cette attaque
-    if atk_type["__atk_def__"] in atk.atk_type:
-        # Check si dans la range
-        if atk_type["range"] == [-1, -1] or atk_type["range"][0] <= \
-                dist(display_atk, display_target) <= atk_type["range"][1]:
-            target.pv -= max(atk.atk * atk_type["atk ratio"] - target.defense, 0)
-            for element in atk_type["special effect"]:
-                pass
-            if target.pv <= 0:
-                return 1
-            return 0
+    # Check si dans la range
+    if atk_type["range"] == [-1, -1] or atk_type["range"][0] <= \
+            dist(display_atk, display_target) <= atk_type["range"][1]:
+        target.pv -= max(atk.atk * atk_type["atk ratio"] - target.defense, 0)
+        for element in atk_type["special effect"]:
+            pass
+        if target.pv <= 0:
+            return 1
+        return 0
     return -1
 
 
